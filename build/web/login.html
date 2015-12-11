@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <link rel="shortcut icon" href="https://cdn2.iconfinder.com/data/icons/social-messaging-productivity-1-1/128/home-512.png">
+        <title>Inicio de sesi&oacute;n</title>
+        <link rel="stylesheet" href="BS/css/bootstrap.css" />
+        <link rel="stylesheet" href="BS/css/bootstrap-theme.css" />
+        <link rel="stylesheet" href="BS/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="BS/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/estilos.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="BS/js/bootstrap.js"/></script>
+    <meta charset="UTF-8">
+    <style>
+        body
+        {
+            background: url(Imagenes/fondoLogin.jpg) no-repeat fixed center; 
+            background-size: 100% 100%; 
+            overflow: hidden;
+        }
+    </style>	
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-2 col-xs-3 "></div>
+            <div class="col-md-6 col-sm-8 col-xs-6">
+                <div class="panel panel-default centrarEnPagina">
+                    <div class="panel-body">
+                        <div class="page-header veteArriba">
+                            <h3>Inicio de sesión</h3>
+                        </div>
+                        <form role="form" id="Login" name="Inicio" method="post" action="JSPLogin.jsp">
+                            <div class="form-group">
+                                <label for="correoElectronico">Correo Electrónico</label>
+                                <input type="email" class="form-control" name="usuario" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" placeholder="ejemplo@dominio.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contraseña">Contraseña</label>
+                                <input type="password" class="form-control" name="password" maxlength="15" required placeholder="Contraseña">
+                            </div>
+                            <button type="submit" class ="btn btn-success">Ingresar</button>
+                            <br><br><br>
+                            No tienes cuenta? <a href="registro.html">Registrate</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-2 col-xs-3"></div>
+        </div>
+    </div>
+</body>
+</html>

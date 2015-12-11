@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8080/WebServices/CifraCesar" uri="src/conf/xml-resources/web-service-references/CifraCesar/wsdl/localhost_8080/WebServices/CifraCesar"/>
+    <system systemId="http://localhost:8080/WebServices/CifraSha?wsdl" uri="src/conf/xml-resources/web-service-references/CifraSha/wsdl/localhost_8080/WebServices/CifraSha.wsdl"/>
+    <system systemId="http://localhost:8080/WebServices/CifraSha?xsd=1" uri="src/conf/xml-resources/web-service-references/CifraSha/wsdl/localhost_8080/WebServices/CifraSha.xsd_1.xsd"/>
+    <system systemId="http://localhost:8080/WebServices/CifraCesar?wsdl" uri="src/conf/xml-resources/web-service-references/CifraCesar/wsdl/localhost_8080/WebServices/CifraCesar.wsdl"/>
+    <system systemId="http://localhost:8080/WebServices/CifraCesar?xsd=1" uri="src/conf/xml-resources/web-service-references/CifraCesar/wsdl/localhost_8080/WebServices/CifraCesar.xsd_1.xsd"/>
+</catalog>

@@ -1,0 +1,65 @@
+/* No se por que pero no me deja importar el estilo, lo puse desde el html, es para la imagen gris de fondo
+body {
+    background: url("imagenes/fondo-gris.jpg") no-repeat fixed center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}*/
+
+.bienvenida
+{
+    background-color: rgba(255,255,255,0.9);
+    color: #000;
+    font-size: 20px;
+}
+
+img
+{
+    max-width: 100%;
+    max-height: 100%;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+.noTePeguesArriba{
+    margin-top: 20px;
+}
+
+.fondo{
+    background-color: rgba(255,255,255,0.7);
+}
+
+.fondoConfig{
+    background-color: rgba(255,255,255,1);
+}
+
+.form-login
+{
+    background-color:rgba(255,255,255,0.5);
+    width:50%; 
+    margin:20% auto; 
+    text-align: center;
+}
+.centrado{
+    background-color:rgba(255,255,255,0.5);
+    width:50%;
+    margin:30% auto; 
+    text-align: center;
+}
+.veteArriba{
+    margin-top: 10px;
+}
+
+.colorBoton
+{
+    background-color: #255625;
+}
+
+.centrarEnPagina{
+    margin-top: 100px;
+}
+
+.alinearIzquierda{
+   margin-left: 5px;
+}
