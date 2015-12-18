@@ -5,6 +5,7 @@
  */
 package Logica;
 
+import BD.cDatos;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -18,8 +19,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Alumno
  */
-@WebServlet(name = "Logout", urlPatterns = {"/Logout"})
-public class Logout extends HttpServlet {
+@WebServlet(name = "BajaProducto", urlPatterns = {"/BajaProducto"})
+public class BajaProducto extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +36,27 @@ public class Logout extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>");
+
+            cDatos datos = new cDatos();
             HttpSession sesion = request.getSession();
-            sesion.setAttribute("sessionStat", "null");
-            sesion.invalidate();
+            String correo = (String) sesion.getAttribute("sessionMail");
+            String code = request.getParameter("codigo");;
+            System.out.println(code);
+            try {
+                datos.conectar();
+                int res;
+                res = datos.modificacion1("call BajaProducto('" + correo + "','" + code + "');");
+                if (res == 1) {
+                    out.print("<script>alert('Se Eliminado correctamente');</script>");
+                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/Despensa.jsp'>");
+                } else {
+                    out.print("<script>alert('Errorts');</script>");
+                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/Despensa.jsp'>");
+                }
+            } catch (Exception e) {
+                out.print(e);
+            }
+
         }
     }
 

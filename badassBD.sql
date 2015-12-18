@@ -11,6 +11,12 @@ create table eventos(idEvento int(2) primary key,fecha timestamp default current
 create table catalogoEventos(idTipo int(2) primary key, evento nvarchar(20));
 create table despensa(idDespensa int(2) primary key,estatus nvarchar(30));
 create table catalogoProductos(idProducto int(2) primary key,producto nvarchar(30));
+
+
+##TABLA ESTUPIDA! :v
+create table DespensaPRO(correo nvarchar(35),produ nvarchar(30) not null,cod nvarchar(20) not null, cantidad int);
+
+
 ##Tablas principales
 
 ##Tablas relacionales
@@ -21,7 +27,7 @@ create table relDispositivoTipo(idRel int(2) primary key auto_increment,idDispos
 create table relUsrEvento(idRel int(2) primary key auto_increment,Correo nvarchar(35),idEvento int(2));
 create table relEventoCatalogo(idRel int(2) primary key auto_increment,idEvento int(2),idTipo int(2));
 create table relDispCasa(idRel int(2) primary key auto_increment,idDispositivo int(2),idCasa int(2));
-create table relCasaDespensa(idRel int(2) primary key auto_increment,idCasa int(2),idDespensa int(2));
+create table relCasaDespensa(idRel int(2) primary key auto_increment,Correo nvarchar(35),idDespensa int(2));
 create table relDespensaProductos(idRel int(2) primary key auto_increment,idDespensa int(2),idProducto int(2),cantidad int(100));
 ##Tablas relacionales
 
@@ -47,7 +53,7 @@ alter table relEventoCatalogo add foreign key(idTipo) references catalogoEventos
 alter table relDispCasa add foreign key(idCasa) references casa(idCasa);
 alter table relDispCasa add foreign key(idDispositivo) references dispositivos(idDispositivo);
 
-alter table relCasaDespensa add foreign key(idCasa) references casa(idCasa);
+alter table relCasaDespensa add foreign key(Correo) references usuarios(Correo);
 alter table relCasaDespensa add foreign key(idDespensa) references despensa(idDespensa);
 
 alter table relDespensaProductos add foreign key(idDespensa) references despensa(idDespensa);

@@ -1,0 +1,212 @@
+
+#sidebar{
+       width: 230px;
+        height: 100%;
+	background: #0f0f0f;
+	color: #eee;
+	position: fixed;
+        top:0px;
+        left: 0px;
+}
+
+/* Landscape phones and down */
+@media (max-width: 480px) {#sidebar{
+       width: 40px;
+        height: 100%;
+	background: #0f0f0f;
+	color: #eee;
+	position: fixed;
+        top:0px;
+        left: 0px;
+}
+}
+
+#sidebar a{color:#FCFEFF;}
+#sidebar a:hover{color:#EAF7FF;}
+
+
+#sidebar hr{
+	border-bottom: 1px solid #333 !important;
+}
+
+#sidebar ul{
+	padding: 0px;
+	margin: 0px;
+	list-style-type: none;	
+}
+
+#sidebar ul li{
+	list-style-type: none;
+}
+
+#sidebar .sidebar-inner{
+  display: block; 
+  width:100%; 
+  margin: 0 auto; 
+  position: absolute;
+  z-index: 60;	
+  background: #111;
+}
+
+#sidebar .navi li i{
+	margin-right: 5px;
+}
+
+#sidebar .navi li span i{
+	margin: 0px;
+}
+
+#sidebar .navi > li > a{ 
+  display: block; 
+  padding: 12px 20px;
+  font-size: 15px;
+  line-height: 25px;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid #222;
+  background-color: #111;
+}
+
+#sidebar .navi > li > a:hover, .sidebar .navi > li.open > a { 
+  border-bottom: 1px solid #222;
+  background-color: #222;
+  color: #fff;
+}
+
+#sidebar .navi li ul { 
+	display: none; 
+	background: #181818; 
+}
+#sidebar .navi li.open ul{
+	display: block;
+}
+
+#sidebar .navi li ul li a { 
+  display: block; 
+  background: none;
+  padding: 10px 0px;
+  padding-left: 30px;
+  text-decoration: none;
+  color: #999;
+  border-bottom: 1px solid #222;
+}
+
+#sidebar .navi li ul li.active a { 
+  background: #131313;
+  border-bottom: 1px solid #222;
+}
+
+#sidebar .navi li ul li a:hover {
+  background: #131313;
+  border-bottom: 1px solid #222;
+}
+
+/* Sidebar colors */
+
+#sidebar .navi > li.nlightblue > a:hover, 
+#sidebar .navi > li.open.nlightblue > a, 
+#sidebar .navi > li.current.nlightblue > a { 
+  background:#52b9e9 !important;
+  -webkit-transition:background 0.5s ease;
+  -moz-transition:background 0.5s ease;
+  -o-transition:background 0.5s ease;
+  transition:background 0.5s ease;
+}
+
+#sidebar .navi > li.nblue > a:hover, 
+#sidebar .navi > li.open.nblue > a,
+#sidebar .navi > li.current.nblue > a { 
+  background:#0F6089 !important;
+  -webkit-transition:background 0.5s ease;
+  -moz-transition:background 0.5s ease;
+  -o-transition:background 0.5s ease;
+  transition:background 0.5s ease;
+}
+
+#sidebar .navi > li.ngreen > a:hover, 
+#sidebar .navi > li.open.ngreen > a,
+#sidebar .navi > li.current.ngreen > a { 
+  background:#43c83c !important;
+  -webkit-transition:background 0.5s ease;
+  -moz-transition:background 0.5s ease;
+  -o-transition:background 0.5s ease;
+  transition:background 0.5s ease;
+}
+
+#sidebar .navi > li.norange > a:hover, 
+#sidebar .navi > li.open.norange > a,
+#sidebar .navi > li.current.norange > a { 
+  background:#f88529 !important;
+  -webkit-transition:background 0.5s ease;
+  -moz-transition:background 0.5s ease;
+  -o-transition:background 0.5s ease;
+  transition:background 0.5s ease;
+}
+
+#sidebar .navi > li.nred > a:hover, 
+#sidebar .navi > li.open.nred > a,
+#sidebar .navi > li.current.nred > a { 
+  background:#fa3031 !important;
+  -webkit-transition:background 0.5s ease;
+  -moz-transition:background 0.5s ease;
+  -o-transition:background 0.5s ease;
+  transition:background 0.5s ease;
+}
+
+#sidebar .navi > li.nviolet > a:hover, 
+#sidebar .navi > li.open.nviolet > a,
+#sidebar .navi > li.current.nviolet > a { 
+  background:#7E219E !important;
+  -webkit-transition:background 0.5s ease;
+  -moz-transition:background 0.5s ease;
+  -o-transition:background 0.5s ease;
+  transition:background 0.5s ease;
+}
+
+#sidebar .navi > li.nrose > a:hover, 
+#sidebar .navi > li.open.nrose > a,
+#sidebar .navi > li.current.nrose > a { 
+  background:#D75CE0 !important;
+  -webkit-transition:background 0.5s ease;
+  -moz-transition:background 0.5s ease;
+  -o-transition:background 0.5s ease;
+  transition:background 0.5s ease;
+}
+
+#sidebar .navi > li.nacua > a:hover, 
+#sidebar .navi > li.open.nacua > a,
+#sidebar .navi > li.current.nacua > a { 
+  background:#00A592 !important;
+  -webkit-transition:background 0.5s ease;
+  -moz-transition:background 0.5s ease;
+  -o-transition:background 0.5s ease;
+  transition:background 0.5s ease;
+}
+
+
+/* Sidebar dropdown */
+
+#sidebar .sidebar-dropdown*{
+	text-decoration: none;
+}
+
+#sidebar .sidebar-dropdown{
+	display: none;
+}
+
+#sidebar .sidebar-dropdown a{
+	color: #ddd;  
+	background-color: #343434;	
+	padding:6px;
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 13px;
+	display: block;
+	border-top: 1px solid #666;
+	border-bottom: 1px solid #333;  
+}
+
+#sidebar .sidebar-dropdown a:hover{
+	text-decoration: none;
+}
+

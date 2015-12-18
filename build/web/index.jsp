@@ -49,7 +49,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">In da' kithcen <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Despensa</a></li>
+                                <li><a href="Despensa.jsp">Despensa</a></li>
                                 <li><a href="#">Gas</a></li>
                                 <li><a href="#">Enchufes</a></li>
                                 <li role="separator" class="divider"></li>
@@ -98,7 +98,7 @@
                 </div>
                 <div class="col-md-4 col-sm-4 inline-block noTePeguesArriba fondo">
                     <article>
-                        <a href="configuracion.html"><img src='Imagenes/config.png' class="col-xs-3"></a>
+                        <a href="configuracion.jsp"><img src='Imagenes/config.png' class="col-xs-3"></a>
                         <h2>Configuracion</h2>
                     </article>
                 </div>

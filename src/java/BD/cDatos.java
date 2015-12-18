@@ -20,7 +20,7 @@ public class cDatos {
         //poner los datos apropiados
         this.usrBD = "root";
         this.passBD = "n0m3l0";
-        this.urlBD = "jdbc:mysql://127.0.0.1:3306/badasshouse";
+        this.urlBD = "jdbc:mysql://127.0.0.1:1433/badasshouse";
         this.driverClassName = "com.mysql.jdbc.Driver";
     }
 

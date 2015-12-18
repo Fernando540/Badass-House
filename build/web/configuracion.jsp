@@ -1,36 +1,32 @@
-<%-- 
-    Document   : configuracion
-    Created on : 7/12/2015, 06:46:05 PM
-    Author     : Best Buy Demo
---%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.ResultSet"%>
 <%
-String idusr = request.getParameter("correo");
 String nombre="";
-String pass1 = "";
-String pass2 = "";
 String ap = "";
 String am = "";
-String correo ="";
+ResultSet rs;
+ String x = (String) session.getAttribute("sessionStat");
+ String log = (String) session.getAttribute("sessionMail");
+        String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
+        if (x.equals("logueado")) {
+            
     try
     {
         BD.cDatos sql = new BD.cDatos();
         sql.conectar();
-        //ResultSet rs = sql.consulta("select * from usuarios where idusr = '"+correo+"'");
-        ResultSet rs = sql.consulta("call sp_datosUsr('"+correo+"');");
+        rs = sql.consulta1("select * from usuarios where correo = '"+log+"';");
+        
         while(rs.next())
         {
         nombre = rs.getString("nombre");
-        pass1 = rs.getString("oldPass");
-        pass2 = rs.getString("newPass");
-        ap = rs.getString("apPaterno");
-        am = rs.getString("apMaterno");
+        ap = rs.getString("aPaterno");
+        am = rs.getString("aMaterno");
         }
     }
     catch(Exception xd)
     {
-        
+        out.println("Error: " + xd);
     }
 
 
@@ -45,7 +41,7 @@ String correo ="";
         <link rel="stylesheet" href="BS/css/bootstrap-theme.min.css" />
         <link rel="stylesheet" href="BS/css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/estilos.css" />
-        <link rel="stylesheet" href="css/SlidersStyles.css" />
+        <link rel="stylesheet" href="css/SlidersStylesConfig.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="BS/js/bootstrap.js"/></script>
     <meta charset="UTF-8">
@@ -72,22 +68,21 @@ String correo ="";
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">Badass House</a>
+                    <a class="navbar-brand" href="index.jsp">Badass House</a>
                 </div>
-
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Force Close <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">No Kids Allowed</a></li>
+                        <li><a href="pForceClose.html">Force Close <span class="sr-only">(current)</span></a></li>
+                        <!--<li><a href="pNKA.html">No Kids Allowed</a></li>-->
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">In da' kithcen <span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Despensa</a></li>
+                                <li><a href="Despensa.jsp">Despensa</a></li>
                                 <li><a href="#">Gas</a></li>
                                 <li><a href="#">Enchufes</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Luces</a></li>
+                                <li><a href="luces.html">Luces</a></li>
                                 <li role="separator" class="divider"></li>
                                 <li><a href="#">Algo más</a></li>
                             </ul>
@@ -95,12 +90,12 @@ String correo ="";
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">In ur wife's room<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">Luces</a></li>
-                                <li><a href="#">Enchufes</a></li>
+                                <li><a href="luces.html">Luces</a></li>
+                                <!--<li><a href="#">Enchufes</a></li>-->
                                 <li><a href="#">Cortinas</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Agregar dispositivo</a></li>
+                        <!--<li><a href="#">Agregar dispositivo</a></li>-->
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
 
@@ -113,53 +108,60 @@ String correo ="";
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-        <div class="row">
+        <div class=" ">
             <div class=" col-md-12 bienvenida text-center">Configuración</div>
         </div>
-        <div class=" row ">
+        <div class=" ">
             <div class="col-md-6 fondoConfig noTePeguesArriba text-center"> <!--Ajustes predeterminados-->
                 <div class="page-header">
                     <h1>Información general</h1>
                 </div>
-                <section>
-                    <form class="form-horizontal" action="Config" method="post"><!-- Aquí van las funciones del form-->
+                <section style="padding-bottom: 51px">
+                    <form class="form-horizontal" action="JSPConfig.jsp" method="post"><!-- Aquí van las funciones del form-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Cuenta: <%=log%></label>
+                            </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Nombre:</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control"  name="nombre" placeholder="Nombre" value="<%=nombre%>">
+                                <input type="text" class="form-control" placeholder="Nombre" name="nom" value="<%=nombre%>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Apellido Paterno:</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="apPaterno" placeholder="Apellido Paterno" value="<%=ap%>>
+                                <input type="text" class="form-control" placeholder="Apellido Paterno" name="ap" value="<%=ap%>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Apellido Materno:</label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name ="apMaterno" placeholder="Apellido Materno" value="<%=am%>>
+                                <input type="text" class="form-control" placeholder="Apellido Materno" name="am" value="<%=am%>">
                             </div>
-                        </div>        
                         </div>
+                        <!--<div class="form-group">
+                            <label class="col-sm-4 control-label">Correo:</label>
+                            <div class="col-sm-6">
+                                <input type="email" class="form-control" placeholder="nombre@dominio.com">
+                            </div>
+                        </div>-->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Contraseña nueva:</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control" name="newPass" placeholder="Contraseña nueva" value="<%=pass1%>>
+                                <input type="password" class="form-control" placeholder="Contraseña nueva" name="pass2">
                             </div>
                         </div>
                         <div class="form-group has-warning has-feedback">
                             <label class="col-sm-4 control-label">Contraseña actual: *</label>
                             <div class="col-sm-6">
-                                <input type="password" class="form-control" name="oldPass" placeholder="Contraseña actual" value="<%=pass2%>>
+                                <input type="password" class="form-control" placeholder="Contraseña actual" name="pass1">
                             </div>
                         </div>
                         <button type="submit" class ="btn btn-success">Aceptar</button>
                         <button type="reset" class="btn btn-warning">Cancelar</button>
                         <br><br>
                         *La contraseña actual es necesaria para cualquier cambio
-                        <input type="hidden" name="uX" value="<%=Integer.toString(uX)%>" />
-                        <br><br><br><br>
+                        <input type="hidden" name="uX" value="<%=log%>">
                     </form>
                 </section>
             </div>
@@ -189,12 +191,12 @@ String correo ="";
                         <br>
                         <input type="checkbox" class="sliderWife" id="sliderWife">
                         <label for="sliderWife"></label>
-                        
+                        <br>
                     </div>
                 </section>
             </div>
         </div>
-        <div class="row">
+        <div class=" ">
             <div class="col-md-12 fondoConfig noTePeguesArriba">
                 <div class="page-header">
                     <h3>Ayuda y soporte técnico</h3>
@@ -211,5 +213,10 @@ String correo ="";
             </div>
         </div>
     </div>   
+    <br>
 </body>
 </html>
+<% } else {
+        out.print(gologin);
+    }
+%>

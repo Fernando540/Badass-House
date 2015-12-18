@@ -30,7 +30,6 @@
                 wsbadasshouse.CifraCesar_Service service = new wsbadasshouse.CifraCesar_Service();
                 wsbadasshouse.CifraCesar port = service.getCifraCesarPort();
                 pass = port.cifrar(password);
-                System.out.println(pass);
 
             } catch (Exception ex) {
                 out.print(ex.getMessage());
@@ -39,7 +38,6 @@
                 wsbadasshouse.CifraSha_Service service1 = new wsbadasshouse.CifraSha_Service();
                 wsbadasshouse.CifraSha port1 = service1.getCifraShaPort();
                 pass1 = port1.cifrar(pass);
-                System.out.println(pass1);
 
             } catch (Exception exD) {
                 out.print(exD.getMessage());
@@ -55,7 +53,6 @@
                         ResultSet rs1 = bD.consulta1("select * from usu where correo='" + correo + "'");
                         while (rs1.next()) {
                             String nameUsr = rs.getString("nName");
-                            System.out.println(nameUsr);
                             if (rs1.getString("tipo").equals("1")) {
                                 out.print("<script> alert('Bienvenido " + correo + "');</script>");
                                 sesion.setAttribute("sessionMail", correo);
