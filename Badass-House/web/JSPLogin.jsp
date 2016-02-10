@@ -53,7 +53,7 @@
                         ResultSet rs1 = bD.consulta1("select * from usu where correo='" + correo + "'");
                         while (rs1.next()) {
                             String nameUsr = rs.getString("nName");
-                            if (rs1.getString("tipo").equals("1")) {
+                            if (rs1.getString("tipo").equals("Premium")) {
                                 out.print("<script> alert('Bienvenido " + correo + "');</script>");
                                 sesion.setAttribute("sessionMail", correo);
                                 sesion.setAttribute("sessionName", nameUsr);

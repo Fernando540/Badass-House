@@ -13,6 +13,14 @@ create table despensa(idDespensa int(2) primary key,estatus nvarchar(30));
 create table catalogoProductos(idProducto int(2) primary key,producto nvarchar(30));
 
 
+##tabla de numeros de serie
+create table numSerie(idNumero int(2), serie nvarchar(20));
+insert into numSerie(idNumero,serie) values(1,'abcde');
+insert into numSerie(idNumero,serie) values(2,'123456');
+insert into numSerie(idNumero,serie) values(3,'abc123');
+
+##
+
 ##TABLA ESTUPIDA! :v
 create table DespensaPRO(correo nvarchar(35),produ nvarchar(30) not null,cod nvarchar(20) not null, cantidad int);
 
@@ -27,7 +35,8 @@ create table relDispositivoTipo(idRel int(2) primary key auto_increment,idDispos
 create table relUsrEvento(idRel int(2) primary key auto_increment,Correo nvarchar(35),idEvento int(2));
 create table relEventoCatalogo(idRel int(2) primary key auto_increment,idEvento int(2),idTipo int(2));
 create table relDispCasa(idRel int(2) primary key auto_increment,idDispositivo int(2),idCasa int(2));
-create table relCasaDespensa(idRel int(2) primary key auto_increment,Correo nvarchar(35),idDespensa int(2));
+##create table relCasaDespensa(idRel int(2) primary key auto_increment,Correo nvarchar(35),idDespensa int(2));
+create table relCasaDespensa(idRel int(2) primary key auto_increment,idCasa nvarchar(6),idDespensa int(2));
 create table relDespensaProductos(idRel int(2) primary key auto_increment,idDespensa int(2),idProducto int(2),cantidad int(100));
 ##Tablas relacionales
 

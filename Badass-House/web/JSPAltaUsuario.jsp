@@ -133,7 +133,7 @@
                         //conectar.consulta();
 
                         if (result == 1) {
-                            if (tipoUsr.equals("1")) {
+                            if (tipoUsr.equals("Premium")) {
                                 out.print("<script> alert('Bienvenido " + nombre + "');</script>");
                                 sesion.setAttribute("sessionMail", correo);
                                 sesion.setAttribute("sessionName", nombre);
