@@ -25,7 +25,6 @@ public class cDatos {
     }
 
     //Conexion a la BD
-
     public void conectar() throws SQLException {
         try {
             Class.forName(this.driverClassName).newInstance();
@@ -48,21 +47,19 @@ public class cDatos {
     }
 
     public void setAccion(String correo, String pass1, String clave) {
-        
-            
-                this.accion1 = "call valida('" + correo + "',AES_ENCRYPT('" + pass1 + "','" + clave + "'));";
-            
-        
+        this.accion1 = "call valida('" + correo + "',AES_ENCRYPT('" + pass1 + "','" + clave + "'));";
     }
-    public void setAccion(String direccion){
-        this.accion1="call registraCasa('"+direccion+"');";
+
+    public void setAccion(String direccion) {
+        this.accion1 = "call registraCasa('" + direccion + "');";
     }
-    public void setAccion(String idUsuario, String idCasa){
-        this.accion1="call relacionUsrCasa('"+idUsuario+"','"+idCasa+"')";
+
+    public void setAccion(String idUsuario, String idCasa) {
+        this.accion1 = "call relacionUsrCasa('" + idUsuario + "','" + idCasa + "')";
     }
     /*public void setAccion(String huella, String correo,String nombre,String hora){
-        this.accion1="call iniciaSesion('"+huella+"','"+correo+"','"+nombre+"','"+hora+"');";
-    }*/
+     this.accion1="call iniciaSesion('"+huella+"','"+correo+"','"+nombre+"','"+hora+"');";
+     }*/
 
     public String getAccion() {
         return accion1;
@@ -73,7 +70,8 @@ public class cDatos {
         this.estancia = (Statement) conn.createStatement();
         return this.estancia.executeQuery(accion1);
     }
-    public ResultSet consulta1(String txt) throws SQLException{
+
+    public ResultSet consulta1(String txt) throws SQLException {
         this.estancia = (Statement) conn.createStatement();
         return this.estancia.executeQuery(txt);
     }
@@ -82,6 +80,7 @@ public class cDatos {
         this.estancia = (Statement) conn.createStatement();
         return this.estancia.executeUpdate(accion1);
     }
+
     public int modificacion1(String txt) throws SQLException {
         this.estancia = (Statement) conn.createStatement();
         return this.estancia.executeUpdate(txt);

@@ -11,7 +11,7 @@
     String clave = "";
     String nombre = "", aPaterno = "", aMaterno = "", direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/registro.html'>";
     String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index.jsp'>";
-    String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>", numSerie="";
+    String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>", numSerie = "";
     Pattern pat1 = Pattern.compile("[^A-Za-zА-За-з ]");
     Pattern pat = Pattern.compile("[A-Za-z0-9._%+-]+@[AZa-z0-9.-]+\\.[a-z]{2,4}$");
     Matcher mat1;
@@ -19,11 +19,10 @@
     Matcher mat3;
     ResultSet rs;
     HttpSession sesion = request.getSession();
-    
-    if (request.getParameter("numSerie").equals("")) {
-        out.print("<script> alert('Ingresa el numero de serie!!!!');</script>");
-        out.print(registro);
 
+    if (request.getParameter("numSerie").equals("") || request.getParameter("numSerie").length() > 6) {
+        out.print("<script> alert('Ingresa bien el numero de serie!!!!');</script>");
+        out.print(registro);
     } else {
         numSerie = request.getParameter("numSerie");
     }
@@ -131,33 +130,45 @@
                         out.print("<script> alert('Usuario ya Registrado');</script>");
                         out.print(registro);
                     } else {
-                        conectar.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
-                        result = conectar.modificacion();
-                        conectar.setAccion(direccion);
-                        conectar.modificacion();
-                        conectar.modificacion1("insert into usu(correo,tipo) values('" + correo + "','" + tipoUsr + "')");
-                        //conectar.setAccion(2, correo, pass1, huella1);
-                        //conectar.consulta();
-
-                        if (result == 1) {
-                            if (tipoUsr.equals("Premium")) {
-                                out.print("<script> alert('Bienvenido " + nombre + "');</script>");
-                                sesion.setAttribute("sessionMail", correo);
-                                sesion.setAttribute("sessionName", nombre);
-                                sesion.setAttribute("sessionStat", "logueado");
-                                out.print(index);
+                        rs = conectar.consulta1("call relacionaDespensa('" + correo + "','" + numSerie + "');");
+                        while (rs.next()) {
+                            if (rs.getString("resultado").equals("ira men no existe ese numero de serie")) {
+                                System.out.println(numSerie);
+                                System.out.println(rs.getString("resultado"));
+                                System.out.println(rs.getString("estaduki"));                                
+                                out.print("<script> alert('ira men no existe ese numero de serie');</script>");
+                                out.print(registro);
                             } else {
-                                out.print("<script> alert('Bienvenido " + nombre + "');</script>");
-                                sesion.setAttribute("sessionMail", correo);
-                                sesion.setAttribute("sessionName", nombre);
-                                sesion.setAttribute("sessionStat", "logueado");
-                                out.print(index1);
-                            }
+                                conectar.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
+                                result = conectar.modificacion();
+                                conectar.setAccion(direccion);
+                                conectar.modificacion();
+                                conectar.modificacion1("insert into usu(correo,tipo) values('" + correo + "','" + tipoUsr + "')");
+                        //conectar.setAccion(2, correo, pass1, huella1);
+                                //conectar.consulta();
 
-                        } else {
-                            out.print("<script> alert('Error');</script>");
-                            out.print(registro);
+                                if (result == 1) {
+                                    if (tipoUsr.equals("Premium")) {
+                                        out.print("<script> alert('Bienvenido " + nombre + "');</script>");
+                                        sesion.setAttribute("sessionMail", correo);
+                                        sesion.setAttribute("sessionName", nombre);
+                                        sesion.setAttribute("sessionStat", "logueado");
+                                        out.print(index);
+                                    } else {
+                                        out.print("<script> alert('Bienvenido " + nombre + "');</script>");
+                                        sesion.setAttribute("sessionMail", correo);
+                                        sesion.setAttribute("sessionName", nombre);
+                                        sesion.setAttribute("sessionStat", "logueado");
+                                        out.print(index1);
+                                    }
+
+                                } else {
+                                    out.print("<script> alert('Error');</script>");
+                                    out.print(registro);
+                                }
+                            }
                         }
+
                     }
                 }
 
