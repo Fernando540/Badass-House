@@ -4,7 +4,7 @@ use badasshouse;
 
 ##Tablas principales
 create table usuarios(Correo nvarchar(35) primary key,contrasenia blob,nombre nvarchar(30),aPaterno nvarchar(30),aMaterno nvarchar(30));
-create table casa(idCasa int(2) primary key,direccion nvarchar(30));
+create table casa(idCasa nvarchar(6) primary key,direccion nvarchar(30));
 create table dispositivos(idDispositivo int(2) primary key,nombre nvarchar(30));
 create table tipoUsuario(idTipo int(2) primary key,tipo nvarchar(30));
 create table eventos(idEvento int(2) primary key,fecha timestamp default current_timestamp);
@@ -28,13 +28,13 @@ create table DespensaPRO(correo nvarchar(35),produ nvarchar(30) not null,cod nva
 ##Tablas principales
 
 ##Tablas relacionales
-create table relUsrCasa(idRel int(2) primary key auto_increment,Correo nvarchar(35),idCasa int(2));
+create table relUsrCasa(idRel int(2) primary key auto_increment,Correo nvarchar(35),idCasa nvarchar(6));
 create table relUsrDispositivo(idRel int(2) primary key auto_increment,Correo nvarchar(35),idDispositivo int(2));
 create table relUsrTipo(idRel int(2) primary key auto_increment,Correo nvarchar(35),idTipo int(2));
 create table relDispositivoTipo(idRel int(2) primary key auto_increment,idDispositivo int(2),idTipo int(2));
 create table relUsrEvento(idRel int(2) primary key auto_increment,Correo nvarchar(35),idEvento int(2));
 create table relEventoCatalogo(idRel int(2) primary key auto_increment,idEvento int(2),idTipo int(2));
-create table relDispCasa(idRel int(2) primary key auto_increment,idDispositivo int(2),idCasa int(2));
+create table relDispCasa(idRel int(2) primary key auto_increment,idDispositivo int(2),idCasa nvarchar(6));
 ##create table relCasaDespensa(idRel int(2) primary key auto_increment,Correo nvarchar(35),idDespensa int(2));
 create table relCasaDespensa(idRel int(2) primary key auto_increment,idCasa nvarchar(6),idDespensa int(2));
 create table relDespensaProductos(idRel int(2) primary key auto_increment,idDespensa int(2),idProducto int(2),cantidad int(100));
@@ -62,7 +62,7 @@ alter table relEventoCatalogo add foreign key(idTipo) references catalogoEventos
 alter table relDispCasa add foreign key(idCasa) references casa(idCasa);
 alter table relDispCasa add foreign key(idDispositivo) references dispositivos(idDispositivo);
 
-alter table relCasaDespensa add foreign key(Correo) references usuarios(Correo);
+alter table relCasaDespensa add foreign key(idCasa) references casa(idCasa);
 alter table relCasaDespensa add foreign key(idDespensa) references despensa(idDespensa);
 
 alter table relDespensaProductos add foreign key(idDespensa) references despensa(idDespensa);

@@ -11,7 +11,7 @@
     String clave = "";
     String nombre = "", aPaterno = "", aMaterno = "", direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/registro.html'>";
     String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index.jsp'>";
-    String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>";
+    String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>", numSerie="";
     Pattern pat1 = Pattern.compile("[^A-Za-zА-За-з ]");
     Pattern pat = Pattern.compile("[A-Za-z0-9._%+-]+@[AZa-z0-9.-]+\\.[a-z]{2,4}$");
     Matcher mat1;
@@ -19,7 +19,14 @@
     Matcher mat3;
     ResultSet rs;
     HttpSession sesion = request.getSession();
+    
+    if (request.getParameter("numSerie").equals("")) {
+        out.print("<script> alert('Ingresa el numero de serie!!!!');</script>");
+        out.print(registro);
 
+    } else {
+        numSerie = request.getParameter("numSerie");
+    }
     if (request.getParameter("nombre").equals("")) {
         out.print("<script> alert('Ingresa el usuario!!!!');</script>");
         out.print(registro);
