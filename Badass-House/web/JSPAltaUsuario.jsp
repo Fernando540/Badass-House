@@ -135,30 +135,33 @@
                             if (rs.getString("resultado").equals("ira men no existe ese numero de serie")) {
                                 System.out.println(numSerie);
                                 System.out.println(rs.getString("resultado"));
-                                System.out.println(rs.getString("estaduki"));                                
+                                System.out.println(rs.getString("estaduki"));
                                 out.print("<script> alert('ira men no existe ese numero de serie');</script>");
                                 out.print(registro);
                             } else {
                                 conectar.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
                                 result = conectar.modificacion();
-                                conectar.regCasa(direccion,correo,numSerie);
+                                conectar.regCasa(direccion, correo, numSerie);
                                 conectar.modificacion();
-                                conectar.modificacion1("insert into usu(correo,tipo) values('" + correo + "','" + tipoUsr + "')");
-                                
+                                //conectar.modificacion1("insert into usu(correo,tipo) values('" + correo + "','" + tipoUsr + "')");
+                                conectar.modificacion1("call altaTipo('" + correo + "','" + tipoUsr + "');");
 
                                 if (result == 1) {
-                                    if (tipoUsr.equals("Premium")) {
-                                        out.print("<script> alert('Bienvenido " + nombre + "');</script>");
-                                        sesion.setAttribute("sessionMail", correo);
-                                        sesion.setAttribute("sessionName", nombre);
-                                        sesion.setAttribute("sessionStat", "logueado");
-                                        out.print(index);
-                                    } else {
-                                        out.print("<script> alert('Bienvenido " + nombre + "');</script>");
-                                        sesion.setAttribute("sessionMail", correo);
-                                        sesion.setAttribute("sessionName", nombre);
-                                        sesion.setAttribute("sessionStat", "logueado");
-                                        out.print(index1);
+                                    rs = conectar.consulta1("call dimeTipo('" + correo + "');");
+                                    while (rs.next()) {
+                                        if (rs.getString("privilegio").equals("1")) {
+                                            out.print("<script> alert('Bienvenido " + nombre + "');</script>");
+                                            sesion.setAttribute("sessionMail", correo);
+                                            sesion.setAttribute("sessionName", nombre);
+                                            sesion.setAttribute("sessionStat", "logueado");
+                                            out.print(index);
+                                        } else {
+                                            out.print("<script> alert('Bienvenido " + nombre + "');</script>");
+                                            sesion.setAttribute("sessionMail", correo);
+                                            sesion.setAttribute("sessionName", nombre);
+                                            sesion.setAttribute("sessionStat", "logueado");
+                                            out.print(index1);
+                                        }
                                     }
 
                                 } else {

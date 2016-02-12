@@ -69,6 +69,6 @@ alter table relDespensaProductos add foreign key(idDespensa) references despensa
 alter table relDespensaProductos add foreign key(idProducto) references catalogoProductos(idProducto);
 
 ##LLaves Foráneas
-create table usu(correo nvarchar(35) primary key, tipo nvarchar(10));
+##create table usu(correo nvarchar(35) primary key, tipo nvarchar(10));
 insert into tipoUsuario(idTipo, tipo) values(1,'Premium');
 insert into tipoUsuario(idTipo, tipo) values(2,'Junior');

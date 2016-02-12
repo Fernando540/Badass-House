@@ -1,11 +1,13 @@
 use badasshouse;
 drop procedure if exists valida;
+drop procedure if exists altaTipo;
 drop procedure if exists validaSerie;
 drop procedure if exists registraCasa;
 drop procedure if exists altadespensuki;
 drop procedure if exists UsoProducto;
 drop procedure if exists actualiza;
 drop procedure if exists BajaProducto;
+drop procedure if exists dimeTipo;
 
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
@@ -53,16 +55,16 @@ begin
     set noDespensas = (select count(*) from despensa);
     if noDespensas = 0 then
 		set noDespensas = 1;
-		insert into despensa(idDespensa) values(noDespensas);
+		insert into despensa(idDespensa,estatus) values(noDespensas,'activo');
     else
 		set noDespensas = (noDespensas+1);
-        insert into despensa(idDespensa) values(noDespensas);
+        insert into despensa(idDespensa,estatus) values(noDespensas,'activo');
     end if;
 	
     
     
     insert into relusrcasa(Correo,idCasa) values(correito,seriuki);
-    insert into relcasadespensa(idCasa,idDespensa) values(seriuki,idDespensa);
+    insert into relcasadespensa(idCasa,idDespensa) values(seriuki,noDespensas);
 end;//
 
 create procedure altadespensuki(in correo nvarchar(35), in codigo nvarchar(35),in nombre nvarchar(35))
@@ -107,10 +109,27 @@ begin
     end if;
 	select msj as mensaje;
 end; //
-
+create procedure altaTipo(in mail nvarchar(35), in tipo nvarchar(20))
+begin 
+	declare privilegio int(2);
+    if tipo='Premium' then
+		set privilegio=1;
+        insert into relusrtipo(Correo,idTipo) values(mail,privilegio);
+	else
+		set Privilegio=2;
+        insert into relusrtipo(Correo,idTipo) values(mail,privilegio);
+    end if;
+end;//
 create procedure BajaProducto(in mail nvarchar(35), in codigo nvarchar(35))
 begin
     DELETE FROM despensapro WHERE correo=mail and cod=codigo;
 end;//
+create procedure dimeTipo(in mail nvarchar(35))
+begin
+	declare tipo nvarchar(10);
+    set tipo=(select idTipo from relusrtipo where correo=mail);
+    select tipo as privilegio;
+end;//
+
 delimiter ;
 

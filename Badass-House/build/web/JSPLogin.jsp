@@ -50,10 +50,10 @@
 
                 while (rs.next()) {
                     if (rs.getString("Estatus").equals("1")) {
-                        ResultSet rs1 = bD.consulta1("select * from usu where correo='" + correo + "'");
+                        ResultSet rs1 = bD.consulta1("call dimeTipo('" + correo + "');");
                         while (rs1.next()) {
                             String nameUsr = rs.getString("nName");
-                            if (rs1.getString("tipo").equals("Premium")) {
+                            if (rs1.getString("privilegio").equals("1")) {
                                 out.print("<script> alert('Bienvenido " + correo + "');</script>");
                                 sesion.setAttribute("sessionMail", correo);
                                 sesion.setAttribute("sessionName", nameUsr);

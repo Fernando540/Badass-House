@@ -25,7 +25,7 @@ begin
 end;//
 create trigger creaRel after insert on despensa for each row
 begin
-	update relcasadespensa set idDespensa=new.idDespensa;
+	update relCasaDespensa set relCasaDespensa.idDespensa=new.idDespensa where relCasaDespensa.idDespensa=null;
 end;// 
 /*create trigger altaDespensa after insert on usuarios for each row
 begin
