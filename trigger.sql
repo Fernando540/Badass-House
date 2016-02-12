@@ -23,10 +23,7 @@ begin
         end if;
     end if;
 end;//
-create trigger creaRel after insert on despensa for each row
-begin
-	update relCasaDespensa set relCasaDespensa.idDespensa=new.idDespensa where relCasaDespensa.idDespensa=null;
-end;// 
+
 /*create trigger altaDespensa after insert on usuarios for each row
 begin
 	declare idDesp int;
