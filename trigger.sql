@@ -1,5 +1,5 @@
 use badasshouse;
-drop trigger if exists altaDespensa;
+drop trigger if exists creaRel;
 drop procedure if exists relacionaDespensa;
 
 delimiter //
@@ -23,6 +23,10 @@ begin
         end if;
     end if;
 end;//
+create trigger creaRel after insert on despensa for each row
+begin
+	update relcasadespensa set idDespensa=new.idDespensa;
+end;// 
 /*create trigger altaDespensa after insert on usuarios for each row
 begin
 	declare idDesp int;
