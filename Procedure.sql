@@ -1,5 +1,6 @@
 use badasshouse;
 drop procedure if exists valida;
+drop procedure if exists validaSerie;
 drop procedure if exists registraCasa;
 drop procedure if exists altadespensuki;
 drop procedure if exists UsoProducto;
@@ -9,37 +10,59 @@ drop procedure if exists BajaProducto;
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
 begin
-declare msg nvarchar(100);
-declare nombr nvarchar(30);
-declare existe int;
-declare valido int;
+	declare msg nvarchar(100);
+	declare nombr nvarchar(30);
+	declare existe int;
+	declare valido int;
 
-set existe = (select count(*) from usuarios where correo = usr and contrasenia = pass);
+	set existe = (select count(*) from usuarios where correo = usr and contrasenia = pass);
 
-if existe = 0 then
-	set msg = '**El usuario NO EXISTE o la CONTRASEÑA es INCORRECTA**';
-    set valido = 0;
-else
-	set msg = 'Bienvenido';
-    set nombr = (select nombre from usuarios where correo = usr);
-    set valido = 1;
-end if;
-
-select valido as Estatus, msg as Respuesta, nombr as nName;
-
+	if existe = 0 then
+		set msg = '**El usuario NO EXISTE o la CONTRASEÑA es INCORRECTA**';
+		set valido = 0;
+	else
+		set msg = 'Bienvenido';
+		set nombr = (select nombre from usuarios where correo = usr);
+		set valido = 1;
+	end if;
+    
+	select valido as Estatus, msg as Respuesta, nombr as nName;
 end; //
 
-create procedure registraCasa(in direccion nvarchar(30))
-begin
-	declare idcasuki int;
+create procedure validaSerie(in numeroSerie nvarchar(6))
+begin 
+    declare estado nvarchar(6);
+    declare mensaje nvarchar(100);
     
-    set idcasuki= (select count(idCasa) from casa)+1;
-    if idcasuki>1 then
-		insert into casa(idCasa,direccion) values(idcasuki,direccion);
+	set estado=(select idCasa from casa where idCasa=numeroSerie);
+    
+    if estado is not null then
+		set mensaje='Eres cabron';
 	else
-		set idcasuki=1;
-        insert into casa(idCasa,direccion) values(idcasuki,direccion);
-	end if;
+		set mensaje='ira men no existe ese numero de serie';
+    end if;
+    select mensaje as resultado,estado as estaduki;
+end;//
+
+create procedure registraCasa(in adress nvarchar(30),in correito nvarchar(35),in seriuki nvarchar(6))
+begin
+	declare noDespensas int;
+    
+    update casa set direccion = adress where idCasa=seriuki;
+    insert into casa(direccion) values(direccion);
+    set noDespensas = (select count(*) from despensa);
+    if noDespensas = 0 then
+		set noDespensas = 1;
+		insert into despensa(idDespensa) values(noDespensas);
+    else
+		set noDespensas = (noDespensas+1);
+        insert into despensa(idDespensa) values(noDespensas);
+    end if;
+	
+    
+    
+    insert into relusrcasa(Correo,idCasa) values(correito,seriuki);
+    insert into relcasadespensa(idCasa,idDespensa) values(seriuki,idDespensa);
 end;//
 
 create procedure altadespensuki(in correo nvarchar(35), in codigo nvarchar(35),in nombre nvarchar(35))

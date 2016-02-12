@@ -4,12 +4,12 @@ drop procedure if exists relacionaDespensa;
 
 delimiter //
 
+
 create procedure relacionaDespensa(in correo nvarchar(35),in numeroSerie nvarchar(6))
 begin 
 	declare idRelacion int;
     declare coincidencia int;
     declare estado nvarchar(6);
-    declare mensaje nvarchar(100);
     
 	set estado=(select serie from numSerie where serie=numeroSerie);
     set coincidencia=0;
@@ -21,10 +21,7 @@ begin
         else
 			insert into relUsrCasa(correo,idCasa) values(correo,numeroSerie);
         end if;
-	else
-		set mensaje='ira men no existe ese numero de serie';
     end if;
-    select mensaje as resultado,estado as estaduki;
 end;//
 /*create trigger altaDespensa after insert on usuarios for each row
 begin

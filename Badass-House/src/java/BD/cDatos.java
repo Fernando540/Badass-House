@@ -50,16 +50,14 @@ public class cDatos {
         this.accion1 = "call valida('" + correo + "',AES_ENCRYPT('" + pass1 + "','" + clave + "'));";
     }
 
-    public void setAccion(String direccion) {
-        this.accion1 = "call registraCasa('" + direccion + "');";
+    public void regCasa(String direccion,String correo,String nSerie) {
+        this.accion1 = "call registraCasa('" + direccion + "','"+ correo + "','"+ nSerie +"');";
+        //this.accion1 = "call relacionaDespensa('" + correo + "','"+ nSerie +"');";
     }
 
     public void setAccion(String idUsuario, String idCasa) {
         this.accion1 = "call relacionUsrCasa('" + idUsuario + "','" + idCasa + "')";
     }
-    /*public void setAccion(String huella, String correo,String nombre,String hora){
-     this.accion1="call iniciaSesion('"+huella+"','"+correo+"','"+nombre+"','"+hora+"');";
-     }*/
 
     public String getAccion() {
         return accion1;

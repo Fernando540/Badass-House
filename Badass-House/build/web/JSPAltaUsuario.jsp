@@ -130,7 +130,7 @@
                         out.print("<script> alert('Usuario ya Registrado');</script>");
                         out.print(registro);
                     } else {
-                        rs = conectar.consulta1("call relacionaDespensa('" + correo + "','" + numSerie + "');");
+                        rs = conectar.consulta1("call validaSerie('" + numSerie + "');");
                         while (rs.next()) {
                             if (rs.getString("resultado").equals("ira men no existe ese numero de serie")) {
                                 System.out.println(numSerie);
@@ -141,11 +141,10 @@
                             } else {
                                 conectar.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
                                 result = conectar.modificacion();
-                                conectar.setAccion(direccion);
+                                conectar.regCasa(direccion,correo,numSerie);
                                 conectar.modificacion();
                                 conectar.modificacion1("insert into usu(correo,tipo) values('" + correo + "','" + tipoUsr + "')");
-                        //conectar.setAccion(2, correo, pass1, huella1);
-                                //conectar.consulta();
+                                
 
                                 if (result == 1) {
                                     if (tipoUsr.equals("Premium")) {

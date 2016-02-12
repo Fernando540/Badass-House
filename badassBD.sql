@@ -14,10 +14,10 @@ create table catalogoProductos(idProducto int(2) primary key,producto nvarchar(3
 
 
 ##tabla de numeros de serie
-create table numSerie(idNumero int(2), serie nvarchar(20));
-insert into numSerie(idNumero,serie) values(1,'abcde');
-insert into numSerie(idNumero,serie) values(2,'123456');
-insert into numSerie(idNumero,serie) values(3,'abc123');
+##create table numSerie(idNumero int(2), serie nvarchar(20));
+insert into casa(idCasa) values('abcde');
+insert into casa(idCasa) values('123456');
+insert into casa(idCasa) values('abc123');
 
 ##
 
