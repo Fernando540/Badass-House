@@ -49,7 +49,7 @@ begin
 	declare noDespensas int;
     
     update casa set direccion = adress where idCasa=seriuki;
-    insert into casa(direccion) values(direccion);
+
     set noDespensas = (select count(*) from despensa);
     if noDespensas = 0 then
 		set noDespensas = 1;
