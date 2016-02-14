@@ -12,10 +12,15 @@ create table catalogoEventos(idTipo int(2) primary key, evento nvarchar(20));
 create table despensa(idDespensa int(2) primary key,estatus nvarchar(30));
 create table catalogoProductos(idProducto int(2) primary key,producto nvarchar(30));
 
+##Tabla de Habitaciones##
+create table habitaciones(idHabitacion int(2) primary key, nombre nvarchar(30));
+
+create table relCasaHab(idRel int(2) primary key auto_increment, idHabitacion int(2), idCasa nvarchar(6));
+##Tabla de Habitaciones##
 
 ##tabla de numeros de serie
 ##create table numSerie(idNumero int(2), serie nvarchar(20));
-insert into casa(idCasa) values('abcde');
+insert into casa(idCasa) values('abcdef');
 insert into casa(idCasa) values('123456');
 insert into casa(idCasa) values('abc123');
 

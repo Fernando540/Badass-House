@@ -196,7 +196,7 @@ ResultSet rs;
                 </section>
             </div>
         </div>
-        <div class=" ">
+        <!--<div class=" ">
             <div class="col-md-12 fondoConfig noTePeguesArriba">
                 <div class="page-header">
                     <h3>Ayuda y soporte técnico</h3>
@@ -211,7 +211,7 @@ ResultSet rs;
                 </form>
                 <br>
             </div>
-        </div>
+        </div>-->
     </div>   
     <br>
 </body>

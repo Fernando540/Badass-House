@@ -92,7 +92,7 @@
                 </div>
                 <div class="col-md-4 col-sm-4 inline-block noTePeguesArriba fondo">
                     <article>
-                        <a href="#"><img src='Imagenes/mi_cuenta.png' class="col-xs-3"></a>
+                        <a href="miCuenta.jsp"><img src='Imagenes/mi_cuenta.png' class="col-xs-3"></a>
                         <h2>Mi cuenta</h2>
                     </article>
                 </div>

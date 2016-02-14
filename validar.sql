@@ -3,4 +3,7 @@ use badasshouse;
 
 select * from usuarios;
 select * from casa;
+select * from habitaciones;
 delete from usuarios where Correo = 'fernandojos44@gmail.com';
+
+select * from relCasaHab;

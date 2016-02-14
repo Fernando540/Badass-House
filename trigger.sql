@@ -1,6 +1,7 @@
 use badasshouse;
 drop trigger if exists creaRel;
 drop procedure if exists relacionaDespensa;
+drop procedure if exists relHab;
 
 delimiter //
 
@@ -24,6 +25,28 @@ begin
     end if;
 end;//
 
+create procedure relHab(in mail nvarchar(35),in nombre nvarchar(30))
+begin
+	declare idHabi int(2);
+    declare idCasuki nvarchar(6);
+    declare coincidencia int(2);
+    set idHabi=(select count(*) from habitaciones);
+	set idCasuki=(select idCasa from relUsrCasa where relUsrCasa.Correo=mail);
+    if idHabi=0 then
+		set idHabi=1;
+        insert into habitaciones(idHabitacion,nombre) values(idHabi,nombre);
+        insert into relCasaHab(idHabitacion, idCasa) values(idHabi,idCasuki);
+    else
+		set idHabi=idHabi+1;
+		set coincidencia=(select count(*) from relCasaHab where idHabitacion=idHabi);
+        if coincidencia<=0 then
+			
+			insert into habitaciones(idHabitacion,nombre) values(idHabi,nombre);
+			insert into relCasaHab(idHabitacion, idCasa) values(idHabi,idCasuki);
+		end if;
+		
+    end if;    
+end;//
 /*create trigger altaDespensa after insert on usuarios for each row
 begin
 	declare idDesp int;
