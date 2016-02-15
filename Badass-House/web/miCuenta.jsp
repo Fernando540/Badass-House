@@ -94,7 +94,8 @@
             ResultSet rs1 = datukis.consulta1("select idCasa from relUsrCasa where correo='" + correo + "'");
             while (rs1.next()) {
                 String idCasa = rs1.getString("idCasa");
-                ResultSet rs = datukis.consulta1("select habitaciones.nombre from relCasaHab inner join habitaciones on idCasa='" + idCasa + "' where idCasa='"+idCasa+"';");
+                ResultSet rs = datukis.consulta1("select habitaciones.nombre,relCasaHab.idCasa from habitaciones inner join relCasaHab on habitaciones.idHabitacion=relCasaHab.idHabitacion;");
+                //'" + idCasa + "' where idCasa='"+idCasa+"'
                 out.println("<center><table><td><h3>Nombre</h3></td></tr>");
 
                 while (rs.next()) {
