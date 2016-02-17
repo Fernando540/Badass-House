@@ -100,9 +100,15 @@ create procedure UsoProducto(in mail nvarchar(35), in codigo nvarchar(35),in can
 begin
     declare total int;
     declare ntotal int;
-    set total = (select cantidad from despensapro where cod=codigo and correo=mail);
+    declare iDesp int;
+    declare homeID nvarchar(6);
+    
+    set homeID = (select idCasa from relUsrCasa where Correo = mail);
+    set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
+    
+    set total = (select cantidad from relDespensaProductos where idProducto=codigo and idDespensa=iDesp);
 	set ntotal = (total-canti);
-    update despensapro set cantidad=(ntotal) where cod=codigo and correo=mail;
+    update relDespensaProductos set cantidad=(ntotal) where idProducto=codigo and idDespensa=iDesp;
 
 end;//
 
@@ -134,10 +140,18 @@ begin
         insert into relusrtipo(Correo,idTipo) values(mail,privilegio);
     end if;
 end;//
+
 create procedure BajaProducto(in mail nvarchar(35), in codigo nvarchar(35))
 begin
-    DELETE FROM despensapro WHERE correo=mail and cod=codigo;
+	declare iDesp int;
+    declare homeID nvarchar(6);
+    
+    set homeID = (select idCasa from relUsrCasa where Correo = mail);
+    set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
+    DELETE FROM relDespensaProductos WHERE idDespensa=iDesp and idProducto=codigo;
 end;//
+
+
 create procedure dimeTipo(in mail nvarchar(35))
 begin
 	declare tipo nvarchar(10);
