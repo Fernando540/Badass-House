@@ -127,26 +127,26 @@
                     datukis.conectar();
 
                     //res = datukis.modificacion1("insert into DespesaPRO(correo,produ, cod) values('" + correo + "','" + nombre + "','" + codigo + "');");
-                    ResultSet rs = datukis.consulta1("select * from DespensaPRO where correo='" + correo + "'");
+                    ResultSet rs = datukis.consulta1("call inventario('" + correo + "');");
                     out.println("<center><table><tr><td/><td><h3>Nombre</h3></td><td><h3>Codigo de Barras</h3></td><td><h3>Cantidad</h3></td><td/></tr>");
 
                     while (rs.next()) {
 
                         out.println("<tr>");
                         out.println("<td><form action='BajaProducto' method='post' onsubmit='return confirmar()'>"
-                                + "<input type='text' value='" + rs.getString("cod") + "' name='codigo' hidden>"
+                                + "<input type='text' value='" + rs.getString("barcode") + "' name='codigo' hidden>"
                                 + "<button type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-trash'></i></button>"
                                 + "</form></td>");
-                        out.println("<td>" + rs.getObject("produ") + "</td>");
-                        out.println("<td>" + rs.getObject("cod") + "</td>");
-                        out.println("<td>" + rs.getObject("cantidad") + "</td>");
+                        out.println("<td>" /*+ rs.getObject("produ")*/ + "</td>");
+                        out.println("<td>" + rs.getObject("barcode") + "</td>");
+                        out.println("<td>" + rs.getObject("numero") + "</td>");
 
-                        int cont = Integer.parseInt(rs.getString("cantidad"));
+                        int cont = Integer.parseInt(rs.getString("numero"));
                         out.println("<td><form action='UsoProducto' method='post'><select name='Cantidad'>");
                         for (int n = 1; n <= cont; n++) {
                             out.println("<option>" + n + "</option>");
                         }
-                        out.println("</select><input type='text' value='" + rs.getString("cod") + "' name='codigo' hidden><input type='submit' value='Usar'/></form></td>");
+                        out.println("</select><input type='text' value='" + rs.getString("barcode") + "' name='codigo' hidden><input type='submit' value='Usar'/></form></td>");
                         out.println("</tr>");
                     }
                     out.println("</table></center>");

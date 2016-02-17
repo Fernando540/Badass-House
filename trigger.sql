@@ -59,16 +59,14 @@ begin
     select paquete as tipo;
 end;//
 
-create procedure inventario(in mail nvarchar(35), barcode nvarchar(100))
+create procedure inventario(in mail nvarchar(35))
 begin
-	declare numero int(2);
     declare idCasi nvarchar(6);
     declare idDespi int(2);
     set idCasi=(select idCasa from relUsrCasa where correo=mail);
-    set idDespi=(select idDepensa from relCasaDespensa where idCasa=idCasi);
-    set numero=(select cantidad from relDespensaProductos where idDespensa=idDespi and idProducto=barcode);
+    set idDespi=(select idDespensa from relCasaDespensa where idCasa=idCasi);
     
-    select numero as cuantity;
+	select cantidad as numero, idProducto as barcode from relDespensaProductos where idDespensa = idDespi;
     
 end;//
 /*create trigger altaDespensa after insert on usuarios for each row
