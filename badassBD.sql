@@ -24,7 +24,7 @@ insert into paquetes(idPaquete, nombre) values(1,'Basico');
 insert into paquetes(idPaquete, nombre) values(2,'Pro');
 insert into paquetes(idPaquete, nombre) values(3,'Platino');
 create table relUsrPaquete(idRel int(2) primary key auto_increment, correo nvarchar(35), idPaquete int(2));
-alter table relUsrPaquete add foreign key(correo) references usuarios(idCorreo);
+alter table relUsrPaquete add foreign key(correo) references usuarios(correo);
 alter table relUsrPaquete add foreign key(idPaquete) references paquetes(idPaquete);
 ##Tabla Paquetes ;)
 
@@ -37,7 +37,7 @@ insert into casa(idCasa) values('abc123');
 ##
 
 ##TABLA ESTUPIDA! :v
-create table DespensaPRO(correo nvarchar(35),produ nvarchar(30) not null,cod nvarchar(20) not null, cantidad int);
+##create table DespensaPRO(correo nvarchar(35),produ nvarchar(30) not null,cod nvarchar(20) not null, cantidad int);
 
 
 ##Tablas principales

@@ -2,6 +2,8 @@ use badasshouse;
 drop trigger if exists creaRel;
 drop procedure if exists relacionaDespensa;
 drop procedure if exists relHab;
+drop procedure if exists dimePaquete;
+drop procedure if exists inventario;
 
 delimiter //
 
@@ -60,7 +62,7 @@ end;//
 create procedure inventario(in mail nvarchar(35), barcode nvarchar(100))
 begin
 	declare numero int(2);
-    declare idCasa nvarchar(6);
+    declare idCasi nvarchar(6);
     declare idDespi int(2);
     set idCasi=(select idCasa from relUsrCasa where correo=mail);
     set idDespi=(select idDepensa from relCasaDespensa where idCasa=idCasi);

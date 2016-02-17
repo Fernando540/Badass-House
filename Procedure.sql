@@ -49,6 +49,9 @@ end;//
 create procedure registraCasa(in adress nvarchar(30),in correito nvarchar(35),in seriuki nvarchar(6))
 begin
 	declare noDespensas int;
+    declare coinDesp int;
+    
+    set coinDesp = (select count(*)from relCasaDespensa where idCasa= seriuki);
     
     update casa set direccion = adress where idCasa=seriuki;
 
@@ -56,29 +59,40 @@ begin
     if noDespensas = 0 then
 		set noDespensas = 1;
 		insert into despensa(idDespensa,estatus) values(noDespensas,'activo');
+        insert into relcasadespensa(idCasa,idDespensa) values(seriuki,noDespensas);
     else
 		set noDespensas = (noDespensas+1);
-        insert into despensa(idDespensa,estatus) values(noDespensas,'activo');
+		if (coinDesp = 0) then
+			insert into despensa(idDespensa,estatus) values(noDespensas,'activo');
+            insert into relcasadespensa(idCasa,idDespensa) values(seriuki,noDespensas);
+        end if;
     end if;
-	
-    
-    
     insert into relusrcasa(Correo,idCasa) values(correito,seriuki);
-    insert into relcasadespensa(idCasa,idDespensa) values(seriuki,noDespensas);
 end;//
 
-create procedure altadespensuki(in correo nvarchar(35), in codigo nvarchar(35),in nombre nvarchar(35))
+create procedure altadespensuki(in correin nvarchar(35), in barcode nvarchar(35),in nombre nvarchar(35))
 begin
-	declare contador int;
+	declare iDesp int;
+    declare homeID nvarchar(6);
     declare total int;
-    set total = (select cantidad from despensapro where cod=codigo);
-    set contador=(select count(cod) from despensapro where cod=codigo);
+    declare coincidencia int;
+    declare coinCat int;
     
-    if contador=0 then
-		insert into despensapro(correo,produ,cod,cantidad) values(correo,nombre,codigo,1);
-    else
-        update despensapro set cantidad=(total+1) where cod=codigo;
-
+    set homeID = (select idCasa from relUsrCasa where Correo = correin);
+    set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
+    set coinCat = (select count(idProducto) from catalogoProductos where idProducto=barcode);
+    
+    if (coinCat=0) then
+		insert into catalogoProductos (idProducto,producto) values (barcode,nombre);
+    end if;
+    
+    set coincidencia = (select count(idProducto) from relDespensaProductos where idDespensa=iDesp and idProducto=barcode);
+    
+    if (coincidencia = 1) then
+		set total = (select cantidad from relDespensaProductos where idDespensa=iDesp and idProducto=barcode);
+		update relDespensaProductos set cantidad=(total+1) where idDespensa=iDesp and idProducto=barcode;
+	else
+		insert into relDespensaProductos (idDespensa,idProducto,cantidad) values (iDesp,barcode,1);
     end if;
 end;//
 
