@@ -12,11 +12,21 @@ create table catalogoEventos(idTipo int(2) primary key, evento nvarchar(20));
 create table despensa(idDespensa int(2) primary key,estatus nvarchar(30));
 create table catalogoProductos(idProducto int(2) primary key,producto nvarchar(30));
 
-##Tabla de Habitaciones##
+/*##Tabla de Habitaciones##
 create table habitaciones(idHabitacion int(2) primary key, nombre nvarchar(30));
 
 create table relCasaHab(idRel int(2) primary key auto_increment, idHabitacion int(2), idCasa nvarchar(6));
-##Tabla de Habitaciones##
+##Tabla de Habitaciones##*/
+
+##Tabla Paquetes ;)
+create table paquetes(idPaquete int(2) primary key, nombre nvarchar(20));
+insert into paquetes(idPaquete, nombre) values(1,'Basico');
+insert into paquetes(idPaquete, nombre) values(2,'Pro');
+insert into paquetes(idPaquete, nombre) values(3,'Platino');
+create table relUsrPaquete(idRel int(2) primary key auto_increment, correo nvarchar(35), idPaquete int(2));
+alter table relUsrPaquete add foreign key(correo) references usuarios(idCorreo);
+alter table relUsrPaquete add foreign key(idPaquete) references paquetes(idPaquete);
+##Tabla Paquetes ;)
 
 ##tabla de numeros de serie
 ##create table numSerie(idNumero int(2), serie nvarchar(20));

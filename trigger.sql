@@ -47,6 +47,28 @@ begin
 		
     end if;    
 end;//
+
+create procedure dimePaquete(in mail nvarchar(35))
+begin
+	declare paquete nvarchar(20);
+    declare tipo int(2);
+    set tipo=(select idTipo from relUsrPaquete where correo=mail);
+    set paquete=(select nombre from paquetes where idTipo=tipo);
+    select paquete as tipo;
+end;//
+
+create procedure inventario(in mail nvarchar(35), barcode nvarchar(100))
+begin
+	declare numero int(2);
+    declare idCasa nvarchar(6);
+    declare idDespi int(2);
+    set idCasi=(select idCasa from relUsrCasa where correo=mail);
+    set idDespi=(select idDepensa from relCasaDespensa where idCasa=idCasi);
+    set numero=(select cantidad from relDespensaProductos where idDespensa=idDespi and idProducto=barcode);
+    
+    select numero as cuantity;
+    
+end;//
 /*create trigger altaDespensa after insert on usuarios for each row
 begin
 	declare idDesp int;
