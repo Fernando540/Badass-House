@@ -16,7 +16,7 @@
     String am = "";
     String opass = "";
     String npass = "";
-    String conf = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/configuracion.jsp'>";
+    String conf = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/miCuenta.jsp'>";
     correo = request.getParameter("uX");
     nombre = request.getParameter("nom");
     ap = request.getParameter("ap");

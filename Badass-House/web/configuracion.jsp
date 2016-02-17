@@ -108,64 +108,7 @@ ResultSet rs;
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-        <div class=" ">
-            <div class=" col-md-12 bienvenida text-center">Configuración</div>
-        </div>
-        <div class=" ">
-            <div class="col-md-6 fondoConfig noTePeguesArriba text-center"> <!--Ajustes predeterminados-->
-                <div class="page-header">
-                    <h1>Información general</h1>
-                </div>
-                <section style="padding-bottom: 51px">
-                    <form class="form-horizontal" action="JSPConfig.jsp" method="post"><!-- Aquí van las funciones del form-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Cuenta: <%=log%></label>
-                            </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Nombre:</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" placeholder="Nombre" name="nom" value="<%=nombre%>">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Apellido Paterno:</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" placeholder="Apellido Paterno" name="ap" value="<%=ap%>">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Apellido Materno:</label>
-                            <div class="col-sm-6">
-                                <input type="text" class="form-control" placeholder="Apellido Materno" name="am" value="<%=am%>">
-                            </div>
-                        </div>
-                        <!--<div class="form-group">
-                            <label class="col-sm-4 control-label">Correo:</label>
-                            <div class="col-sm-6">
-                                <input type="email" class="form-control" placeholder="nombre@dominio.com">
-                            </div>
-                        </div>-->
-                        <div class="form-group">
-                            <label class="col-sm-4 control-label">Contraseña nueva:</label>
-                            <div class="col-sm-6">
-                                <input type="password" class="form-control" placeholder="Contraseña nueva" name="pass2">
-                            </div>
-                        </div>
-                        <div class="form-group has-warning has-feedback">
-                            <label class="col-sm-4 control-label">Contraseña actual: *</label>
-                            <div class="col-sm-6">
-                                <input type="password" class="form-control" placeholder="Contraseña actual" name="pass1">
-                            </div>
-                        </div>
-                        <button type="submit" class ="btn btn-success">Aceptar</button>
-                        <button type="reset" class="btn btn-warning">Cancelar</button>
-                        <br><br>
-                        *La contraseña actual es necesaria para cualquier cambio
-                        <input type="hidden" name="uX" value="<%=log%>">
-                    </form>
-                </section>
-            </div>
-
+        
             <div class="col-md-6 fondoConfig noTePeguesArriba">
                 <div class="page-header">
                     <h1>Notificaciones</h1>

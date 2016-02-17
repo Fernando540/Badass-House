@@ -1,9 +1,41 @@
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.ResultSet"%>
+<%
+String nombre="";
+String ap = "";
+String am = "";
+ResultSet rs;
+ String x = (String) session.getAttribute("sessionStat");
+ String log = (String) session.getAttribute("sessionMail");
+        String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
+        if (x.equals("logueado")) {
+            
+    try
+    {
+        BD.cDatos sql = new BD.cDatos();
+        sql.conectar();
+        rs = sql.consulta1("select * from usuarios where correo = '"+log+"';");
+        
+        while(rs.next())
+        {
+        nombre = rs.getString("nombre");
+        ap = rs.getString("aPaterno");
+        am = rs.getString("aMaterno");
+        }
+    }
+    catch(Exception xd)
+    {
+        out.println("Error: " + xd);
+    }
+
+
+%>
 <!DOCTYPE html>
 <html>
     <head>
         <link rel="shortcut icon" href="https://cdn2.iconfinder.com/data/icons/social-messaging-productivity-1-1/128/home-512.png">
-        <title>Badass House Men�</title>
+        <title>Badass House Menú</title>
         <link rel="stylesheet" href="BS/css/bootstrap.css" />
         <link rel="stylesheet" href="BS/css/bootstrap-theme.css" />
         <link rel="stylesheet" href="BS/css/bootstrap-theme.min.css" />
@@ -51,7 +83,7 @@
                                 <li role="separator" class="divider"></li>
                                 <li><a href="luces.html">Luces</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><a href="#">Algo m�s</a></li>
+                                <li><a href="#">Algo más</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -76,52 +108,69 @@
             </div><!-- /.container-fluid -->
         </nav>
 
-        <form class="form-horizontal" method="post" action="registraHabitacion.jsp">
-            <div class="form-group">
-                <label class="col-sm-4 control-label">Nombre de la Habitaci�n:</label>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" placeholder="Nombre" name="nombre" required>
+                    
+        <div class=" ">
+            <div class=" col-md-12 bienvenida text-center">Configuración</div>
+        </div>
+        <div class=" ">
+            <div class="col-md-6 fondoConfig noTePeguesArriba text-center" > <!--Ajustes predeterminados-->
+                <div class="page-header">
+                    <h1>Información general</h1>
                 </div>
-                <button type="submit" class ="btn btn-success">Aceptar</button>
+                <section style="padding-bottom: 51px">
+                    <form class="form-horizontal" action="JSPConfig.jsp" method="post"><!-- Aquí van las funciones del form-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Cuenta: <%=log%></label>
+                            </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Nombre:</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Nombre" name="nom" value="<%=nombre%>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Apellido Paterno:</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Apellido Paterno" name="ap" value="<%=ap%>">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Apellido Materno:</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" placeholder="Apellido Materno" name="am" value="<%=am%>">
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
+                            <label class="col-sm-4 control-label">Correo:</label>
+                            <div class="col-sm-6">
+                                <input type="email" class="form-control" placeholder="nombre@dominio.com">
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">Contraseña nueva:</label>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" placeholder="Contraseña nueva" name="pass2">
+                            </div>
+                        </div>
+                        <div class="form-group has-warning has-feedback">
+                            <label class="col-sm-4 control-label">Contraseña actual: *</label>
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control" placeholder="Contraseña actual" name="pass1">
+                            </div>
+                        </div>
+                        <button type="submit" class ="btn btn-success">Aceptar</button>
+                        <button type="reset" class="btn btn-warning">Cancelar</button>
+                        <br><br>
+                        *La contraseña actual es necesaria para cualquier cambio
+                        <input type="hidden" name="uX" value="<%=log%>">
+                    </form>
+                </section>
             </div>
-        </form>
-        <%
-            String correo = (String) session.getAttribute("sessionMail");
-            BD.cDatos datukis = new BD.cDatos();
-            datukis.conectar();
-
-            //res = datukis.modificacion1("insert into DespesaPRO(correo,produ, cod) values('" + correo + "','" + nombre + "','" + codigo + "');");
-            ResultSet rs1 = datukis.consulta1("select idCasa from relUsrCasa where correo='" + correo + "'");
-            while (rs1.next()) {
-                String idCasa = rs1.getString("idCasa");
-                ResultSet rs = datukis.consulta1("select habitaciones.nombre,relCasaHab.idCasa from habitaciones inner join relCasaHab on habitaciones.idHabitacion=relCasaHab.idHabitacion;");
-                //'" + idCasa + "' where idCasa='"+idCasa+"'
-                out.println("<center><table><td><h3>Nombre</h3></td></tr>");
-
-                while (rs.next()) {
-
-                    out.println("<tr>");
-                    /*out.println("<td><form action='BajaProducto' method='post' onsubmit='return confirmar()'>"
-                     + "<input type='text' value='" + rs.getString("cod") + "' name='codigo' hidden>"
-                     + "<button type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-trash'></i></button>"
-                     + "</form></td>");*/
-                    out.println("<td>" + rs.getObject("nombre") + "</td>");
-                    /*out.println("<td>" + rs.getObject("cod") + "</td>");
-                     out.println("<td>" + rs.getObject("cantidad") + "</td>");
-
-                     int cont = Integer.parseInt(rs.getString("cantidad"));
-                     out.println("<td><form action='UsoProducto' method='post'><select name='Cantidad'>");
-                     for (int n = 1; n <= cont; n++) {
-                     out.println("<option>" + n + "</option>");
-                     }
-                     out.println("</select><input type='text' value='" + rs.getString("cod") + "' name='codigo' hidden><input type='submit' value='Usar'/></form></td>");
-                     */
-                    out.println("</tr>");
-                }
-                out.println("</table></center>");
-            }
-
-        %>
     </div>
+                    
 </body>
 </html>
+<% } else {
+        out.print(gologin);
+    }
+%>
