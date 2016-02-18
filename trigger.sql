@@ -50,13 +50,22 @@ begin
     end if;    
 end;//
 
-create procedure dimePaquete(in mail nvarchar(35))
+create procedure dimePaquete(in mail nvarchar(35),tipiko nvarchar(20))
 begin
 	declare paquete nvarchar(20);
     declare tipo int(2);
-    set tipo=(select idTipo from relUsrPaquete where correo=mail);
-    set paquete=(select nombre from paquetes where idTipo=tipo);
-    select paquete as tipo;
+    declare coincidencia int;
+    set coincidencia=(select count(*) from relUsrPaquete where correo=mail);
+    if coincidencia!=0 then
+		set tipo=(select idPaquete from relUsrPaquete where correo=mail);
+		set paquete=(select nombre from paquetes where idPaquete=tipo);
+	else
+		set tipo=(select idPaquete from paquetes where nombre=tipiko);
+		insert into relUsrPaquete(idPaquete,correo) values(tipo,mail);
+        set paquete=(select nombre from paquetes where idPaquete=tipo);
+    end if;
+    
+    select paquete as pkte;
 end;//
 
 create procedure inventario(in mail nvarchar(35))

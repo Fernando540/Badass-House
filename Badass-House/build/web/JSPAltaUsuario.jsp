@@ -149,12 +149,19 @@
                                 if (result == 1) {
                                     rs = conectar.consulta1("call dimeTipo('" + correo + "');");
                                     while (rs.next()) {
+
                                         if (rs.getString("privilegio").equals("1")) {
-                                            out.print("<script> alert('Bienvenido " + nombre + "');</script>");
-                                            sesion.setAttribute("sessionMail", correo);
-                                            sesion.setAttribute("sessionName", nombre);
-                                            sesion.setAttribute("sessionStat", "logueado");
-                                            out.print(index);
+                                            ResultSet rs1 = conectar.consulta1("call dimePaquete('" + correo + "','Basico')");
+                                            while (rs1.next()) {
+                                                if (rs1.getString("pkte").equals("Basico")) {
+                                                    out.print("<script> alert('Bienvenido " + nombre + "');</script>");
+                                                    sesion.setAttribute("sessionMail", correo);
+                                                    sesion.setAttribute("sessionName", nombre);
+                                                    sesion.setAttribute("sessionStat", "logueado");
+                                                    String homeBasic="<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/homeBasic-test.jsp'>";
+                                                    out.print(homeBasic);
+                                                }
+                                            }
                                         } else {
                                             out.print("<script> alert('Bienvenido " + nombre + "');</script>");
                                             sesion.setAttribute("sessionMail", correo);
