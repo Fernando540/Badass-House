@@ -18,6 +18,10 @@ create table habitaciones(idHabitacion int(2) primary key, nombre nvarchar(30));
 create table relCasaHab(idRel int(2) primary key auto_increment, idHabitacion int(2), idCasa nvarchar(6));
 ##Tabla de Habitaciones##*/
 
+##Tabla de Eventos##
+insert into catalogoeventos(idTipo,evento) values(1,'Modifico Despensa');
+insert into catalogoeventos(idTipo,evento) values(2,'Uso Force Close');
+##Tabla de Eventos##
 ##Tabla Paquetes ;)
 create table paquetes(idPaquete int(2) primary key, nombre nvarchar(20));
 insert into paquetes(idPaquete, nombre) values(1,'Basico');
