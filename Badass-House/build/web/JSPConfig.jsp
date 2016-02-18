@@ -10,6 +10,7 @@
 <%@page import="java.sql.Statement;"%>
 <!DOCTYPE html>
 <%
+     HttpSession sesion = request.getSession();
     String correo = "";
     String nombre = "";
     String ap = "";
@@ -24,6 +25,12 @@
     opass = request.getParameter("pass1");
     String pass = "", pass1 = "", npass1 = "", npass2 = "";
     ResultSet rs;
+                                sesion.setAttribute("sessionMail", correo);
+                                sesion.setAttribute("sessionName", nombre);
+                                sesion.setAttribute("sessionStat", "logueado");
+                                sesion.setMaxInactiveInterval(40*60);
+        String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
+                
     if (nombre.equals("") || ap.equals("") || am.equals("")) {
         out.print("<script> alert('Completa el formulario!!!!');</script>");
         out.print(conf);

@@ -28,8 +28,6 @@ ResultSet rs;
     {
         out.println("Error: " + xd);
     }
-
-
 %>
 <!DOCTYPE html>
 <html>
