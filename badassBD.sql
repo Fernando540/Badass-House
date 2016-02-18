@@ -10,7 +10,7 @@ create table tipoUsuario(idTipo int(2) primary key,tipo nvarchar(30));
 create table eventos(idEvento int(2) primary key,fecha timestamp default current_timestamp);
 create table catalogoEventos(idTipo int(2) primary key, evento nvarchar(20));
 create table despensa(idDespensa int(2) primary key,estatus nvarchar(30));
-create table catalogoProductos(idProducto int(2) primary key,producto nvarchar(30));
+create table catalogoProductos(idUnico nvarchar(100) primary key, idProducto int(2),producto nvarchar(30));
 
 ##Tabla de Eventos##
 insert into catalogoeventos(idTipo,evento) values(1,'Modifico Despensa');
@@ -60,7 +60,7 @@ create table relEventoCatalogo(idRel int(2) primary key auto_increment,idEvento 
 create table relDispCasa(idRel int(2) primary key auto_increment,idDispositivo int(2),idCasa nvarchar(6));
 ##create table relCasaDespensa(idRel int(2) primary key auto_increment,Correo nvarchar(35),idDespensa int(2));
 create table relCasaDespensa(idRel int(2) primary key auto_increment,idCasa nvarchar(6),idDespensa int(2));
-create table relDespensaProductos(idRel int(2) primary key auto_increment,idDespensa int(2),idProducto int(2),cantidad int(100));
+create table relDespensaProductos(idRel int(2) primary key auto_increment,idDespensa int(2),idUnico nvarchar(100),cantidad int(100));
 ##Tablas relacionales
 
 ##LLaves Foráneas
@@ -89,7 +89,7 @@ alter table relCasaDespensa add foreign key(idCasa) references casa(idCasa);
 alter table relCasaDespensa add foreign key(idDespensa) references despensa(idDespensa);
 
 alter table relDespensaProductos add foreign key(idDespensa) references despensa(idDespensa);
-alter table relDespensaProductos add foreign key(idProducto) references catalogoProductos(idProducto);
+alter table relDespensaProductos add foreign key(idUnico) references catalogoProductos(idUnico);
 
 ##LLaves Foráneas
 ##create table usu(correo nvarchar(35) primary key, tipo nvarchar(10));

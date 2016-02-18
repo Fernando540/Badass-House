@@ -75,7 +75,7 @@ begin
     set idCasi=(select idCasa from relUsrCasa where correo=mail);
     set idDespi=(select idDespensa from relCasaDespensa where idCasa=idCasi);
     
-	select cantidad as numero, idProducto as barcode from relDespensaProductos where idDespensa = idDespi;
+	select cantidad as numero, idUnico as barcode from relDespensaProductos where idDespensa = idDespi;
     
 end;//
 /*create trigger altaDespensa after insert on usuarios for each row

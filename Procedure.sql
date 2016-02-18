@@ -77,22 +77,23 @@ begin
     declare total int;
     declare coincidencia int;
     declare coinCat int;
-    
+    declare idUnique nvarchar(100);
     set homeID = (select idCasa from relUsrCasa where Correo = correin);
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
-    set coinCat = (select count(idProducto) from catalogoProductos where idProducto=barcode);
+	set idUnique=homeId+''+barcode;
+	set coinCat = (select count(idUnico) from catalogoProductos where idUnico=idUnique);
     
     if (coinCat=0) then
-		insert into catalogoProductos (idProducto,producto) values (barcode,nombre);
+		insert into catalogoProductos (idUnico,idProducto,producto) values (idUnique,barcode,nombre);
     end if;
     
-    set coincidencia = (select count(idProducto) from relDespensaProductos where idDespensa=iDesp and idProducto=barcode);
+    set coincidencia = (select count(idUnico) from relDespensaProductos where idDespensa=iDesp and idUnico=idUnique);
     
     if (coincidencia = 1) then
-		set total = (select cantidad from relDespensaProductos where idDespensa=iDesp and idProducto=barcode);
-		update relDespensaProductos set cantidad=(total+1) where idDespensa=iDesp and idProducto=barcode;
+		set total = (select cantidad from relDespensaProductos where idDespensa=iDesp and idUnico=idUnique);
+		update relDespensaProductos set cantidad=(total+1) where idDespensa=iDesp and idUnico=idUnique;
 	else
-		insert into relDespensaProductos (idDespensa,idProducto,cantidad) values (iDesp,barcode,1);
+		insert into relDespensaProductos(idDespensa,idUnico,cantidad) values (iDesp,idUnique,1);
     end if;
 end;//
 
