@@ -12,12 +12,6 @@ create table catalogoEventos(idTipo int(2) primary key, evento nvarchar(20));
 create table despensa(idDespensa int(2) primary key,estatus nvarchar(30));
 create table catalogoProductos(idProducto int(2) primary key,producto nvarchar(30));
 
-/*##Tabla de Habitaciones##
-create table habitaciones(idHabitacion int(2) primary key, nombre nvarchar(30));
-
-create table relCasaHab(idRel int(2) primary key auto_increment, idHabitacion int(2), idCasa nvarchar(6));
-##Tabla de Habitaciones##*/
-
 ##Tabla de Eventos##
 insert into catalogoeventos(idTipo,evento) values(1,'Modifico Despensa');
 insert into catalogoeventos(idTipo,evento) values(2,'Uso Force Close');
@@ -38,10 +32,20 @@ insert into casa(idCasa) values('abcdef');
 insert into casa(idCasa) values('123456');
 insert into casa(idCasa) values('abc123');
 
-##
 
-##TABLA ESTUPIDA! :v
-##create table DespensaPRO(correo nvarchar(35),produ nvarchar(30) not null,cod nvarchar(20) not null, cantidad int);
+##Tabla de Habitaciones##
+create table habitaciones(idHabitacion int(2) primary key, nombre nvarchar(30));
+create table relCasaHab(idRel int(2) primary key auto_increment, idHabitacion int(2), idCasa nvarchar(6));
+##Tabla de Habitaciones##
+
+##Tabla de Enchufes
+create table enchufes(idEnchufe int(2) primary key, Nombre nvarchar(20),uso int);
+insert into enchufes(idEnchufe, nombre) values(1,'Luz1');
+insert into enchufes(idEnchufe, nombre) values(2,'Luz2');
+insert into enchufes(idEnchufe, nombre) values(3,'Luz3');
+insert into enchufes(idEnchufe, nombre) values(3,'Apagador');
+create table relEnchuHab(idRel int(2) primary key auto_increment, idHabitacion nvarchar(35), idEnchufe int(2));
+##
 
 
 ##Tablas principales

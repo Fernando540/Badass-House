@@ -61,7 +61,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">In ur wife's room<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a href="luces.html">Luces</a></li>
+                                <li><a href="luces.jsp">Luces</a></li>
                                 <li><a href="#">Enchufes</a></li>
                                 <li><a href="#">Cortinas</a></li>
                             </ul>

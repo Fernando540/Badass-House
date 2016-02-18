@@ -1,3 +1,10 @@
+<%-- 
+    Document   : luces
+    Created on : 18/02/2016, 10:16:19 AM
+    Author     : Alumno
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html><html>
     <head>
         <title>Status General</title>
@@ -86,86 +93,89 @@
                             <div class="page-header text-center">
                                 <h1>Gestión de Luces</h1>
                             </div>
-                            Luz 1
-                            <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderPEntrada" checked>
-                            <label for="sliderPEntrada"></label>
-                            <br>
-                            Luz 2
-                            <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderPDormitorio">
-                            <label for="sliderPDormitorio"></label>
-                            <br>
-                            Luz 3
-                            <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderPCocina">
-                            <label for="sliderPCocina"></label>
-                            <br>
-                            luz 4
-                            <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderWife" checked>
-                            <label for="sliderWife"></label>
-                        </div>
-                    <!--</section>-->
-                </div>
-                <!--<div class=" col-md-1  noTePeguesArriba"></div>
-                <div class=" col-md-3 col-sm-6 col-xs-12 noTePeguesArriba fondoConfig ">
-                    <section>
-                        <div class="form-group">
-                            <div class="page-header text-center">
-                                <h1>Enchufes</h1>
-                            </div>
                             Enchufe 1
                             <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderEnchufe1">
-                            <label for="sliderEnchufe1"></label>
+                            <table>
+                                    <tr>
+                                        <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                            <td>
+                                                <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
+                                                <label for="sliderPEntrada"></label>
+                                            </td>
+                                            <td style="padding-left:30px ; padding-top: 18px">
+                                                <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
+                                            </td>
+                                            <td style="padding-left:30px ; padding-top: 18px">
+                                                <input type='submit' value='Mandalo'/>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                </table>
+                            </form>
                             <br>
                             Enchufe 2
                             <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderEnchufe2">
-                            <label for="sliderEnchufe2"></label>
+                            <table>
+                                    <tr>
+                                        <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                            <td>
+                                                <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
+                                                <label for="sliderPEntrada"></label>
+                                            </td>
+                                            <td style="padding-left:30px ; padding-top: 18px">
+                                                <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
+                                            </td>
+                                            <td style="padding-left:30px ; padding-top: 18px">
+                                                <input type='submit' value='Mandalo'/>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                </table>
+                            </form>
                             <br>
                             Enchufe 3
                             <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderEnchufe3">
-                            <label for="sliderEnchufe3"></label>
+                            <table>
+                                    <tr>
+                                        <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                            <td>
+                                                <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
+                                                <label for="sliderPEntrada"></label>
+                                            </td>
+                                            <td style="padding-left:30px ; padding-top: 18px">
+                                                <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
+                                            </td>
+                                            <td style="padding-left:30px ; padding-top: 18px">
+                                                <input type='submit' value='Mandalo'/>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                </table>
+                            </form>
                             <br>
-                            Enchufe 
+                            Luz principal
                             <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderEnchufe4">
-                            <label for="sliderEnchufe4"></label>
+                            <table>
+                                    <tr>
+                                        <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                            <td>
+                                                <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
+                                                <label for="sliderPEntrada"></label>
+                                            </td>
+                                            <td style="padding-left:30px ; padding-top: 18px">
+                                                <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
+                                            </td>
+                                            <td style="padding-left:30px ; padding-top: 18px">
+                                                <input type='submit' value='Mandalo'/>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                </table>
+                            </form>
+                            <br>
                         </div>
-                    </section>
-                </div>-->
-                <!--<div class=" col-md-1  noTePeguesArriba"></div>
-                <div class=" col-md-3 col-sm-6 col-xs-12 noTePeguesArriba fondoConfig ">
-                    <section>
-                        <div class="form-group">
-                            <div class="page-header text-center">
-                                <h1>Llaves de gas</h1>
-                            </div>
-                            Llave 1
-                            <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderLlave1">
-                            <label for="sliderLlave1"></label>
-                            <br>
-                            Llave 2
-                            <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderLlave2">
-                            <label for="sliderLlave2"></label>
-                            <br>
-                            Llave 3
-                            <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderLlave3">
-                            <label for="sliderLlave3"></label>
-                            <br>
-                            Llave 4
-                            <br>
-                            <input type="checkbox" class="sliderEstilos" id="sliderLlave4">
-                            <label for="sliderLlave4"></label>
-                        </div>
-                    </section>
-                </div>-->
+                    <!--</section>-->
+                </div>
             </div>
         </div>
     </body>

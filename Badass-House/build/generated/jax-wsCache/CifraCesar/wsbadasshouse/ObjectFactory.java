@@ -24,22 +24,14 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _Cifrar_QNAME = new QName("http://WSBadassHouse/", "Cifrar");
     private final static QName _CifrarResponse_QNAME = new QName("http://WSBadassHouse/", "CifrarResponse");
+    private final static QName _Cifrar_QNAME = new QName("http://WSBadassHouse/", "Cifrar");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: wsbadasshouse
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link Cifrar }
-     * 
-     */
-    public Cifrar createCifrar() {
-        return new Cifrar();
     }
 
     /**
@@ -51,12 +43,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link Cifrar }{@code >}}
+     * Create an instance of {@link Cifrar }
      * 
      */
-    @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "Cifrar")
-    public JAXBElement<Cifrar> createCifrar(Cifrar value) {
-        return new JAXBElement<Cifrar>(_Cifrar_QNAME, Cifrar.class, null, value);
+    public Cifrar createCifrar() {
+        return new Cifrar();
     }
 
     /**
@@ -66,6 +57,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "CifrarResponse")
     public JAXBElement<CifrarResponse> createCifrarResponse(CifrarResponse value) {
         return new JAXBElement<CifrarResponse>(_CifrarResponse_QNAME, CifrarResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Cifrar }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "Cifrar")
+    public JAXBElement<Cifrar> createCifrar(Cifrar value) {
+        return new JAXBElement<Cifrar>(_Cifrar_QNAME, Cifrar.class, null, value);
     }
 
 }
