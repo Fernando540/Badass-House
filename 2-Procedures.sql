@@ -237,5 +237,18 @@ begin
     
 end;//
 
+create procedure enchufeState(in mail nvarchar(35),habi nvarchar(15))
+begin
+    declare idCasi nvarchar(6);
+    
+    
+    set idCasi=(select idCasa from relUsrCasa where correo=mail);
+    
+    
+    
+	select cantidad as numero, idUnico as barcode from relDespensaProductos where idDespensa = idDespi;
+    
+end;//
+
 
 delimiter ;
