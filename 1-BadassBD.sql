@@ -16,7 +16,8 @@ create table catalogoProductos(idUnico nvarchar(100) primary key, idProducto int
 insert into catalogoeventos(idTipo,evento) values(1,'Modifico Despensa');
 insert into catalogoeventos(idTipo,evento) values(2,'Uso Force Close');
 ##Tabla de Eventos##
-##Tabla Paquetes ;)
+
+/*##Tabla Paquetes ;)
 create table paquetes(idPaquete int(2) primary key, nombre nvarchar(20));
 insert into paquetes(idPaquete, nombre) values(1,'Basico');
 insert into paquetes(idPaquete, nombre) values(2,'Pro');
@@ -24,26 +25,23 @@ insert into paquetes(idPaquete, nombre) values(3,'Platino');
 create table relUsrPaquete(idRel int(2) primary key auto_increment, correo nvarchar(35), idPaquete int(2));
 alter table relUsrPaquete add foreign key(correo) references usuarios(correo);
 alter table relUsrPaquete add foreign key(idPaquete) references paquetes(idPaquete);
-##Tabla Paquetes ;)
+##Tabla Paquetes ;)*/
 
 ##tabla de numeros de serie
 ##create table numSerie(idNumero int(2), serie nvarchar(20));
 
 
-
 ##Tabla de Habitaciones##
-create table habitaciones(idHabitacion int(2) primary key auto_increment, nombre nvarchar(30));
-create table relCasaHab(idRel int(2) primary key auto_increment, idHabitacion int(2), idCasa nvarchar(6));
+create table habitaciones(idHabitacion int primary key auto_increment, nombre nvarchar(30));
+create table relCasaHab(idRel int primary key auto_increment, idHabitacion int(2), idCasa nvarchar(6));
 alter table relCasaHab add foreign key(idCasa) references casa(idCasa);
 ##Tabla de Habitaciones##
 
 ##Tabla de Enchufes
-create table enchufes(idEnchufe int(2) primary key, Nombre nvarchar(20),uso int);
-insert into enchufes(idEnchufe, nombre) values(1,'Enchufe1');
-insert into enchufes(idEnchufe, nombre) values(2,'Enchufe2');
-insert into enchufes(idEnchufe, nombre) values(3,'Enchufe3');
-insert into enchufes(idEnchufe, nombre) values(4,'Apagador');
-create table relEnchuHab(idRel int(2) primary key auto_increment, idHabitacion nvarchar(35), idEnchufe int(2));
+create table enchufes(idEnchufe int primary key auto_increment, Nombre nvarchar(20),uso int);
+create table relEnchuHab(idRel int primary key auto_increment, idHabitacion int, idEnchufe int);
+alter table relEnchuHab add foreign key(idHabitacion) references habitaciones(idHabitacion);
+alter table relEnchuHab add foreign key(idEnchufe) references enchufes(idEnchufe);
 ##
 
 

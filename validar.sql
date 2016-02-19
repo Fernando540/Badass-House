@@ -11,6 +11,10 @@ select * from catalogoProductos;
 
 select * from habitaciones;
 select * from relCasaHab;
+
+select * from enchufes;
+select * from relEnchuHab;
+
 delete from usuarios where Correo = 'fernandojos44@gmail.com';
 
 select * from relCasaHab;
