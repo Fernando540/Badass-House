@@ -1,4 +1,4 @@
-
+<%@page import="java.sql.SQLException"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.ResultSet"%>
 <%
@@ -116,6 +116,7 @@ ResultSet rs;
                     <h1>Información general</h1>
                 </div>
                 <section style="padding-bottom: 51px">
+                    <br><br>
                     <form class="form-horizontal" action="JSPConfig.jsp" method="post"><!-- Aquí van las funciones del form-->
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Cuenta: <%=log%></label>
@@ -162,10 +163,54 @@ ResultSet rs;
                         *La contraseña actual es necesaria para cualquier cambio
                         <input type="hidden" name="uX" value="<%=log%>">
                     </form>
+                    <br><br><br><br>
                 </section>
             </div>
     </div>
                     
+            <div class="col-md-6 fondoConfig noTePeguesArriba">
+                <div class="form-group">
+                <div class="page-header">
+                    <h1>Agregar una nueva Cuenta</h1>
+                </div>
+                <section style="padding-bottom: 51px">
+                    <form method="post" action="JSPAltamiCuenta.jsp">
+                        <div class="form-group">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" name="nombre" maxlength="35" onkeypress="return noNumeros(event)" required >
+                            </div>
+                            <div class="form-group">
+                                <label>Apellido Paterno</label>
+                                <input type="text" class="form-control" name="aPaterno" maxlength="35" onkeypress="return noNumeros(event)" required >
+                            </div>
+                            <div class="form-group">
+                                <label>Apellido Materno</label>
+                                <input type="text" class="form-control" name="aMaterno" maxlength="35" onkeypress="return noNumeros(event)" required >
+                            </div>
+                            <div class="form-group">
+                                <label>Tipo Usuario</label>
+                                <select class="form-control" name="tipoUsr" required>
+                                    <option>Premium</option>
+                                    <option>Junior</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Nuevo Correo electrónico</label>
+                                <input type="email" class="form-control" name="correo" placeholder="nombre@dominio.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" >
+                            </div>
+                            <div class="form-group">
+                                <label>Nueva Contraseña de la Cuenta</label>
+                                <input type="password" class="form-control" name="newPassword" maxlength="15" placeholder="15 caract&eacute;res max" required>
+                            </div>
+                        <div class="form-group">
+                                <label>Contraseña actual de tu Cuenta</label>
+                                <input type="password" class="form-control" name="yourPassword" maxlength="15" placeholder="15 caract&eacute;res max" required>
+                            </div>
+                            <button type="submit" name="Aceptar" class ="btn btn-success">Confirmar</button>
+                        </form>
+                    </section>
+            </div>
+    </div>
 </body>
 </html>
 <% } else {

@@ -1,11 +1,61 @@
-<%@page import="java.sql.SQLException"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.Date"%>
-<%@page import="BD.cDatos"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.util.regex.Matcher"%>
-<%@page import="java.util.regex.Pattern"%>
-<%
+package org.apache.jsp;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.jsp.*;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import BD.cDatos;
+import java.sql.ResultSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public final class JSPAltaUsuario_jsp extends org.apache.jasper.runtime.HttpJspBase
+    implements org.apache.jasper.runtime.JspSourceDependent {
+
+  private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
+
+  private static java.util.List<String> _jspx_dependants;
+
+  private org.glassfish.jsp.api.ResourceInjector _jspx_resourceInjector;
+
+  public java.util.List<String> getDependants() {
+    return _jspx_dependants;
+  }
+
+  public void _jspService(HttpServletRequest request, HttpServletResponse response)
+        throws java.io.IOException, ServletException {
+
+    PageContext pageContext = null;
+    HttpSession session = null;
+    ServletContext application = null;
+    ServletConfig config = null;
+    JspWriter out = null;
+    Object page = this;
+    JspWriter _jspx_out = null;
+    PageContext _jspx_page_context = null;
+
+    try {
+      response.setContentType("text/html");
+      pageContext = _jspxFactory.getPageContext(this, request, response,
+      			null, true, 8192, true);
+      _jspx_page_context = pageContext;
+      application = pageContext.getServletContext();
+      config = pageContext.getServletConfig();
+      session = pageContext.getSession();
+      out = pageContext.getOut();
+      _jspx_out = out;
+      _jspx_resourceInjector = (org.glassfish.jsp.api.ResourceInjector) application.getAttribute("com.sun.appserv.jsp.resource.injector");
+
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+      out.write("\r\n");
+
     String pass = "", pass1 = "";
     int result;
     String clave = "";
@@ -13,7 +63,7 @@
     String direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/registro.html'>";
     String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index.jsp'>";
     String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>", numSerie = "";
-    Pattern pat1 = Pattern.compile("[^A-Za-z·-˙¡-⁄ ]");
+    Pattern pat1 = Pattern.compile("[^A-Za-z√°-√∫√Å-√ö ]");
     Pattern pat = Pattern.compile("[A-Za-z0-9._%+-]+@[AZa-z0-9.-]+\\.[a-z]{2,4}$");
     Matcher mat1;
     Matcher mat2;
@@ -77,7 +127,7 @@
         }
     }
     if (request.getParameter("password").equals("")) {
-        out.print("<script> alert('Ingresa la contraseÒa!!!!');</script>");
+        out.print("<script> alert('Ingresa la contrase√±a!!!!');</script>");
         out.print(registro);
 
     } else {
@@ -122,7 +172,7 @@
                 cDatos conectar = new cDatos();
                 conectar.conectar();
                 clave = "777888222333";
-                //AES_DECRYPT('contraseÒa','llave')<----- Para desencriptar los datos (Nombre,Apellidos,etc...)*/
+                //AES_DECRYPT('contrase√±a','llave')<----- Para desencriptar los datos (Nombre,Apellidos,etc...)*/
                 conectar.setAccion(correo, pass1, clave);
                 rs = conectar.consulta();/*("call valida('" + correo + "','" + pass + "');");*/
 
@@ -190,4 +240,19 @@
         }
 
     }
-%>
+
+      out.write('\r');
+      out.write('\n');
+    } catch (Throwable t) {
+      if (!(t instanceof SkipPageException)){
+        out = _jspx_out;
+        if (out != null && out.getBufferSize() != 0)
+          out.clearBuffer();
+        if (_jspx_page_context != null) _jspx_page_context.handlePageException(t);
+        else throw new ServletException(t);
+      }
+    } finally {
+      _jspxFactory.releasePageContext(_jspx_page_context);
+    }
+  }
+}

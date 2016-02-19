@@ -9,7 +9,8 @@
     String pass = "", pass1 = "";
     int result;
     String clave = "";
-    String nombre = "", aPaterno = "", aMaterno = "", direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/registro.html'>";
+    String nombre = "", aPaterno = "", aMaterno = "";
+    String direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/registro.html'>";
     String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index.jsp'>";
     String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>", numSerie = "";
     Pattern pat1 = Pattern.compile("[^A-Za-zА-За-з ]");
@@ -157,6 +158,8 @@
                                                     out.print("<script> alert('Bienvenido " + nombre + "');</script>");
                                                     sesion.setAttribute("sessionMail", correo);
                                                     sesion.setAttribute("sessionName", nombre);
+                                                    sesion.setAttribute("numSerie",numSerie);
+                                                    sesion.setAttribute("direccion",direccion);
                                                     sesion.setAttribute("sessionStat", "logueado");
                                                     String homeBasic="<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/homeBasic-test.jsp'>";
                                                     out.print(homeBasic);
