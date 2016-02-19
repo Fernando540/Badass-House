@@ -4,7 +4,7 @@ use badasshouse;
 
 ##Tablas principales
 create table usuarios(Correo nvarchar(35) primary key,contrasenia blob,nombre nvarchar(30),aPaterno nvarchar(30),aMaterno nvarchar(30));
-create table casa(idCasa nvarchar(6) primary key,direccion nvarchar(30));
+create table casa(idCasa nvarchar(6) primary key,direccion nvarchar(30),paquete nvarchar(30));
 create table dispositivos(idDispositivo int(2) primary key,nombre nvarchar(30));
 create table tipoUsuario(idTipo int(2) primary key,tipo nvarchar(30));
 create table eventos(idEvento int(2) primary key,fecha timestamp default current_timestamp);
@@ -28,22 +28,21 @@ alter table relUsrPaquete add foreign key(idPaquete) references paquetes(idPaque
 
 ##tabla de numeros de serie
 ##create table numSerie(idNumero int(2), serie nvarchar(20));
-insert into casa(idCasa) values('abcdef');
-insert into casa(idCasa) values('123456');
-insert into casa(idCasa) values('abc123');
+
 
 
 ##Tabla de Habitaciones##
-create table habitaciones(idHabitacion int(2) primary key, nombre nvarchar(30));
+create table habitaciones(idHabitacion int(2) primary key auto_increment, nombre nvarchar(30));
 create table relCasaHab(idRel int(2) primary key auto_increment, idHabitacion int(2), idCasa nvarchar(6));
+alter table relCasaHab add foreign key(idCasa) references casa(idCasa);
 ##Tabla de Habitaciones##
 
 ##Tabla de Enchufes
 create table enchufes(idEnchufe int(2) primary key, Nombre nvarchar(20),uso int);
-insert into enchufes(idEnchufe, nombre) values(1,'Luz1');
-insert into enchufes(idEnchufe, nombre) values(2,'Luz2');
-insert into enchufes(idEnchufe, nombre) values(3,'Luz3');
-insert into enchufes(idEnchufe, nombre) values(3,'Apagador');
+insert into enchufes(idEnchufe, nombre) values(1,'Enchufe1');
+insert into enchufes(idEnchufe, nombre) values(2,'Enchufe2');
+insert into enchufes(idEnchufe, nombre) values(3,'Enchufe3');
+insert into enchufes(idEnchufe, nombre) values(4,'Apagador');
 create table relEnchuHab(idRel int(2) primary key auto_increment, idHabitacion nvarchar(35), idEnchufe int(2));
 ##
 

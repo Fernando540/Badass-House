@@ -160,5 +160,59 @@ begin
     select tipo as privilegio;
 end;//
 
-delimiter ;
+create trigger creameHabs after insert on casa for each row
+begin
+	declare homeID nvarchar(6);
+    declare paktazo nvarchar(30);
+    declare noHabs int;
+    
+	set homeID = (NEW.idCasa);
+	set paktazo = (NEW.paquete);
+    set noHabs = (select count(*) from habitaciones);
+    
+	if (paktazo = 'Basico')then
+		insert into habitaciones (nombre) values ('Habitacion 1');
+        set noHabs = (noHabs+1);
+        insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+		insert into habitaciones (nombre) values ('Habitacion 2');
+		set noHabs = (noHabs+1);
+        insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+	else
+		if (paktazo = 'Pro')then
+			insert into habitaciones (nombre) values ('Habitacion 1');
+            set noHabs = (noHabs+1);
+			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+			insert into habitaciones (nombre) values ('Habitacion 2');
+            set noHabs = (noHabs+1);
+			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+			insert into habitaciones (nombre) values ('Habitacion 3');
+            set noHabs = (noHabs+1);
+			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+			insert into habitaciones (nombre) values ('Habitacion 4');
+            set noHabs = (noHabs+1);
+			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+		else
+			insert into habitaciones (nombre) values ('Habitacion 1');
+            set noHabs = (noHabs+1);
+			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+			insert into habitaciones (nombre) values ('Habitacion 2');
+            set noHabs = (noHabs+1);
+			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+			insert into habitaciones (nombre) values ('Habitacion 3');
+            set noHabs = (noHabs+1);
+			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+			insert into habitaciones (nombre) values ('Habitacion 4');
+            set noHabs = (noHabs+1);
+			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+			insert into habitaciones (nombre) values ('Habitacion 5');
+            set noHabs = (noHabs+1);
+			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+			insert into habitaciones (nombre) values ('Habitacion 6');
+            set noHabs = (noHabs+1);
+			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+		end if;
+	end if;
 
+end;//
+
+delimiter ;
