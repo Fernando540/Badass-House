@@ -8,6 +8,9 @@ select * from relCasaDespensa;
 select * from relUsrCasa;
 select * from relDespensaProductos;
 select * from catalogoProductos;
+
+select * from habitaciones;
+select * from relCasaHab;
 delete from usuarios where Correo = 'fernandojos44@gmail.com';
 
 select * from relCasaHab;
