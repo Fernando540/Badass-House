@@ -152,7 +152,7 @@
                                     while (rs.next()) {
 
                                         if (rs.getString("privilegio").equals("1")) {
-                                            ResultSet rs1 = conectar.consulta1("call dimePaquete('" + correo + "','Basico')");
+                                            ResultSet rs1 = conectar.consulta1("call dimePaquete('" + numSerie + "','');");
                                             while (rs1.next()) {
                                                 if (rs1.getString("pkte").equals("Basico")) {
                                                     out.print("<script> alert('Bienvenido " + nombre + "');</script>");

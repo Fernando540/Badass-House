@@ -54,18 +54,25 @@
                         while (rs1.next()) {
                             String nameUsr = rs.getString("nName");
                             if (rs1.getString("privilegio").equals("1")) {
-                                out.print("<script> alert('Bienvenido " + correo + "');</script>");
-                                sesion.setAttribute("sessionMail", correo);
-                                sesion.setAttribute("sessionName", nameUsr);
-                                sesion.setAttribute("sessionStat", "logueado");
-                                sesion.setMaxInactiveInterval(40*60);
-                                out.print(index);
+                                rs1 = bD.consulta1("call dimePaquete('','" + correo + "');");
+                                while (rs1.next()) {
+                                    if (rs1.getString("pkte").equals("Basico")) {
+                                        out.print("<script> alert('Bienvenido " + nameUsr + "');</script>");
+                                        sesion.setAttribute("sessionMail", correo);
+                                        sesion.setAttribute("sessionName", nameUsr);
+                                        sesion.setAttribute("sessionStat", "logueado");
+                                        sesion.setMaxInactiveInterval(40 * 60);
+                                        String indexBasic="<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/homeBasic-test.jsp'>";
+                                        out.print(indexBasic);
+                                    }
+                                }
+
                             } else {
                                 out.print("<script> alert('Bienvenido " + correo + "');</script>");
                                 sesion.setAttribute("sessionMail", correo);
                                 sesion.setAttribute("sessionName", nameUsr);
                                 sesion.setAttribute("sessionStat", "logueado");
-                                sesion.setMaxInactiveInterval(40*60);
+                                sesion.setMaxInactiveInterval(40 * 60);
                                 out.print(index1);
                             }
                         }

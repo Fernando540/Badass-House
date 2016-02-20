@@ -18,14 +18,14 @@ insert into catalogoeventos(idTipo,evento) values(2,'Uso Force Close');
 ##Tabla de Eventos##
 
 ##Tabla Paquetes ;)
-create table paquetes(idPaquete int(2) primary key, nombre nvarchar(20));
+/*create table paquetes(idPaquete int(2) primary key, nombre nvarchar(20));
 insert into paquetes(idPaquete, nombre) values(1,'Basico');
 insert into paquetes(idPaquete, nombre) values(2,'Pro');
 insert into paquetes(idPaquete, nombre) values(3,'Platino');
 create table relUsrPaquete(idRel int(2) primary key auto_increment, correo nvarchar(35), idPaquete int(2));
 alter table relUsrPaquete add foreign key(correo) references usuarios(correo);
 alter table relUsrPaquete add foreign key(idPaquete) references paquetes(idPaquete);
-##Tabla Paquetes ;)
+##Tabla Paquetes ;)*/
 
 ##tabla de numeros de serie
 ##create table numSerie(idNumero int(2), serie nvarchar(20));
