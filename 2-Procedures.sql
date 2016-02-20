@@ -11,6 +11,7 @@ drop procedure if exists dimeTipo;
 drop procedure if exists relacionaDespensa;
 drop procedure if exists dimePaquete;
 drop procedure if exists inventario;
+drop procedure if exists enchufeState;
 
 
 delimiter //
@@ -84,7 +85,7 @@ begin
     declare idUnique nvarchar(100);
     set homeID = (select idCasa from relUsrCasa where Correo = correin);
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
-	set idUnique=homeId+''+barcode;
+	set idUnique=CONCAT(homeId,'',barcode);
 	set coinCat = (select count(idUnico) from catalogoProductos where idUnico=idUnique);
     
     if (coinCat=0) then
@@ -111,9 +112,9 @@ begin
     set homeID = (select idCasa from relUsrCasa where Correo = mail);
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
     
-    set total = (select cantidad from relDespensaProductos where idProducto=codigo and idDespensa=iDesp);
+    set total = (select cantidad from relDespensaProductos where idUnico=codigo and idDespensa=iDesp);
 	set ntotal = (total-canti);
-    update relDespensaProductos set cantidad=(ntotal) where idProducto=codigo and idDespensa=iDesp;
+    update relDespensaProductos set cantidad=(ntotal) where idUnico=codigo and idDespensa=iDesp;
 
 end;//
 
@@ -154,7 +155,7 @@ begin
     
     set homeID = (select idCasa from relUsrCasa where Correo = mail);
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
-    DELETE FROM relDespensaProductos WHERE idDespensa=iDesp and idProducto=codigo;
+    DELETE FROM relDespensaProductos WHERE idDespensa=iDesp and idUnico=codigo;
 end;//
 
 
@@ -230,10 +231,25 @@ create procedure inventario(in mail nvarchar(35))
 begin
     declare idCasi nvarchar(6);
     declare idDespi int(2);
+    declare nom nvarchar(100);
+    declare idUnique nvarchar(100);
+    declare codigo nvarchar(100);
+    declare cuanto nvarchar(100);
+    
     set idCasi=(select idCasa from relUsrCasa where correo=mail);
     set idDespi=(select idDespensa from relCasaDespensa where idCasa=idCasi);
-    
-	select cantidad as numero, idUnico as barcode from relDespensaProductos where idDespensa = idDespi;
+    set idUnique=(select idUnico from relDespensaProductos where idDespensa=idDespi);
+    set cuanto=(select cantidad from relDespensaProductos where idDespensa = idDespi);
+    set codigo=(select idProducto from catalogoProductos where idUnico=idUnique);
+    set nom=(select producto from catalogoProductos where idUnico=idUnique);
+    if idCasi=null or idDespi=null  or idUnique=null or cuanto=null or codigo=null then
+		set idCasi=' ';
+		set idDespi=' ';
+		set idUnique=' ';
+		set cuanto=' ';
+		set codigo=' ';
+    end if;
+	select cuanto as numero, codigo as barcode, nom as nombre, idUnique as llave;
     
 end;//
 
