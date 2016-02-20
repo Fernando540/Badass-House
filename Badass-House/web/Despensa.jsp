@@ -1,4 +1,3 @@
-<%@page import="java.sql.SQLException"%>
 <%@page import="BD.cDatos"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -6,7 +5,7 @@
 <html style=" background: url(Imagenes/background.jpg)"> 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+        
         <link rel="stylesheet" href="BS/css/bootstrap.css" />
         <link rel="stylesheet" href="BS/css/bootstrap-theme.css" />
         <link rel="stylesheet" href="BS/css/bootstrap-theme.min.css" />
@@ -14,52 +13,52 @@
         <link rel="stylesheet" href="css/estilos.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="BS/js/bootstrap.js"/></script>
+        
+        
+        
+        <link rel="shortcut icon" href="Imagenes/homeIcon.png">
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="Estilos/bootstrap-responsive.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,800italic,700italic,700,600italic,600,400italic,300italic,300|Yellowtail' rel='stylesheet'>
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300' rel='stylesheet'>
+        <link rel="stylesheet" href="http://static.boredsoft.com/boredsoft/static/base.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="http://static.boredsoft.com/boredsoft/static/sidebar.css" type="text/css" media="screen" />
 
-    <link rel="shortcut icon" href="Imagenes/homeIcon.png">
+        <title>Cocina</title>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <style>
+            h1,h3{font-family: "Montserrat", sans-serif;color:#000;}
+        </style>
+        <link rel="stylesheet" href="Estilos/estiloTabla.css">
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="Estilos/bootstrap-responsive.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,800,800italic,700italic,700,600italic,600,400italic,300italic,300|Yellowtail' rel='stylesheet'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700,300' rel='stylesheet'>
-    <link rel="stylesheet" href="http://static.boredsoft.com/boredsoft/static/base.css" type="text/css" media="screen" />
-    <link rel="stylesheet" href="http://static.boredsoft.com/boredsoft/static/sidebar.css" type="text/css" media="screen" />
-
-    <title>Cocina</title>
-
-    <style>
-        h1,h3{font-family: "Montserrat", sans-serif;color:#000;}
-    </style>
-    <link rel="stylesheet" href="Estilos/estiloTabla.css">
-
-    <script>
-        function confirmar() {
-            if (confirm("Esta seguro que desea eliminarlo?"))
-            {
-                return true;
+        <script>
+            function confirmar() {
+                if (confirm("Esta seguro que desea eliminarlo?"))
+                {
+                    return true;
+                }
+                return false;
             }
-            return false;
-        }
-    </script>
+        </script>
 
-</head>
+    </head>
+    
+    <body style="background: url(Imagenes/background.jpg)">
+        <%
+            String x = (String) session.getAttribute("sessionStat");
+            String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
 
-<body style="background: url(Imagenes/background.jpg)">
-    <%
-        String x = (String) session.getAttribute("sessionStat");
-        String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
-
-        if (x.equals("logueado")) {
-    %>
-    <div class="container">
+            if (x.equals("logueado")) { 
+        %>
+        <div class="container">
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
@@ -90,13 +89,13 @@
                             </ul>
                         </li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">In ur wife's room<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="luces.html">Luces</a></li>
-                                <li><a href="#">Enchufes</a></li>
-                                <li><a href="#">Cortinas</a></li>
-                            </ul>
-                        </li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true">In ur wife's room<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="luces.html">Luces</a></li>
+                                    <li><a href="#">Enchufes</a></li>
+                                    <li><a href="#">Cortinas</a></li>
+                                </ul>
+                            </li>
                         <%--<li><a href="#">Agregar dispositivo</a></li>--%>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -132,40 +131,31 @@
                     out.println("<center><table><tr><td/><td><h3>Nombre</h3></td><td><h3>Codigo de Barras</h3></td><td><h3>Cantidad</h3></td><td/></tr>");
 
                     while (rs.next()) {
-                        String nombre = rs.getString("nombre"), cantidad = rs.getString("barcode"), numero = rs.getString("numero");
-                        if (nombre != null && cantidad != null && numero != null) {
-                            out.println("<tr>");
-                            out.println("<td><form action='BajaProducto' method='post' onsubmit='return confirmar()'>"
-                                    + "<input type='text' value='" + rs.getString("llave") + "' name='codigo' hidden>"
-                                    + "<button type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-trash'></i></button>"
-                                    + "</form></td>");
-                            out.println("<td>" + nombre + "</td>");
-                            out.println("<td>" + cantidad + "</td>");
-                            out.println("<td>" + numero + "</td>");
 
-                            int cont = Integer.parseInt(rs.getString("numero"));
-                            
+                        out.println("<tr>");
+                        out.println("<td><form action='BajaProducto' method='post' onsubmit='return confirmar()'>"
+                                + "<input type='text' value='" + rs.getString("barcode") + "' name='codigo' hidden>"
+                                + "<button type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-trash'></i></button>"
+                                + "</form></td>");
+                        out.println("<td>" /*+ rs.getObject("produ")*/ + "</td>");
+                        out.println("<td>" + rs.getObject("barcode") + "</td>");
+                        out.println("<td>" + rs.getObject("numero") + "</td>");
 
-                            out.println("<td><form action='UsoProducto' method='post'><select name='Cantidad'>");
-                            for (int n = 1; n <= cont; n++) {
-                                out.println("<option>" + n + "</option>");
-                            }
-                            out.println("</select><input type='text' value='" + rs.getString("llave") + "' name='codigo' hidden><input type='submit' value='Usar'/></form></td>");
-                            out.println("</tr>");
-
-                        } else {
-
+                        int cont = Integer.parseInt(rs.getString("numero"));
+                        out.println("<td><form action='UsoProducto' method='post'><select name='Cantidad'>");
+                        for (int n = 1; n <= cont; n++) {
+                            out.println("<option>" + n + "</option>");
                         }
-
+                        out.println("</select><input type='text' value='" + rs.getString("barcode") + "' name='codigo' hidden><input type='submit' value='Usar'/></form></td>");
+                        out.println("</tr>");
                     }
-
                     out.println("</table></center>");
                 %>
             </center>
         </section>
-
+        
     </div>
-</body>
+    </body>
 </html>
 
 <% } else {
