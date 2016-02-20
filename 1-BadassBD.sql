@@ -10,14 +10,14 @@ create table tipoUsuario(idTipo int(2) primary key,tipo nvarchar(30));
 create table eventos(idEvento int(2) primary key,fecha timestamp default current_timestamp);
 create table catalogoEventos(idTipo int(2) primary key, evento nvarchar(20));
 create table despensa(idDespensa int(2) primary key,estatus nvarchar(30));
-create table catalogoProductos(idUnico nvarchar(100) primary key, idProducto int(2),producto nvarchar(30));
+create table catalogoProductos(idUnico nvarchar(100) primary key, idProducto int(2));##,producto nvarchar(30));
 
 ##Tabla de Eventos##
 insert into catalogoeventos(idTipo,evento) values(1,'Modifico Despensa');
 insert into catalogoeventos(idTipo,evento) values(2,'Uso Force Close');
 ##Tabla de Eventos##
 
-/*##Tabla Paquetes ;)
+##Tabla Paquetes ;)
 create table paquetes(idPaquete int(2) primary key, nombre nvarchar(20));
 insert into paquetes(idPaquete, nombre) values(1,'Basico');
 insert into paquetes(idPaquete, nombre) values(2,'Pro');
@@ -25,7 +25,7 @@ insert into paquetes(idPaquete, nombre) values(3,'Platino');
 create table relUsrPaquete(idRel int(2) primary key auto_increment, correo nvarchar(35), idPaquete int(2));
 alter table relUsrPaquete add foreign key(correo) references usuarios(correo);
 alter table relUsrPaquete add foreign key(idPaquete) references paquetes(idPaquete);
-##Tabla Paquetes ;)*/
+##Tabla Paquetes ;)
 
 ##tabla de numeros de serie
 ##create table numSerie(idNumero int(2), serie nvarchar(20));
@@ -57,7 +57,7 @@ create table relEventoCatalogo(idRel int(2) primary key auto_increment,idEvento 
 create table relDispCasa(idRel int(2) primary key auto_increment,idDispositivo int(2),idCasa nvarchar(6));
 ##create table relCasaDespensa(idRel int(2) primary key auto_increment,Correo nvarchar(35),idDespensa int(2));
 create table relCasaDespensa(idRel int(2) primary key auto_increment,idCasa nvarchar(6),idDespensa int(2));
-create table relDespensaProductos(idRel int(2) primary key auto_increment,idDespensa int(2),idUnico nvarchar(100),cantidad int(100));
+create table relDespensaProductos(idRel int(2) primary key auto_increment,idDespensa int(2),idUnico nvarchar(100),producto nvarchar(100),cantidad int(100), aviso int(100));
 ##Tablas relacionales
 
 ##LLaves Foráneas

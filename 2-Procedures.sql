@@ -11,6 +11,7 @@ drop procedure if exists dimeTipo;
 drop procedure if exists relacionaDespensa;
 drop procedure if exists dimePaquete;
 drop procedure if exists inventario;
+drop procedure if exists enchufeState;
 
 
 delimiter //
@@ -74,7 +75,7 @@ begin
     insert into relusrcasa(Correo,idCasa) values(correito,seriuki);
 end;//
 
-create procedure altadespensuki(in correin nvarchar(35), in barcode nvarchar(35),in nombre nvarchar(35))
+create procedure altadespensuki(in correin nvarchar(35), in barcode nvarchar(35),in nombre nvarchar(35),in alert nvarchar(100))
 begin
 	declare iDesp int;
     declare homeID nvarchar(6);
@@ -84,11 +85,11 @@ begin
     declare idUnique nvarchar(100);
     set homeID = (select idCasa from relUsrCasa where Correo = correin);
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
-	set idUnique=homeId+''+barcode;
+	set idUnique=CONCAT(homeId,'',barcode);
 	set coinCat = (select count(idUnico) from catalogoProductos where idUnico=idUnique);
     
     if (coinCat=0) then
-		insert into catalogoProductos (idUnico,idProducto,producto) values (idUnique,barcode,nombre);
+		insert into catalogoProductos (idUnico,idProducto) values (idUnique,barcode);
     end if;
     
     set coincidencia = (select count(idUnico) from relDespensaProductos where idDespensa=iDesp and idUnico=idUnique);
@@ -97,7 +98,12 @@ begin
 		set total = (select cantidad from relDespensaProductos where idDespensa=iDesp and idUnico=idUnique);
 		update relDespensaProductos set cantidad=(total+1) where idDespensa=iDesp and idUnico=idUnique;
 	else
-		insert into relDespensaProductos(idDespensa,idUnico,cantidad) values (iDesp,idUnique,1);
+    if alert='' then
+		insert into relDespensaProductos(idDespensa,idUnico,producto,cantidad) values (iDesp,idUnique,nombre,1);
+	else
+		insert into relDespensaProductos(idDespensa,idUnico,producto,cantidad,aviso) values (iDesp,idUnique,nombre,1,alert);
+    end if;
+		
     end if;
 end;//
 
@@ -111,9 +117,9 @@ begin
     set homeID = (select idCasa from relUsrCasa where Correo = mail);
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
     
-    set total = (select cantidad from relDespensaProductos where idProducto=codigo and idDespensa=iDesp);
+    set total = (select cantidad from relDespensaProductos where idUnico=codigo and idDespensa=iDesp);
 	set ntotal = (total-canti);
-    update relDespensaProductos set cantidad=(ntotal) where idProducto=codigo and idDespensa=iDesp;
+    update relDespensaProductos set cantidad=(ntotal) where idUnico=codigo and idDespensa=iDesp;
 
 end;//
 
@@ -154,7 +160,8 @@ begin
     
     set homeID = (select idCasa from relUsrCasa where Correo = mail);
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
-    DELETE FROM relDespensaProductos WHERE idDespensa=iDesp and idProducto=codigo;
+    DELETE FROM relDespensaProductos WHERE idDespensa=iDesp and idUnico=codigo;
+    DELETE FROM catalogoproductos WHERE idUnico=codigo;
 end;//
 
 
@@ -232,6 +239,19 @@ begin
     declare idDespi int(2);
     set idCasi=(select idCasa from relUsrCasa where correo=mail);
     set idDespi=(select idDespensa from relCasaDespensa where idCasa=idCasi);
+    
+    
+	select cantidad as numero, idUnico as barcode, producto as produ, aviso as alertuki from relDespensaProductos where idDespensa = idDespi;
+    
+end;//
+create procedure enchufeState(in mail nvarchar(35),habi nvarchar(15))
+begin
+    declare idCasi nvarchar(6);
+    
+    
+    set idCasi=(select idCasa from relUsrCasa where correo=mail);
+    
+    
     
 	select cantidad as numero, idUnico as barcode from relDespensaProductos where idDespensa = idDespi;
     
