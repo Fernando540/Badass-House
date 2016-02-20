@@ -156,6 +156,7 @@ begin
     set homeID = (select idCasa from relUsrCasa where Correo = mail);
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
     DELETE FROM relDespensaProductos WHERE idDespensa=iDesp and idUnico=codigo;
+    DELETE FROM catalogoProductos WHERE idUnico=codigo;
 end;//
 
 
