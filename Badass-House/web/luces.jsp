@@ -3,7 +3,8 @@
     Created on : 18/02/2016, 10:16:19 AM
     Author     : Alumno
 --%>
-
+<%@page import="BD.cDatos"%>
+<%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html><html>
     <head>
@@ -32,6 +33,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        <%
+        String correuki = (String) session.getAttribute("sessionMail");
+        String Habitacion = "Habitacion 1";
+        
+        cDatos datukis = new cDatos();
+        datukis.conectar();
+        %>
+        
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -86,10 +95,100 @@
             <div class="">
                 <div class=" col-md-12 bienvenida text-center">Luces</div>
             </div>
+            
             <div class="">
                 <div class=" col-md-3 col-sm-6 col-xs-12 noTePeguesArriba fondoConfig ">
                     <!--<section>-->
-                        <div class="form-group">
+                    <div class="form-group">
+                        <div class="page-header text-center">
+                            <h1>Gestión de Luces</h1>
+                        </div>
+                        Enchufe 1
+                        <br>
+                        <table>
+                            <tr>
+                            <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <td>
+                                    <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
+                                    <label for="sliderPEntrada"></label>
+                                </td>
+                                <td style="padding-left:30px ; padding-top: 18px">
+                                    <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
+                                </td>
+                                <td style="padding-left:30px ; padding-top: 18px">
+                                    <input type='submit' value='Mandalo'/>
+                                </td>
+                            </form>
+                             </tr>
+                        </table>
+                        </form>
+                        <br>
+                        Enchufe 2
+                        <br>
+                        <table>
+                            <tr>
+                            <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <td>
+                                    <%
+                                        ResultSet rs = datukis.consulta1("call enchufeState('" + correuki + "',"+Habitacion+");");
+                                        int E1;
+                                    %>
+                                    <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
+                                    <label for="sliderPEntrada"></label>
+                                </td>
+                                <td style="padding-left:30px ; padding-top: 18px">
+                                    <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
+                                </td>
+                                <td style="padding-left:30px ; padding-top: 18px">
+                                    <input type='submit' value='Mandalo'/>
+                                </td>
+                            </form>
+                                     </tr>
+                        </table>
+                        </form>
+                        <br>
+                        Enchufe 3
+                        <br>
+                        <table>
+                            <tr>
+                            <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <td>
+                                    <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
+                                    <label for="sliderPEntrada"></label>
+                                </td>
+                                <td style="padding-left:30px ; padding-top: 18px">
+                                    <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
+                                </td>
+                                <td style="padding-left:30px ; padding-top: 18px">
+                                    <input type='submit' value='Mandalo'/>
+                                </td>
+                            </form>
+                            </tr>
+                        </table>
+                        </form>
+                        <br>
+                        Luz principal
+                        <br>
+                        <table>
+                            <tr>
+                            <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <td>
+                                    <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
+                                    <label for="sliderPEntrada"></label>
+                                </td>
+                                <td style="padding-left:30px ; padding-top: 18px">
+                                    <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
+                                </td>
+                                <td style="padding-left:30px ; padding-top: 18px">
+                                    <input type='submit' value='Mandalo'/>
+                                </td>
+                            </form>
+                            </tr>
+                        </table>
+                        </form>
+                        <br>
+                    </div>
+                        <!--<div class="form-group">
                             <div class="page-header text-center">
                                 <h1>Gestión de Luces</h1>
                             </div>
@@ -170,10 +269,9 @@
                                             </td>
                                         </form>
                                     </tr>
-                                </table>
+                                </table>-->
                             </form>
-                            <br>
-                        </div>
+                            
                     <!--</section>-->
                 </div>
             </div>

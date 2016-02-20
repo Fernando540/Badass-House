@@ -69,19 +69,19 @@ begin
     set totEnchufe = (select count(*) from enchufes);
     
     set totEnchufe = (totEnchufe+1);
-    insert into enchufes(idEnchufe, nombre) values(totEnchufe,'Enchufe1');
+    insert into enchufes(idEnchufe, nombre,uso) values(totEnchufe,'Enchufe1',0);
     insert into relEnchuHab(idHabitacion,idEnchufe) values (room,totEnchufe);
     
     set totEnchufe = (totEnchufe+1);
-    insert into enchufes(idEnchufe, nombre) values(totEnchufe,'Enchufe2');
+    insert into enchufes(idEnchufe, nombre,uso) values(totEnchufe,'Enchufe2',0);
     insert into relEnchuHab(idHabitacion,idEnchufe) values (room,totEnchufe);
     
     set totEnchufe = (totEnchufe+1);
-    insert into enchufes(idEnchufe, nombre) values(totEnchufe,'Enchufe3');
+    insert into enchufes(idEnchufe, nombre,uso) values(totEnchufe,'Enchufe3',0);
     insert into relEnchuHab(idHabitacion,idEnchufe) values (room,totEnchufe);
     
     set totEnchufe = (totEnchufe+1);
-    insert into enchufes(idEnchufe, nombre) values(totEnchufe,'Luz');
+    insert into enchufes(idEnchufe, nombre,uso) values(totEnchufe,'Luz',0);
     insert into relEnchuHab(idHabitacion,idEnchufe) values (room,totEnchufe);
 	
 end;//
