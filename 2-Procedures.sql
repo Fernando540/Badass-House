@@ -17,6 +17,7 @@ drop procedure if exists dimeNKA;
 drop procedure if exists ingresaAltura;
 drop procedure if exists dimeAltura;
 drop procedure if exists dimeCuenta;
+drop procedure if exists altaUsu;
 
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
@@ -52,7 +53,7 @@ begin
 	else
 		set mensaje='ira men no existe ese numero de serie';
     end if;
-    select mensaje as resultado,estado as estaduki;
+    select mensaje as resultado ,estado as estaduki;
 end;//
 
 create procedure registraCasa(in adress nvarchar(30),in correito nvarchar(35),in seriuki nvarchar(6))
@@ -299,6 +300,21 @@ if dir!='' then
 	set mensaje='Ya hay usuario principal';
 else
 	set mensaje='adelante';
+end if;
+select mensaje as msj;
+end;//
+create procedure altaUsu(in serie nvarchar(6), in mail nvarchar(35),in pass blob,in nom nvarchar(30), in aPat nvarchar(30), in aMat nvarchar(30), in tipoUsu nvarchar(20),in uldMail nvarchar(35), in passOrig blob)
+begin
+declare usuCoin int;
+declare mensaje nvarchar(100);
+set usuCoin=(select count(*) from usuarios where correo=uldMail and contrasenia=passOrig);
+if usuCoin=0 then
+	set mensaje='contra invalida';
+else
+	insert into usuarios(Correo,contrasenia,nombre,aPaterno,aMaterno) values(mail,pass,nom,aPat,aMat);
+    call registraCasa('',mail,serie);
+    call altaTipo(mail,tipoUsu);
+    set mensaje='alta';
 end if;
 select mensaje as msj;
 end;//

@@ -2,33 +2,29 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="java.sql.ResultSet"%>
 <%
-String nombre="";
-String ap = "";
-String am = "";
-ResultSet rs;
- String x = (String) session.getAttribute("sessionStat");
- String log = (String) session.getAttribute("sessionMail");
-  String numSerie = (String) session.getAttribute("numSerie");
-        String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
-        if (x.equals("logueado")) {
-            
-    try
-    {
-        BD.cDatos sql = new BD.cDatos();
-        sql.conectar();
-        rs = sql.consulta1("select * from usuarios where correo = '"+log+"';");
-        
-        while(rs.next())
-        {
-        nombre = rs.getString("nombre");
-        ap = rs.getString("aPaterno");
-        am = rs.getString("aMaterno");
+    String nombre = "";
+    String ap = "";
+    String am = "";
+    ResultSet rs;
+    String x = (String) session.getAttribute("sessionStat");
+    String log = (String) session.getAttribute("sessionMail");
+    String numSerie = (String) session.getAttribute("numSerie");
+    String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
+    if (x.equals("logueado")) {
+
+        try {
+            BD.cDatos sql = new BD.cDatos();
+            sql.conectar();
+            rs = sql.consulta1("select * from usuarios where correo = '" + log + "';");
+
+            while (rs.next()) {
+                nombre = rs.getString("nombre");
+                ap = rs.getString("aPaterno");
+                am = rs.getString("aMaterno");
+            }
+        } catch (Exception xd) {
+            out.println("Error: " + xd);
         }
-    }
-    catch(Exception xd)
-    {
-        out.println("Error: " + xd);
-    }
 %>
 <!DOCTYPE html>
 <html>
@@ -107,7 +103,7 @@ ResultSet rs;
             </div><!-- /.container-fluid -->
         </nav>
 
-                    
+
         <div class=" ">
             <div class=" col-md-12 bienvenida text-center">Configuración</div>
         </div>
@@ -120,10 +116,9 @@ ResultSet rs;
                     <br>
                     <form class="form-horizontal" action="JSPConfig.jsp" method="post"><!-- Aquí van las funciones del form-->
                         <div class="form-group">
-                            <label class="">Número de serie de la casa: <%=numSerie%></label>
-                            <br><br>
+                            
                             <label class="col-sm-4 control-label">Cuenta: <%=log%></label>
-                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label">Nombre:</label>
                             <div class="col-sm-6">
@@ -169,60 +164,58 @@ ResultSet rs;
                     <br><br><br><br>
                 </section>
             </div>
-    </div>
-                    
-            <div class="col-md-6 fondoConfig noTePeguesArriba">
-                <div class="form-group">
+        </div>
+
+        <div class="col-md-6 fondoConfig noTePeguesArriba">
+            <div class="form-group">
                 <div class="page-header">
                     <h1>Agregar una nueva Cuenta</h1>
                 </div>
                 <section style="padding-bottom: 51px">
-                    <form method="post" action="JSPAltamiCuenta.jsp">
+                    <form method="post" action="JSPAltaCuenta.jsp">
                         <div class="form-group">
-                                <label>¿Protección para niños?&nbsp; SI<input type="checkbox" name="nka" value="SI">&nbsp; NO<input type="checkbox" name="nka" value="NO"></label>
-                            </div>
-                            <div class="form-group">
-                                <label>Nombre</label>
-                                <input type="text" class="form-control" name="nombre" maxlength="35" onkeypress="return noNumeros(event)" required >
-                            </div>
-                            <div class="form-group">
-                                <label>Apellido Paterno</label>
-                                <input type="text" class="form-control" name="aPaterno" maxlength="35" onkeypress="return noNumeros(event)" required >
-                            </div>
-                            <div class="form-group">
-                                <label>Apellido Materno</label>
-                                <input type="text" class="form-control" name="aMaterno" maxlength="35" onkeypress="return noNumeros(event)" required >
-                            </div>
-                            <div class="form-group">
-                                <label>Tipo Usuario</label>
-                                <select class="form-control" name="tipoUsr" required>
-                                    <option>Premium</option>
-                                    <option>Junior</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Direccion</label>
-                                <input type="text" class="form-control" name="direccion" maxlength="35" placeholder="Col: Calle: No.:" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Correo electrónico</label>
-                                <input type="email" class="form-control" name="correo" placeholder="nombre@dominio.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" >
-                            </div>
-                            <div class="form-group">
-                                <label>Contraseña</label>
-                                <input type="password" class="form-control" name="password" maxlength="15" placeholder="15 caract&eacute;res max" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Contraseña de la cuenta actual:</label>
-                                <input type="password" class="form-control" name="passwordOrig" maxlength="15" placeholder="15 caract&eacute;res max" required>
-                            </div>
-                            <button type="submit" name="Aceptar" class ="btn btn-success">Confirmar</button>
+                                <label>Numero de Serie</label>
+                                <input type="text" class="form-control" name="numSerie" maxlength="6" required >
+                                
+                        </div>
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" class="form-control" name="nombre" maxlength="35" onkeypress="return noNumeros(event)" required >
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido Paterno</label>
+                            <input type="text" class="form-control" name="aPaterno" maxlength="35" onkeypress="return noNumeros(event)" required >
+                        </div>
+                        <div class="form-group">
+                            <label>Apellido Materno</label>
+                            <input type="text" class="form-control" name="aMaterno" maxlength="35" onkeypress="return noNumeros(event)" required >
+                        </div>
+                        <div class="form-group">
+                            <label>Tipo Usuario</label>
+                            <select class="form-control" name="tipoUsr" required>
+                                <option>Premium</option>
+                                <option>Junior</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Correo electrónico</label>
+                            <input type="email" class="form-control" name="correo" placeholder="nombre@dominio.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" >
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña</label>
+                            <input type="password" class="form-control" name="password" maxlength="15" placeholder="15 caract&eacute;res max" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Contraseña de la cuenta actual:</label>
+                            <input type="password" class="form-control" name="passwordOrig" maxlength="15" required>
+                        </div>
+                        <button type="submit" name="Aceptar" class ="btn btn-success">Confirmar</button>
 
-                            <br><br>
-                        </form>
-                    </section>
+                        <br><br>
+                    </form>
+                </section>
             </div>
-    </div>
+        </div>
 </body>
 </html>
 <% } else {
