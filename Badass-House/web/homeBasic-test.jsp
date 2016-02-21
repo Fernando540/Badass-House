@@ -57,7 +57,7 @@
                                     while (rs.next()) {
                                         
                                         if (rs.getString("estadots").equals("SI")){
-                                            out.print("<li><a href='pNKA.html'>No Kids Allowed</a></li>");
+                                            out.print("<li><a href='pNKA.jsp'>No Kids Allowed</a></li>");
                                         }
                                     }
                             %>

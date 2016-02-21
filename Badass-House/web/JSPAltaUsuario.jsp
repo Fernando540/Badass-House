@@ -15,13 +15,13 @@
     String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>", numSerie = "";
     Pattern pat1 = Pattern.compile("[^A-Za-zА-За-з ]");
     Pattern pat = Pattern.compile("[A-Za-z0-9._%+-]+@[AZa-z0-9.-]+\\.[a-z]{2,4}$");
-    String nka="";
+    String nka = "";
     Matcher mat1;
     Matcher mat2;
     Matcher mat3;
     ResultSet rs;
     HttpSession sesion = request.getSession();
-    
+
     if (request.getParameter("nka").equals("")) {
         out.print("<script> alert('Por Favor seleccione la proteccion');</script>");
         out.print(registro);
@@ -148,45 +148,54 @@
                                 out.print("<script> alert('ira men no existe ese numero de serie');</script>");
                                 out.print(registro);
                             } else {
-                                conectar.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
-                                result = conectar.modificacion();
-                                conectar.regCasa(direccion, correo, numSerie);
-                                conectar.modificacion();
-                                //conectar.modificacion1("insert into usu(correo,tipo) values('" + correo + "','" + tipoUsr + "')");
-                                conectar.modificacion1("call altaTipo('" + correo + "','" + tipoUsr + "');");
+                                rs = conectar.consulta1("call dimeCuenta('" + numSerie + "');");
+                                while (rs.next()) {
+                                    if (rs.getString("msj").equals("adelante")) {
+                                        conectar.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
+                                        result = conectar.modificacion();
+                                        conectar.regCasa(direccion, correo, numSerie);
+                                        conectar.modificacion();
+                                        //conectar.modificacion1("insert into usu(correo,tipo) values('" + correo + "','" + tipoUsr + "')");
+                                        conectar.modificacion1("call altaTipo('" + correo + "','" + tipoUsr + "');");
 
-                                if (result == 1) {
-                                    rs = conectar.consulta1("call dimeTipo('" + correo + "');");
-                                    while (rs.next()) {
+                                        if (result == 1) {
+                                            rs = conectar.consulta1("call dimeTipo('" + correo + "');");
+                                            while (rs.next()) {
 
-                                        if (rs.getString("privilegio").equals("1")) {
-                                            ResultSet rs1 = conectar.consulta1("call dimePaquete('" + numSerie + "','');");
-                                            while (rs1.next()) {
-                                                conectar.consulta1("call ingresaProteccion('"+correo+"','"+nka+"');");
-                                                if (rs1.getString("pkte").equals("Basico")) {
+                                                if (rs.getString("privilegio").equals("1")) {
+                                                    ResultSet rs1 = conectar.consulta1("call dimePaquete('" + numSerie + "','');");
+                                                    while (rs1.next()) {
+                                                        conectar.consulta1("call ingresaProteccion('" + correo + "','" + nka + "');");
+                                                        if (rs1.getString("pkte").equals("Basico")) {
+                                                            out.print("<script> alert('Bienvenido " + nombre + "');</script>");
+                                                            sesion.setAttribute("sessionMail", correo);
+                                                            sesion.setAttribute("sessionName", nombre);
+                                                            sesion.setAttribute("numSerie", numSerie);
+                                                            sesion.setAttribute("direccion", direccion);
+                                                            sesion.setAttribute("sessionStat", "logueado");
+                                                            String homeBasic = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/homeBasic-test.jsp'>";
+                                                            out.print(homeBasic);
+                                                        }
+                                                    }
+                                                } else {
                                                     out.print("<script> alert('Bienvenido " + nombre + "');</script>");
                                                     sesion.setAttribute("sessionMail", correo);
                                                     sesion.setAttribute("sessionName", nombre);
-                                                    sesion.setAttribute("numSerie",numSerie);
-                                                    sesion.setAttribute("direccion",direccion);
                                                     sesion.setAttribute("sessionStat", "logueado");
-                                                    String homeBasic="<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/homeBasic-test.jsp'>";
-                                                    out.print(homeBasic);
+                                                    out.print(index1);
                                                 }
                                             }
-                                        } else {
-                                            out.print("<script> alert('Bienvenido " + nombre + "');</script>");
-                                            sesion.setAttribute("sessionMail", correo);
-                                            sesion.setAttribute("sessionName", nombre);
-                                            sesion.setAttribute("sessionStat", "logueado");
-                                            out.print(index1);
-                                        }
-                                    }
 
-                                } else {
-                                    out.print("<script> alert('Error');</script>");
-                                    out.print(registro);
+                                        } else {
+                                            out.print("<script> alert('Error');</script>");
+                                            out.print(registro);
+                                        }
+                                    }else{
+                                        out.print("<script> alert('Ingresa a tu cuenta principal para agregar una nueva cuenta');</script>");
+                                        out.print(registro);
+                                    }
                                 }
+
                             }
                         }
 
