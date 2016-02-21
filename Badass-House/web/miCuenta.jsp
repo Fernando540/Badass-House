@@ -8,6 +8,7 @@ String am = "";
 ResultSet rs;
  String x = (String) session.getAttribute("sessionStat");
  String log = (String) session.getAttribute("sessionMail");
+  String numSerie = (String) session.getAttribute("numSerie");
         String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
         if (x.equals("logueado")) {
             
@@ -116,9 +117,11 @@ ResultSet rs;
                     <h1>Información general</h1>
                 </div>
                 <section style="padding-bottom: 51px">
-                    <br><br>
+                    <br>
                     <form class="form-horizontal" action="JSPConfig.jsp" method="post"><!-- Aquí van las funciones del form-->
                         <div class="form-group">
+                            <label class="">Número de serie de la casa: <%=numSerie%></label>
+                            <br><br>
                             <label class="col-sm-4 control-label">Cuenta: <%=log%></label>
                             </div>
                         <div class="form-group">
@@ -176,6 +179,9 @@ ResultSet rs;
                 <section style="padding-bottom: 51px">
                     <form method="post" action="JSPAltamiCuenta.jsp">
                         <div class="form-group">
+                                <label>¿Protección para niños?&nbsp; SI<input type="checkbox" name="nka" value="SI">&nbsp; NO<input type="checkbox" name="nka" value="NO"></label>
+                            </div>
+                            <div class="form-group">
                                 <label>Nombre</label>
                                 <input type="text" class="form-control" name="nombre" maxlength="35" onkeypress="return noNumeros(event)" required >
                             </div>
@@ -195,18 +201,24 @@ ResultSet rs;
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Nuevo Correo electrónico</label>
+                                <label>Direccion</label>
+                                <input type="text" class="form-control" name="direccion" maxlength="35" placeholder="Col: Calle: No.:" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Correo electrónico</label>
                                 <input type="email" class="form-control" name="correo" placeholder="nombre@dominio.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" >
                             </div>
                             <div class="form-group">
-                                <label>Nueva Contraseña de la Cuenta</label>
-                                <input type="password" class="form-control" name="newPassword" maxlength="15" placeholder="15 caract&eacute;res max" required>
+                                <label>Contraseña</label>
+                                <input type="password" class="form-control" name="password" maxlength="15" placeholder="15 caract&eacute;res max" required>
                             </div>
-                        <div class="form-group">
-                                <label>Contraseña actual de tu Cuenta</label>
-                                <input type="password" class="form-control" name="yourPassword" maxlength="15" placeholder="15 caract&eacute;res max" required>
+                            <div class="form-group">
+                                <label>Contraseña de la cuenta actual:</label>
+                                <input type="password" class="form-control" name="passwordOrig" maxlength="15" placeholder="15 caract&eacute;res max" required>
                             </div>
                             <button type="submit" name="Aceptar" class ="btn btn-success">Confirmar</button>
+
+                            <br><br>
                         </form>
                     </section>
             </div>

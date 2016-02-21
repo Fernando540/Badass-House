@@ -10,30 +10,34 @@
 <%@page import="java.sql.Statement;"%>
 <!DOCTYPE html>
 <%
-    HttpSession sesion = request.getSession();
-    String pass = "", pass1 = "", pass2 = "";
+   String pass = "", pass1 = "";
     int result;
     String clave = "";
     String nombre = "", aPaterno = "", aMaterno = "";
-    String direccion = "", correo = "";
-    String registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/miCuenta.jsp'>";
-    String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index.jsp'>";
-    String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>", numSerie = "";
+    String direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/miCuenta.jsp'>";
+    String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/miCuenta.jsp'>";
+    String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>";
     Pattern pat1 = Pattern.compile("[^A-Za-zá-úÁ-Ú ]");
     Pattern pat = Pattern.compile("[A-Za-z0-9._%+-]+@[AZa-z0-9.-]+\\.[a-z]{2,4}$");
+    String nka="";
     Matcher mat1;
     Matcher mat2;
     Matcher mat3;
+    
+    String passOrig = "", pass1Orig = "",  passwordOrig = "";
+    
     ResultSet rs;
+    HttpSession sesion = request.getSession();
+    String numSerie = (String) sesion.getAttribute("numSerie");
+    String correoOrig = (String) sesion.getAttribute("sessionMail");
     
-    
-    numSerie = (String)sesion.getAttribute("numSerie");
-    direccion = (String) sesion.getAttribute("direccion");
-    String sessionMail = (String) session.getAttribute("sessionMail");
-   
-//Inicio de getParameter
-
-if (request.getParameter("nombre").equals("")) {
+    if (request.getParameter("nka").equals("")) {
+        out.print("<script> alert('Por Favor seleccione la proteccion');</script>");
+        out.print(registro);
+    } else {
+        nka = request.getParameter("nka");
+    }
+    if (request.getParameter("nombre").equals("")) {
         out.print("<script> alert('Ingresa el usuario!!!!');</script>");
         out.print(registro);
 
@@ -59,7 +63,14 @@ if (request.getParameter("nombre").equals("")) {
         out.print(registro);
     } else {
         tipoUsr = request.getParameter("tipoUsr");
-    } 
+    }
+    if (request.getParameter("direccion").equals("")) {
+        out.print("<script> alert('Ingresa la direccion!!!!');</script>");
+        out.print(registro);
+
+    } else {
+        direccion = request.getParameter("direccion");
+    }
     if (request.getParameter("correo").equals("")) {
         out.print("<script> alert('Ingresa el correo!!!!');</script>");
         out.print(registro);
@@ -75,23 +86,21 @@ if (request.getParameter("nombre").equals("")) {
             out.print(registro);
         }
     }
-    if (request.getParameter("newPassword").equals("")) {
-        out.print("<script> alert('Ingresa la nueva contraseña!!!!');</script>");
+    if (request.getParameter("password").equals("")) {
+        out.print("<script> alert('Ingresa la contraseña!!!!');</script>");
         out.print(registro);
 
     } else {
-        pass1 = request.getParameter("newPassword");
+        password = request.getParameter("password");
     }
-    if (request.getParameter("yourPassword").equals("")) {
-        out.print("<script> alert('Ingresa tu contraseña!!!!');</script>");
+    if (request.getParameter("passwordOrig").equals("")) {
+        out.print("<script> alert('Ingresa la contraseña!!!!');</script>");
         out.print(registro);
 
     } else {
-        pass2 = request.getParameter("yourPassword");
+        passwordOrig = request.getParameter("password");
     }
-    out.print("<script> alert('Ingresa caracteres Validos >:V!!!!');</script>");
-    out.print("<script> alert(Correo: "+sessionMail+" y Contraseña: "+pass2+");</script>");
-    if (correo.equals("") || nombre.equals("") || aPaterno.equals("") || aMaterno.equals("") || pass1.equals("") || pass2.equals("")) {
+    if (correo.equals("") || nombre.equals("") || aPaterno.equals("") || direccion.equals("") || aMaterno.equals("") || password.equals("")) {
         out.print("<script> alert('Ingresa bien tus datos!!!!');</script>");
         out.print(registro);
     } else {
@@ -106,27 +115,43 @@ if (request.getParameter("nombre").equals("")) {
         if (mat1.find() || mat2.find() || mat3.find()) {
             out.print("<script> alert('Ingresa caracteres Validos >:V!!!!');</script>");
             out.print(registro);
-            } 
-        
-        
-        //Final del getParameter
-        else {
-            
+        } else {
+            //------------------------------------------------------------------------------------>
+            try{
+                //Cifrado de la Contraseña de la cuenta actual
+                try {
+                wsbadasshouse.CifraCesar_Service service = new wsbadasshouse.CifraCesar_Service();
+                wsbadasshouse.CifraCesar port = service.getCifraCesarPort();
+                passOrig = port.cifrar(passwordOrig);
+
+            } catch (Exception ex) {
+                out.print(ex.getMessage());
+            }
             try {
-            BD.cDatos sql = new BD.cDatos();
-            sql.conectar();
-            rs = sql.consulta1("select * from usuarios where correo = '" + sessionMail + "' and contrasenia = '" + pass2 + "';");
-            
-            while (rs.next()) {
-                out.print("<script> alert('Registro mal agregado');</script>");
-                out.print(registro);
-               /* try {
+                wsbadasshouse.CifraSha_Service service1 = new wsbadasshouse.CifraSha_Service();
+                wsbadasshouse.CifraSha port1 = service1.getCifraShaPort();
+                pass1Orig = port1.cifrar(passOrig);
+
+            } catch (Exception exD) {
+                out.print(exD.getMessage());
+            }
+            cDatos conectar = new cDatos();
+                conectar.conectar();
+                clave = "777888222333";
+                conectar.setAccion(correoOrig, pass1Orig, clave);
+                rs = conectar.consulta();
+                while (rs.next()) {
+                    if (rs.getString("Estatus").equals("1")) {
+                        out.print("<script> alert('Usuario ya Registrado');</script>");
+                        out.print(registro);
+                    } else {
+                       //----------------------------------------------------<
+                         try {
                 try {
                     wsbadasshouse.CifraCesar_Service service = new wsbadasshouse.CifraCesar_Service();
                     wsbadasshouse.CifraCesar port = service.getCifraCesarPort();
-                    pass = port.cifrar(pass1);
-                } 
-                catch (Exception ex) {
+                    pass = port.cifrar(password);
+                } catch (Exception ex) {
                     out.print(ex.getMessage());
                 }
 
@@ -136,23 +161,25 @@ if (request.getParameter("nombre").equals("")) {
 
                     pass1 = port1.cifrar(pass);
 
-                } 
-                catch (Exception exD) {
+                } catch (Exception exD) {
                     out.print(exD.getMessage());
                     // TODO handle custom exceptions here
                 }
+                
 
-                sql.conectar();
+               // cDatos conectar = new cDatos();
+                conectar.conectar();
                 clave = "777888222333";
-                sql.setAccion(correo, pass1, clave);
-                rs = sql.consulta();/*("call valida('" + correo + "','" + pass + "');");*/
+                //AES_DECRYPT('contraseña','llave')<----- Para desencriptar los datos (Nombre,Apellidos,etc...)*/
+                conectar.setAccion(correo, pass1, clave);
+                rs = conectar.consulta();/*("call valida('" + correo + "','" + pass + "');");*/
 
-                /*while (rs.next()) {
+                while (rs.next()) {
                     if (rs.getString("Estatus").equals("1")) {
                         out.print("<script> alert('Usuario ya Registrado');</script>");
                         out.print(registro);
-                    } else { 
-                        rs = sql.consulta1("call validaSerie('" + numSerie + "');");
+                    } else {
+                        rs = conectar.consulta1("call validaSerie('" + numSerie + "');");
                         while (rs.next()) {
                             if (rs.getString("resultado").equals("ira men no existe ese numero de serie")) {
                                 System.out.println(numSerie);
@@ -161,32 +188,34 @@ if (request.getParameter("nombre").equals("")) {
                                 out.print("<script> alert('ira men no existe ese numero de serie');</script>");
                                 out.print(registro);
                             } else {
-                                sql.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
-                                result = sql.modificacion();
-                                sql.regCasa(direccion, correo, numSerie);
-                                sql.modificacion();
+                                conectar.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
+                                result = conectar.modificacion();
+                                conectar.regCasa(direccion, correo, numSerie);
+                                conectar.modificacion();
                                 //conectar.modificacion1("insert into usu(correo,tipo) values('" + correo + "','" + tipoUsr + "')");
-                                sql.modificacion1("call altaTipo('" + correo + "','" + tipoUsr + "');");
+                                conectar.modificacion1("call altaTipo('" + correo + "','" + tipoUsr + "');");
 
                                 if (result == 1) {
-                                    rs = sql.consulta1("call dimeTipo('" + correo + "');");
+                                    rs = conectar.consulta1("call dimeTipo('" + correo + "');");
                                     while (rs.next()) {
 
                                         if (rs.getString("privilegio").equals("1")) {
-                                            ResultSet rs1 = sql.consulta1("call dimePaquete('" + correo + "','Basico')");
+                                            ResultSet rs1 = conectar.consulta1("call dimePaquete('" + numSerie + "','');");
                                             while (rs1.next()) {
+                                                conectar.consulta1("call ingresaProteccion('"+correo+"','"+nka+"');");
                                                 if (rs1.getString("pkte").equals("Basico")) {
-                                                    out.print("<script> alert('Bienvenido " + nombre + "');</script>");
+                                                    String hola="<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/miCuenta.jsp'>";
+                                               //     out.print(hola);
                                                 }
                                             }
                                         } else {
-                                            out.print(index1);
+                                        //       out.print(index);
                                         }
                                     }
 
                                 } else {
                                     out.print("<script> alert('Error');</script>");
-                                    out.print(registro);
+                                   // out.print(index);
                                 }
                             }
                         }
@@ -194,15 +223,20 @@ if (request.getParameter("nombre").equals("")) {
                     }
                 }
 
-            } 
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 out.print(e);
-            }*/
-            } 
-        } 
-            catch (Exception xd) {
-            out.println("Error: " + xd);
-        }
+            }  
+             
+                         //----------------------------------------------------------------------------->
+                         
+                } 
+            }
+        } catch (SQLException e) {
+                out.print(e);
+            }
+                
+            
+            //--------------------------------------------------------------------->
             
         }
 
