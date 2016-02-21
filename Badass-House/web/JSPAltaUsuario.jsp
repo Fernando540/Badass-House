@@ -15,11 +15,19 @@
     String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>", numSerie = "";
     Pattern pat1 = Pattern.compile("[^A-Za-zА-За-з ]");
     Pattern pat = Pattern.compile("[A-Za-z0-9._%+-]+@[AZa-z0-9.-]+\\.[a-z]{2,4}$");
+    String nka="";
     Matcher mat1;
     Matcher mat2;
     Matcher mat3;
     ResultSet rs;
     HttpSession sesion = request.getSession();
+    
+    if (request.getParameter("nka").equals("")) {
+        out.print("<script> alert('Por Favor seleccione la proteccion');</script>");
+        out.print(registro);
+    } else {
+        nka = request.getParameter("nka");
+    }
 
     if (request.getParameter("numSerie").equals("") || request.getParameter("numSerie").length() > 6) {
         out.print("<script> alert('Ingresa bien el numero de serie!!!!');</script>");
@@ -154,6 +162,7 @@
                                         if (rs.getString("privilegio").equals("1")) {
                                             ResultSet rs1 = conectar.consulta1("call dimePaquete('" + numSerie + "','');");
                                             while (rs1.next()) {
+                                                conectar.consulta1("call ingresaProteccion('"+correo+"','"+nka+"');");
                                                 if (rs1.getString("pkte").equals("Basico")) {
                                                     out.print("<script> alert('Bienvenido " + nombre + "');</script>");
                                                     sesion.setAttribute("sessionMail", correo);

@@ -1,3 +1,5 @@
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.ResultSet"%>
 <!DOCTYPE html>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
@@ -11,7 +13,7 @@
         <link rel="stylesheet" href="css/estilos.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="BS/js/bootstrap.js"/></script>
-        <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <style>
         body {
             background: url("Imagenes/fondo_menu_principal.jpg") no-repeat fixed center;
@@ -45,7 +47,22 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="pForceClose.html">Force Close <span class="sr-only">(current)</span></a></li>
-                        <li><a href="pNKA.html">No Kids Allowed</a></li>
+                            <%
+                                BD.cDatos datos = new BD.cDatos();
+                                
+                                    datos.conectar();
+                                    String correo = (String) session.getAttribute("sessionMail");
+                                    ResultSet rs = datos.consulta1("call dimeNKA('" + correo + "');");
+                                    
+                                    while (rs.next()) {
+                                        
+                                        if (rs.getString("estadots").equals("SI")){
+                                            out.print("<li><a href='pNKA.html'>No Kids Allowed</a></li>");
+                                        }
+                                    }
+                            %>
+                        
+
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">In da' kithcen <span class="caret"></span></a>
                             <ul class="dropdown-menu">

@@ -41,8 +41,8 @@
             if (letras.indexOf(tecla) === -1 && !tecla_especial)
                 return false;
         }
-        
-    --></script>	
+
+--></script>	
 </head>
 <body>
     <div class="container">
@@ -58,6 +58,10 @@
                             <div class="form-group">
                                 <label>Numero de Serie</label>
                                 <input type="text" class="form-control" name="numSerie" maxlength="6" required >
+                                
+                            </div>
+                            <div class="form-group">
+                                <label>¿Protección para niños?&nbsp; SI<input type="checkbox" name="nka" value="SI">&nbsp; NO<input type="checkbox" name="nka" value="NO"></label>
                             </div>
                             <div class="form-group">
                                 <label>Nombre</label>
@@ -91,9 +95,9 @@
                                 <input type="password" class="form-control" name="password" maxlength="15" placeholder="15 caract&eacute;res max" required>
                             </div>
                             <button type="submit" name="Aceptar" class ="btn btn-success">Confirmar</button>
-                            
+
                             <br><br>
-                             Ya Tienes Cuenta? <a href="login.html" target="_top">Iniciar Sesi&oacute;n</a>
+                            Ya Tienes Cuenta? <a href="login.html" target="_top">Iniciar Sesi&oacute;n</a>
                         </form>
                     </div>
                 </div>
