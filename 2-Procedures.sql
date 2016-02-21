@@ -12,6 +12,8 @@ drop procedure if exists relacionaDespensa;
 drop procedure if exists dimePaquete;
 drop procedure if exists inventario;
 drop procedure if exists enchufeState;
+drop procedure if exists ingresaProteccion;
+drop procedure if exists dimeNKA;
 
 
 delimiter //
@@ -251,5 +253,26 @@ begin
     
 end;//
 
+create procedure ingresaProteccion(in mail nvarchar(35),in estadots nvarchar(30))
+begin
+declare idCasuki nvarchar(6);
+declare coin int(2);
+set idCasuki=(select idCasa from relUsrCasa where correo=mail);
+set coin=(select count(*) from relCasaNka where idCasa=idCasuki);
+if coin=0 then
+	if estadots='SI' then
+		insert into relCasaNka(idCasa,estado) values(idCasuki,estadots);
+	else
+		insert into relCasaNka(idCasa,estado) values(idCasuki,'no hay chavots');
+    end if;
+end if;
+end;//
+
+create procedure dimeNKA(in mail nvarchar(35))
+begin
+declare idCasuki nvarchar(6);
+set idCasuki=(select idCasa from relUsrCasa where correo=mail);
+select estado as estadots from relCasaNka where idCasa=idCasuki;
+end;//
 
 delimiter ;
