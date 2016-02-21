@@ -18,7 +18,7 @@ insert into catalogoeventos(idTipo,evento) values(2,'Uso Force Close');
 ##Tabla de Eventos##
 
 ##Tabla NKA
-create table relCasaNka(idRel int(2) auto_increment primary key, idCasa nvarchar(6), estado nvarchar(30));
+create table relCasaNka(idRel int(2) auto_increment primary key, idCasa nvarchar(6), estado nvarchar(30),alturaMax nvarchar(3), alturaMin nvarchar(3));
 ##Tabla NKA
 
 

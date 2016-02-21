@@ -14,7 +14,9 @@ drop procedure if exists inventario;
 drop procedure if exists enchufeState;
 drop procedure if exists ingresaProteccion;
 drop procedure if exists dimeNKA;
-
+drop procedure if exists ingresaAltura;
+drop procedure if exists dimeAltura;
+drop procedure if exists dimeCuenta;
 
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
@@ -275,4 +277,29 @@ set idCasuki=(select idCasa from relUsrCasa where correo=mail);
 select estado as estadots from relCasaNka where idCasa=idCasuki;
 end;//
 
+create procedure ingresaAltura(in mail nvarchar(20), in heightM nvarchar(3), in heightMin nvarchar(3))
+begin
+declare idCasuki nvarchar(6);
+set idCasuki=(select idCasa from relUsrCasa where correo=mail);
+update relCasaNka set alturaMax=heightM where idCasa=idCasuki;
+update relCasaNka set alturaMin=heightMin where idCasa=idCasuki;
+end;//
+create procedure dimeAltura(in mail nvarchar(35))
+begin
+declare idCasuki nvarchar(6);
+set idCasuki=(select idCasa from relUsrCasa where correo=mail);
+select alturaMax as alto, alturaMin as bajo from relCasaNka where idCasa=idCasuki;
+end;//
+create procedure dimeCuenta(in serie nvarchar(35))
+begin
+declare dir nvarchar(35);
+declare mensaje nvarchar(100);
+set dir=(select direccion from casa where idCasa=serie);
+if dir!='' then
+	set mensaje='Ya hay usuario principal';
+else
+	set mensaje='adelante';
+end if;
+select mensaje as msj;
+end;//
 delimiter ;
