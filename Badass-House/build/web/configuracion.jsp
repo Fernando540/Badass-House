@@ -4,6 +4,7 @@
 <%@page import="java.sql.ResultSet"%>
 <%
     String nombre = "";
+    String correo = "";
     String ap = "";
     String am = "";
     ResultSet rs;
@@ -151,18 +152,33 @@
                             while (rs2.next()) {
                                 String idCasa = rs2.getString("idCasa");
                                 rs1 = datous.consulta1("select correo from relUsrCasa where idCasa='" + idCasa + "'");
-                                out.println("<center><table><tr><td><h3>Correo</h3></td><td><h3>Tipo</h3></td></tr>");
+                                out.println("<center><table><tr><td><h3>Correo</h3></td><td><h3>Tipo</h3></td><td><h3>Privilegio por habitacion</h3></td></tr>");
                                 while (rs1.next()) {
                                     out.print("<tr>");
-                                    String correo = rs1.getString("correo");
+                                    correo = rs1.getString("correo");
                                     out.println("<td>" + rs1.getObject("correo") + "</td>");
-                                    rs3 = datous.consulta1("call dimeTipo('" + correo + "');");
-                                    while (rs3.next()) {
-                                        if (rs3.getString("privilegio").equals("1")) {
+                                    rs2 = datous.consulta1("call dimeTipo('" + correo + "');");
+                                    while (rs2.next()) {
+                                        if (rs2.getString("privilegio").equals("1")) {
                                             out.println("<td>Premium</td>");
-                                        }
-                                        if (rs3.getString("privilegio").equals("2")) {
+                                            out.println("<td>Todos</td>");
+                                        } else {
+
                                             out.println("<td>Junior</td>");
+                                            rs2 = datous.consulta1("call dimeHab('" + log + "');");
+                                            out.print("<td>");
+                                            int id = 0;
+                                            while (rs2.next()) {
+                                                id = Integer.parseInt(rs2.getString("habi"));
+                                            }
+                                            out.println("<form action='daPrivi.jsp' method='post'><select name='idHabitacion'>");
+                                            for (int n = 1; n <= id; n++) {
+                                                out.println("<option>" + n + "</option>");
+                                            }
+                                            out.println("</select><input type='text' name='permiso' placeholde='SI/'><input type='text' value='" + rs1.getObject("correo") + "' name='correo' ><button type='submit' name='Aceptar' class ='btn btn-success'>Confirmar</button>");
+
+                                            out.print("</td>");
+
                                         }
 
                                     }

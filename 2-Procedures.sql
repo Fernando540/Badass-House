@@ -19,6 +19,8 @@ drop procedure if exists ingresaAltura;
 drop procedure if exists dimeAltura;
 drop procedure if exists dimeCuenta;
 drop procedure if exists altaUsu;
+drop procedure if exists altaPrivi;
+drop procedure if exists dimeHab;
 
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
@@ -333,5 +335,15 @@ else
     set mensaje='alta';
 end if;
 select mensaje as msj;
+end;//
+create procedure altaPrivi(in correo nvarchar(35),in idHabitacon int, in permixo nvarchar(10))
+begin
+insert into privilegios(idHabitacion,correoJunior, permiso) values(idHabitacon,correo,permixo);
+end;//
+create procedure dimeHab(in mail nvarchar(35))
+begin
+declare idCasuki nvarchar(6);
+set idCasuki=(select idCasa from relUsrCasa where correo=mail);
+select idHabitacion as habi from relCasaHab where idCasa=idCasuki; 
 end;//
 delimiter ;
