@@ -12,6 +12,7 @@ drop procedure if exists relacionaDespensa;
 drop procedure if exists dimePaquete;
 drop procedure if exists inventario;
 drop procedure if exists enchufeState;
+drop procedure if exists simulaCorriente;
 drop procedure if exists ingresaProteccion;
 drop procedure if exists dimeNKA;
 drop procedure if exists ingresaAltura;
@@ -253,6 +254,19 @@ begin
     set idHabi = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where idCasa=idCasi and habitaciones.nombre=habiName);
         
 	select enchufes.uso as estatus, enchufes.Nombre as switchName from enchufes inner join relenchuhab on enchufes.idEnchufe = relenchuhab.idEnchufe where relenchuhab.idHabitacion=idHabi;
+end;//
+
+create procedure simulaCorriente(in mailuki nvarchar(35),in corriente int, in contacto nvarchar(30),in habName nvarchar(30))
+begin
+    declare homeID nvarchar(6);
+    declare idHabi int;
+    declare idContact int;
+    
+    set homeID = (select idCasa from relUsrCasa where Correo = mailuki);
+    set idHabi = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where relcasahab.idCasa=homeID and habitaciones.nombre=habName);
+    set idContact = (select enchufes.idEnchufe from enchufes inner join relEnchuHab on enchufes.idEnchufe = relEnchuHab.idEnchufe where relEnchuHab.idHabitacion=idHabi and enchufes.Nombre=contacto);
+    
+    update enchufes set uso=corriente where idEnchufe=idContact;
 end;//
 
 create procedure ingresaProteccion(in mail nvarchar(35),in estadots nvarchar(30))
