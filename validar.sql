@@ -18,3 +18,6 @@ select * from relEnchuHab;
 delete from usuarios where Correo = 'fernandojos44@gmail.com';
 
 select * from relCasaHab;
+
+select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where idCasa='abcdef' and habitaciones.nombre='Habitacion 4';
+select enchufes.uso as estatus, enchufes.Nombre as switchName from enchufes inner join relenchuhab on enchufes.idEnchufe = relenchuhab.idEnchufe where relenchuhab.idHabitacion=2;

@@ -3,6 +3,7 @@
     Created on : 18/02/2016, 10:16:19 AM
     Author     : Alumno
 --%>
+<%@page import="java.sql.SQLException"%>
 <%@page import="BD.cDatos"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -34,13 +35,23 @@
     </head>
     <body>
         <%
-        String correuki = (String) session.getAttribute("sessionMail");
-        String Habitacion = "Habitacion 1";
-        
-        cDatos datukis = new cDatos();
-        datukis.conectar();
+            String correuki = (String) session.getAttribute("sessionMail");
+            String Habitacion = "Habitacion 1";
+
+            cDatos datukis = new cDatos();
+            datukis.conectar();
+
+            try {
+                ResultSet rs = datukis.consulta1("call enchufeState('" + correuki + "'," + Habitacion + ");");
+                int contador = 0;
+                String[] uso = new String[4];
+                String[] nombres = new String[4];
+                while (rs.next()) {
+                    uso[contador] = (String) rs.getObject("estatus");
+                    nombres[contador] = (String) rs.getObject("switchName");
+                    contador++;
+                }
         %>
-        
         <div class="container">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
@@ -95,7 +106,6 @@
             <div class="">
                 <div class=" col-md-12 bienvenida text-center">Luces</div>
             </div>
-            
             <div class="">
                 <div class=" col-md-3 col-sm-6 col-xs-12 noTePeguesArriba fondoConfig ">
                     <!--<section>-->
@@ -105,23 +115,45 @@
                         </div>
                         Enchufe 1
                         <br>
-                        <table>
-                            <tr>
-                            <form class="form-horizontal" action="apagadores.jsp" method="post">
-                                <td>
-                                    <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
-                                    <label for="sliderPEntrada"></label>
-                                </td>
-                                <td style="padding-left:30px ; padding-top: 18px">
-                                    <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
-                                </td>
-                                <td style="padding-left:30px ; padding-top: 18px">
-                                    <input type='submit' value='Mandalo'/>
-                                </td>
-                            </form>
-                             </tr>
-                        </table>
+                        <% if (uso[0].equals("0")) {
+                        %>
+                        <form class="form-horizontal" action="apagadores.jsp" method="post">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
+                                        <label for="sliderPEntrada"></label>
+                                    </td>
+                                    <td style="padding-left:30px ; padding-top: 18px">
+                                        <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
+                                    </td>
+                                    <td style="padding-left:30px ; padding-top: 18px">
+                                        <input type='submit' value='Mandalo'/>
+                                    </td>
+                                </tr>  
+                            </table>
                         </form>
+                        <% } else {
+                        %>
+                        <form class="form-horizontal" action="apagadores.jsp" method="post">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" class="sliderEstilos" id="sliderPEntrada" checked>
+                                        <label for="sliderPEntrada"></label>
+                                    </td>
+                                    <td style="padding-left:30px ; padding-top: 18px">
+                                        <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
+                                    </td>
+                                    <td style="padding-left:30px ; padding-top: 18px">
+                                        <input type='submit' value='Mandalo'/>
+                                    </td>
+                                </tr>  
+                            </table>
+                        </form>
+                        <%
+                            }
+                        %>
                         <br>
                         Enchufe 2
                         <br>
@@ -129,10 +161,6 @@
                             <tr>
                             <form class="form-horizontal" action="apagadores.jsp" method="post">
                                 <td>
-                                    <%
-                                        ResultSet rs = datukis.consulta1("call enchufeState('" + correuki + "',"+Habitacion+");");
-                                        int E1;
-                                    %>
                                     <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
                                     <label for="sliderPEntrada"></label>
                                 </td>
@@ -143,9 +171,8 @@
                                     <input type='submit' value='Mandalo'/>
                                 </td>
                             </form>
-                                     </tr>
+                            </tr>
                         </table>
-                        </form>
                         <br>
                         Enchufe 3
                         <br>
@@ -165,7 +192,6 @@
                             </form>
                             </tr>
                         </table>
-                        </form>
                         <br>
                         Luz principal
                         <br>
@@ -182,99 +208,19 @@
                                 <td style="padding-left:30px ; padding-top: 18px">
                                     <input type='submit' value='Mandalo'/>
                                 </td>
-                            </form>
-                            </tr>
+                                </tr>
                         </table>
-                        </form>
                         <br>
                     </div>
-                        <!--<div class="form-group">
-                            <div class="page-header text-center">
-                                <h1>Gestión de Luces</h1>
-                            </div>
-                            Enchufe 1
-                            <br>
-                            <table>
-                                    <tr>
-                                        <form class="form-horizontal" action="apagadores.jsp" method="post">
-                                            <td>
-                                                <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
-                                                <label for="sliderPEntrada"></label>
-                                            </td>
-                                            <td style="padding-left:30px ; padding-top: 18px">
-                                                <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
-                                            </td>
-                                            <td style="padding-left:30px ; padding-top: 18px">
-                                                <input type='submit' value='Mandalo'/>
-                                            </td>
-                                        </form>
-                                    </tr>
-                                </table>
-                            </form>
-                            <br>
-                            Enchufe 2
-                            <br>
-                            <table>
-                                    <tr>
-                                        <form class="form-horizontal" action="apagadores.jsp" method="post">
-                                            <td>
-                                                <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
-                                                <label for="sliderPEntrada"></label>
-                                            </td>
-                                            <td style="padding-left:30px ; padding-top: 18px">
-                                                <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
-                                            </td>
-                                            <td style="padding-left:30px ; padding-top: 18px">
-                                                <input type='submit' value='Mandalo'/>
-                                            </td>
-                                        </form>
-                                    </tr>
-                                </table>
-                            </form>
-                            <br>
-                            Enchufe 3
-                            <br>
-                            <table>
-                                    <tr>
-                                        <form class="form-horizontal" action="apagadores.jsp" method="post">
-                                            <td>
-                                                <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
-                                                <label for="sliderPEntrada"></label>
-                                            </td>
-                                            <td style="padding-left:30px ; padding-top: 18px">
-                                                <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
-                                            </td>
-                                            <td style="padding-left:30px ; padding-top: 18px">
-                                                <input type='submit' value='Mandalo'/>
-                                            </td>
-                                        </form>
-                                    </tr>
-                                </table>
-                            </form>
-                            <br>
-                            Luz principal
-                            <br>
-                            <table>
-                                    <tr>
-                                        <form class="form-horizontal" action="apagadores.jsp" method="post">
-                                            <td>
-                                                <input type="checkbox" class="sliderEstilos" id="sliderPEntrada">
-                                                <label for="sliderPEntrada"></label>
-                                            </td>
-                                            <td style="padding-left:30px ; padding-top: 18px">
-                                                <input type="text" class="form-control" name="Luz1" placeholder="Voltaje" size="5">
-                                            </td>
-                                            <td style="padding-left:30px ; padding-top: 18px">
-                                                <input type='submit' value='Mandalo'/>
-                                            </td>
-                                        </form>
-                                    </tr>
-                                </table>-->
-                            </form>
-                            
                     <!--</section>-->
                 </div>
             </div>
         </div>
+        <%
+            } catch (Exception errots) {
+                out.print(errots.getMessage());
+            }
+        %>
+
     </body>
 </html>

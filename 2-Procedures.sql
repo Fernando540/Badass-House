@@ -243,17 +243,16 @@ begin
 	select cantidad as numero, idUnico as barcode, producto as produ, aviso as alertuki from relDespensaProductos where idDespensa = idDespi;
     
 end;//
-create procedure enchufeState(in mail nvarchar(35),habi nvarchar(15))
+
+create procedure enchufeState(in mail nvarchar(35),habiName nvarchar(15))
 begin
     declare idCasi nvarchar(6);
-    
+	declare idHabi int;
     
     set idCasi=(select idCasa from relUsrCasa where correo=mail);
-    
-    
-    
-	select cantidad as numero, idUnico as barcode from relDespensaProductos where idDespensa = idDespi;
-    
+    set idHabi = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where idCasa=idCasi and habitaciones.nombre=habiName);
+        
+	select enchufes.uso as estatus, enchufes.Nombre as switchName from enchufes inner join relenchuhab on enchufes.idEnchufe = relenchuhab.idEnchufe where relenchuhab.idHabitacion=idHabi;
 end;//
 
 create procedure ingresaProteccion(in mail nvarchar(35),in estadots nvarchar(30))
@@ -285,12 +284,14 @@ set idCasuki=(select idCasa from relUsrCasa where correo=mail);
 update relCasaNka set alturaMax=heightM where idCasa=idCasuki;
 update relCasaNka set alturaMin=heightMin where idCasa=idCasuki;
 end;//
+
 create procedure dimeAltura(in mail nvarchar(35))
 begin
 declare idCasuki nvarchar(6);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
 select alturaMax as alto, alturaMin as bajo from relCasaNka where idCasa=idCasuki;
 end;//
+
 create procedure dimeCuenta(in serie nvarchar(35))
 begin
 declare dir nvarchar(35);
@@ -303,6 +304,7 @@ else
 end if;
 select mensaje as msj;
 end;//
+
 create procedure altaUsu(in serie nvarchar(6), in mail nvarchar(35),in pass blob,in nom nvarchar(30), in aPat nvarchar(30), in aMat nvarchar(30), in tipoUsu nvarchar(20),in uldMail nvarchar(35), in passOrig blob)
 begin
 declare usuCoin int;
