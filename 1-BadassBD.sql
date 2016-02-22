@@ -12,6 +12,14 @@ create table catalogoEventos(idTipo int(2) primary key, evento nvarchar(20));
 create table despensa(idDespensa int(2) primary key,estatus nvarchar(30));
 create table catalogoProductos(idUnico nvarchar(100) primary key, idProducto int(2));##,producto nvarchar(30));
 
+##Tabla pre-Registro
+create table preUsuarios(Correo nvarchar(35) primary key,contrasenia blob,nombre nvarchar(30),aPaterno nvarchar(30),aMaterno nvarchar(30), codigo nvarchar(1000));
+##Tabla pre-Registro
+
+##Tabla privilegios 
+create table privilegios(idRel int(2) auto_increment primary key,idHabitacion int(2), correoJunior nvarchar(35), permiso nvarchar(10));
+##Tabla privilegios
+
 ##Tabla de Eventos##
 insert into catalogoeventos(idTipo,evento) values(1,'Modifico Despensa');
 insert into catalogoeventos(idTipo,evento) values(2,'Uso Force Close');

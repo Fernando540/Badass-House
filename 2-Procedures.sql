@@ -338,7 +338,15 @@ select mensaje as msj;
 end;//
 create procedure altaPrivi(in correo nvarchar(35),in idHabitacon int, in permixo nvarchar(10))
 begin
-insert into privilegios(idHabitacion,correoJunior, permiso) values(idHabitacon,correo,permixo);
+declare contador int;
+set contador=(select count(*) from privilegios where idHabitacion=idHabitacon and correoJunior=correo);
+if contador=0 then
+	insert into privilegios(idHabitacion,correoJunior, permiso) values(idHabitacon,correo,permixo);
+else
+	if permixo!='' then
+		update privilegios set permiso=permixo where idHabitacion=idHabitacon and correoJunior=correo;
+	end if;
+end if;
 end;//
 create procedure dimeHab(in mail nvarchar(35))
 begin
