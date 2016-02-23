@@ -9,7 +9,7 @@
     String pass = "";
     String pass1 = "";
     String login = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
-    String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index.jsp'>";
+    String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp'>";
     String index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>";
     cDatos bD = new cDatos();
     ResultSet rs;
@@ -60,8 +60,8 @@
                                 sesion.setAttribute("sessionName", nameUsr);
                                 sesion.setAttribute("sessionStat", "logueado");
                                 sesion.setMaxInactiveInterval(40 * 60);
-                                String indexBasic = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/homeBasic-test.jsp'>";
-                                out.print(indexBasic);
+                                
+                                out.print(index);
 
                             } else {
                                 out.print("<script> alert('Bienvenido " + correo + "');</script>");

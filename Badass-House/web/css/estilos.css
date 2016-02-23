@@ -223,10 +223,10 @@ strong {
     color: #000 !important;
 }
 
-#miCuenta, #cerraduras, #alacena{
+/*#miCuenta, #cerraduras, #alacena{
     background-color: #4d4d4d;
     color: #fff;
-}
+}*/
 
 h4.cuenta{
     color: #fff;

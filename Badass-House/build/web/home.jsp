@@ -16,6 +16,20 @@
         <link rel="stylesheet" href="css/SlidersStyles.css" />
         <script src="BS/js/bootstrap.js"/></script>
     <script src="js/scripts.js"/></script>
+<script type="text/javascript">
+    function apagaPrende1() {
+        document.OnOff1.submit();
+    }
+    function apagaPrende2() {
+        document.OnOff2.submit();
+    }
+    function apagaPrende3() {
+        document.OnOff3.submit();
+    }
+    function apagaPrende4() {
+        document.OnOff4.submit();
+    }
+</script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -35,7 +49,18 @@
                     <li><a href="#configuracion">Configuracion</a></li>
                     <li><a href="#cerraduras">Cerraduras</a></li>
                     <li><a href="#NoKids">Niños no</a></li>
-                    <li><a href="#alacena">Alacena</a></li>                                        
+                    <li><a href="Despensa.jsp">Alacena </a> </li> 
+                        <%
+                            BD.cDatos datos = new BD.cDatos();
+                            datos.conectar();
+                            ResultSet rs3;
+
+                        %>
+                    <li>
+                        <form class="navbar-form navbar-left" method="post" action="Logout" >
+                            <input type="submit" class="btn btn-default" value="Cerrar Sesion">
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -135,8 +160,7 @@
                 <strong>Mi cuenta</strong>
             </div>
         </div>
-        <%
-            String nombre = "";
+        <%            String nombre = "";
             String ap = "";
             String am = "";
             ResultSet rs;
@@ -146,9 +170,8 @@
             String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
 
             try {
-                BD.cDatos sql = new BD.cDatos();
-                sql.conectar();
-                rs = sql.consulta1("select * from usuarios where correo = '" + log + "';");
+
+                rs = datos.consulta1("select * from usuarios where correo = '" + log + "';");
 
                 while (rs.next()) {
                     nombre = rs.getString("nombre");
@@ -363,10 +386,10 @@
             <div class="col-md-8 col-md-offset-2 text-center">
                 <form method="post" action="subeAltura.jsp">
                     <%
-                        BD.cDatos datos = new BD.cDatos();
+
                         String altuki = "", altot = "", correo = (String) session.getAttribute("sessionMail");
                         ResultSet rs2;
-                        datos.conectar();
+
                         rs2 = datos.consulta1("call dimeAltura('" + correo + "')");
                         while (rs2.next()) {
                             if (rs2.getString("alto") != null && rs2.getString("bajo") != null) {
@@ -394,65 +417,14 @@
     </div>
     <!--Niños no-->
     <!--Despensa-->
-    <div id="alacena" class="container-fluid noTePeguesArriba">
+    <!--<div id="alacena" class="container-fluid noTePeguesArriba">
         <div class="row">
             <div class=" page-header text-center noTePeguesArriba">
                 <br>
                 <strong>Alacena</strong>
             </div>
-        </div>
-        <div class="col-md-10 col-md-offset-1">
-            <form method="post" action="Despensa1.jsp">
-                Código de barras<input type="text" placeholder="Codigo de Barras" maxlenght="35" name="codigo" required>
-                &nbsp;&nbsp;
-                Nombre<input type="text" placeholder="Nombre para identificar" maxlenght="35" name="nombre" required>
-                Avisar cuando haya...<input type="text" placeholder="cantidad" maxlenght="35" name="alerta">
-                &nbsp;&nbsp;
-                <button type="submit" name="Aceptar" class ="btn btn-success">Confirmar</button>
-            </form>
-            <%
-                //String correo = (String) session.getAttribute("sessionMail");
-                cDatos datukis = new cDatos();
-                datukis.conectar();
+        </div>-->
 
-                //res = datukis.modificacion1("insert into DespesaPRO(correo,produ, cod) values('" + correo + "','" + nombre + "','" + codigo + "');");
-                ResultSet rs1 = datukis.consulta1("call inventario('" + correo + "');");
-                out.println("<center><table><tr><td/><td><h3>Nombre</h3></td><td><h3>Codigo de Barras</h3></td><td><h3>Cantidad</h3></td><td/></tr>");
-
-                while (rs1.next()) {
-                    if (rs1.getString("alertuki") != null) {
-                        int si = Integer.parseInt(rs1.getString("alertuki"));
-                        int compara = Integer.parseInt(rs1.getString("numero"));
-                        System.out.println(si);
-                        System.out.println(compara);
-                        if (compara <= si) {
-                            out.print("<script> alert('Queda poco de " + rs1.getString("produ") + "');</script>");
-                        }
-                    } else {
-                        out.print("<script> alert('Le recomendamos ingresar una alerta de cantidad para: " + rs1.getString("produ") + "');</script>");
-                    }
-
-                    out.println("<tr>");
-                    out.println("<td><form action='BajaProducto' method='post' onsubmit='return confirmar()'>"
-                            + "<input type='text' value='" + rs1.getString("barcode") + "' name='codigo' hidden>"
-                            + "<button type='submit' class='btn btn-primary'><i class='glyphicon glyphicon-trash'></i></button>"
-                            + "</form></td>");
-                    out.println("<td>" + rs1.getObject("produ") + "</td>");
-                    out.println("<td>" + rs1.getObject("barcode") + "</td>");
-                    out.println("<td>" + rs1.getObject("numero") + "</td>");
-
-                    int cont = Integer.parseInt(rs1.getString("numero"));
-                    out.println("<td><form action='UsoProducto' method='post'><select name='Cantidad'>");
-                    for (int n = 1; n <= cont; n++) {
-                        out.println("<option>" + n + "</option>");
-                    }
-                    out.println("</select><input type='text' value='" + rs1.getString("barcode") + "' name='codigo' hidden><input type='submit' value='Usar'/></form></td>");
-                    out.println("</tr>");
-                }
-                out.println("</table></center>");
-            %>
-        </div>
-    </div>
     <!--Despensa-->
 </body>
 </html>
