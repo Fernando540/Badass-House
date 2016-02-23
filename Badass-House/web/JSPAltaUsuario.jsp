@@ -10,8 +10,8 @@
     int result;
     String clave = "";
     String nombre = "", aPaterno = "", aMaterno = "";
-    String direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/registro.html'>";
-    String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index.jsp'>";
+    String direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/registroBasico.jsp'>";
+    String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp'>";
     String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>", numSerie = "";
     Pattern pat1 = Pattern.compile("[^A-Za-zá-úÁ-Ú ]");
     Pattern pat = Pattern.compile("[A-Za-z0-9._%+-]+@[AZa-z0-9.-]+\\.[a-z]{2,4}$");
@@ -69,27 +69,27 @@
     } else {
         direccion = request.getParameter("direccion");
     }
-    if (request.getParameter("correo").equals("")) {
+    if (request.getParameter("correo1").equals("")) {
         out.print("<script> alert('Ingresa el correo!!!!');</script>");
         out.print(registro);
 
     } else {
 
-        String correo1 = request.getParameter("correo");
+        String correo1 = request.getParameter("correo1");
         Matcher mat = pat.matcher(correo1);
         if (mat.find()) {
-            correo = request.getParameter("correo");
+            correo = request.getParameter("correo1");
         } else {
             out.print("<script> alert('Ingresa un correo valido!!!!');</script>");
             out.print(registro);
         }
     }
-    if (request.getParameter("password").equals("")) {
+    if (request.getParameter("password1").equals("")) {
         out.print("<script> alert('Ingresa la contraseña!!!!');</script>");
         out.print(registro);
 
     } else {
-        password = request.getParameter("password");
+        password = request.getParameter("password1");
     }
     if (correo.equals("") || nombre.equals("") || aPaterno.equals("") || direccion.equals("") || aMaterno.equals("") || password.equals("")) {
         out.print("<script> alert('Ingresa bien tus datos!!!!');</script>");
@@ -163,20 +163,18 @@
                                             while (rs.next()) {
 
                                                 if (rs.getString("privilegio").equals("1")) {
-                                                    ResultSet rs1 = conectar.consulta1("call dimePaquete('" + numSerie + "','');");
-                                                    while (rs1.next()) {
+                                                   
                                                         conectar.consulta1("call ingresaProteccion('" + correo + "','" + nka + "');");
-                                                        if (rs1.getString("pkte").equals("Basico")) {
+                                                        
                                                             out.print("<script> alert('Bienvenido " + nombre + "');</script>");
                                                             sesion.setAttribute("sessionMail", correo);
                                                             sesion.setAttribute("sessionName", nombre);
                                                             sesion.setAttribute("numSerie", numSerie);
                                                             sesion.setAttribute("direccion", direccion);
                                                             sesion.setAttribute("sessionStat", "logueado");
-                                                            String homeBasic = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/homeBasic-test.jsp'>";
-                                                            out.print(homeBasic);
-                                                        }
-                                                    }
+                                                            
+                                                            out.print(index);
+                                                     
                                                 } else {
                                                     out.print("<script> alert('Bienvenido " + nombre + "');</script>");
                                                     sesion.setAttribute("sessionMail", correo);
