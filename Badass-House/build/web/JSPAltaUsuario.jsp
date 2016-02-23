@@ -166,16 +166,15 @@
                                                     ResultSet rs1 = conectar.consulta1("call dimePaquete('" + numSerie + "','');");
                                                     while (rs1.next()) {
                                                         conectar.consulta1("call ingresaProteccion('" + correo + "','" + nka + "');");
-                                                        if (rs1.getString("pkte").equals("Basico")) {
-                                                            out.print("<script> alert('Bienvenido " + nombre + "');</script>");
-                                                            sesion.setAttribute("sessionMail", correo);
-                                                            sesion.setAttribute("sessionName", nombre);
-                                                            sesion.setAttribute("numSerie", numSerie);
-                                                            sesion.setAttribute("direccion", direccion);
-                                                            sesion.setAttribute("sessionStat", "logueado");
-                                                            String homeBasic = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/homeBasic-test.jsp'>";
-                                                            out.print(homeBasic);
-                                                        }
+
+                                                        out.print("<script> alert('Bienvenido " + nombre + "');</script>");
+                                                        sesion.setAttribute("sessionMail", correo);
+                                                        sesion.setAttribute("sessionName", nombre);
+                                                        sesion.setAttribute("numSerie", numSerie);
+                                                        sesion.setAttribute("direccion", direccion);
+                                                        sesion.setAttribute("sessionStat", "logueado");
+                                                        String homeBasic = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/homeBasic-test.jsp'>";
+                                                        out.print(homeBasic);
                                                     }
                                                 } else {
                                                     out.print("<script> alert('Bienvenido " + nombre + "');</script>");
@@ -190,7 +189,7 @@
                                             out.print("<script> alert('Error');</script>");
                                             out.print(registro);
                                         }
-                                    }else{
+                                    } else {
                                         out.print("<script> alert('Ingresa a tu cuenta principal para agregar una nueva cuenta');</script>");
                                         out.print(registro);
                                     }
