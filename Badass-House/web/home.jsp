@@ -953,6 +953,10 @@
         %>
     </div>
     <%
+                /*                      HABITACIONES 3 Y 4
+                ----------------------------------------------------------------
+                ----------------------------------------------------------------
+                */
                 if (paquete.equals("Pro")){
     %>
     <div id='Habitacion3' class= 'container-fluid noTePeguesArriba' >
@@ -1490,7 +1494,7 @@
         <div class='row'>
             <div class='page-header text-center noTePeguesArriba'>
                 <br>
-                <strong>Habitacion 3</strong>
+                <strong>Habitacion 5</strong>
             </div>
         </div>
         <div class='row'>
