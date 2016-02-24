@@ -16,6 +16,7 @@
         <link rel="stylesheet" href="css/SlidersStyles.css" />
         <script src="BS/js/bootstrap.js"/></script>
     <script src="js/scripts.js"/></script>
+
 <script type="text/javascript">
     function apagaPrende1() {
         document.OnOff1.submit();
@@ -80,12 +81,12 @@
                                         out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
                                     } else {
                                         if (rs4.getString("pkte").equals("Pro")) {
-                                            out.print("<li><a href='#'>Habitacion 1</a></li>");
+                                            out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
                                             out.print("<li><a href='#'>Habitacion 2</a></li>");
                                             out.print("<li><a href='#'>Habitacion 3</a></li>");
                                             out.print("<li><a href='#'>Habitacion 4</a></li>");
                                         } else {
-                                            out.print("<li><a href='#'>Habitacion 1</a></li>");
+                                            out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
                                             out.print("<li><a href='#'>Habitacion 2</a></li>");
                                             out.print("<li><a href='#'>Habitacion 3</a></li>");
                                             out.print("<li><a href='#'>Habitacion 4</a></li>");
@@ -363,26 +364,19 @@
             <div class="text-center">                
                 <h4 class="status">Notificaciones</h4>
             </div>
-            <div class="col-md-3">
-                Cerraduras
-                <input type="checkbox" class="sliderEstilos" id="sliderForce">
-                <label for="sliderForce"></label>
-            </div>
-            <div class="col-md-3">
-                Niños no
-                <input type="checkbox" class="sliderEstilos" id="sliderKids">
-                <label for="sliderKids"></label>
-            </div>
-            <div class="col-md-3">
-                Alacena
-                <input type="checkbox" class="sliderEstilos" id="sliderKitchen">
-                <label for="sliderKitchen"></label>
-            </div>
-            <div class="col-md-3">
-                Cuartos
-                <input type="checkbox" class="sliderEstilos" id="sliderWife">
-                <label for="sliderWife"></label>
-            </div>
+            <%
+                ResultSet rs6;
+                datos.conectar();
+                rs6=datos.consulta1("call dimeNoti('"+correin+"');");
+                out.println("<center><table><tr><td><h3>Correo</h3></td><td><h3>Accion</h3></td><td><h3>Fecha</h3></td><td/></tr>");
+                while(rs6.next()){
+                    out.print("<tr><td>"+rs6.getString("correin")+"</td>");
+                    out.print("<td>"+rs6.getString("que")+"</td>");
+                    out.print("<td>"+rs6.getString("prueba")+"</td>");
+                    out.print("</tr>");
+                }
+                out.print("</center></table>");
+            %>
         </div>
     </div>
     <!--Div COnfiguración-->
@@ -783,7 +777,7 @@
                         <tr>
                             <td>
                                 <form name="OnOff5" action="ApagaPrende.jsp" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe" onclick="apagaPrende5()">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende5()">
                                     <label for="Enchufe1"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>

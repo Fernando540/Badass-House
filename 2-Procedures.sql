@@ -21,6 +21,8 @@ drop procedure if exists dimeCuenta;
 drop procedure if exists altaUsu;
 drop procedure if exists altaPrivi;
 drop procedure if exists dimeHab;
+drop procedure if exists dimeNoti;
+
 
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
@@ -106,13 +108,14 @@ begin
 		set total = (select cantidad from relDespensaProductos where idDespensa=iDesp and idUnico=idUnique);
 		update relDespensaProductos set cantidad=(total+1) where idDespensa=iDesp and idUnico=idUnique;
 	else
-    if alert='' then
-		insert into relDespensaProductos(idDespensa,idUnico,producto,cantidad) values (iDesp,idUnique,nombre,1);
-	else
-		insert into relDespensaProductos(idDespensa,idUnico,producto,cantidad,aviso) values (iDesp,idUnique,nombre,1,alert);
-    end if;
+		if alert='' then
+			insert into relDespensaProductos(idDespensa,idUnico,producto,cantidad) values (iDesp,idUnique,nombre,1);
+		else
+			insert into relDespensaProductos(idDespensa,idUnico,producto,cantidad,aviso) values (iDesp,idUnique,nombre,1,alert);
+		end if;
 		
     end if;
+    insert into notificaciones(idCasa,correo,acciones) values(homeID,correin,'Modifico Despensa');
 end;//
 
 create procedure UsoProducto(in mail nvarchar(35), in codigo nvarchar(35),in canti int)
@@ -128,7 +131,7 @@ begin
     set total = (select cantidad from relDespensaProductos where idUnico=codigo and idDespensa=iDesp);
 	set ntotal = (total-canti);
     update relDespensaProductos set cantidad=(ntotal) where idUnico=codigo and idDespensa=iDesp;
-
+	insert into notificaciones(idCasa,correo,acciones) values(homeID,mail,'Modifico Despensa');
 end;//
 
 create procedure actualiza(in mail nvarchar(45), in usr nvarchar(45), in ap nvarchar(45), in am nvarchar(45), in opass blob, in npass blob)
@@ -170,6 +173,7 @@ begin
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
     DELETE FROM relDespensaProductos WHERE idDespensa=iDesp and idUnico=codigo;
     DELETE FROM catalogoproductos WHERE idUnico=codigo;
+    insert into notificaciones(idCasa,correo,acciones) values(homeID,mail,'Elimino un elemento de la Despensa');
 end;//
 
 
@@ -353,5 +357,11 @@ begin
 declare idCasuki nvarchar(6);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
 select idHabitacion as habi from relCasaHab where idCasa=idCasuki; 
+end;//
+create procedure dimeNoti(in mail nvarchar(35))
+begin
+declare idCasuki nvarchar(6);
+set idCasuki=(select idCasa from relUsrCasa where correo=mail);
+select correo as correin, acciones as que, fecha as prueba from notificaciones where idCasa=idCasuki;
 end;//
 delimiter ;
