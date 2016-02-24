@@ -97,7 +97,7 @@
 
                 //res = datukis.modificacion1("insert into DespesaPRO(correo,produ, cod) values('" + correo + "','" + nombre + "','" + codigo + "');");
                 ResultSet rs = datukis.consulta1("call inventario('" + correo + "');");
-                out.println("<center><table><tr><td/><td><h3>Nombre</h3></td><td><h3>Codigo de Barras</h3></td><td><h3>Cantidad</h3></td><td/></tr>");
+                out.println("<center><table class='flat-table'><tr><th/><th><h3>Nombre</h3></th><th><h3>Codigo de Barras</h3></th><th><h3>Cantidad</h3></th><th/></tr>");
 
                 while (rs.next()) {
                     if (rs.getString("alertuki") != null) {

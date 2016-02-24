@@ -23,6 +23,8 @@ create table privilegios(idRel int(2) auto_increment primary key,idHabitacion in
 ##Tabla de Eventos##
 insert into catalogoeventos(idTipo,evento) values(1,'Modifico Despensa');
 insert into catalogoeventos(idTipo,evento) values(2,'Uso Force Close');
+
+create table notificaciones(idRel int(2) auto_increment primary key,idCasa nvarchar(6), correo nvarchar(35), acciones nvarchar(30), fecha timestamp default current_timestamp);
 ##Tabla de Eventos##
 
 ##Tabla NKA
