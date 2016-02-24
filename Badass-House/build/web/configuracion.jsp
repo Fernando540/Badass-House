@@ -26,8 +26,6 @@
         } catch (Exception xd) {
             out.println("Error: " + xd);
         }
-
-
 %>
 <!DOCTYPE html>
 <html>
