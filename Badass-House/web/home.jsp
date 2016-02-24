@@ -29,40 +29,87 @@
     function apagaPrende4() {
         document.OnOff4.submit();
     }
+    function apagaPrende5() {
+        document.OnOff5.submit();
+    }
+    function apagaPrende6() {
+        document.OnOff6.submit();
+    }
+    function apagaPrende7() {
+        document.OnOff7.submit();
+    }
+    function apagaPrende8() {
+        document.OnOff8.submit();
+    }
 </script>
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand">Casa de ${sessionScope.sessionName}<!--Aquí va el nombre del cabrón ese--></a>
-            </div>
-            <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#status">Status</a></li>
-                    <li><a href="#miCuenta">Mi cuenta</a></li>
-                    <li><a href="#configuracion">Configuracion</a></li>
-                    <li><a href="#cerraduras">Cerraduras</a></li>
-                    <li><a href="#NoKids">Niños no</a></li>
-                    <li><a href="Despensa.jsp">Alacena </a> </li> 
-                        <%
-                            BD.cDatos datos = new BD.cDatos();
-                            datos.conectar();
-                            ResultSet rs3;
+            <center>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand">Casa de ${sessionScope.sessionName}<!--Aquí va el nombre del cabrón ese--></a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
 
-                        %>
-                    <li>
-                        <form class="navbar-form navbar-left" method="post" action="Logout" >
-                            <input type="submit" class="btn btn-default" value="Cerrar Sesion">
-                        </form>
-                    </li>
-                </ul>
-            </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#status">Status</a></li>
+                        <li><a href="#miCuenta">Mi cuenta</a></li>
+                        <li><a href="#configuracion">Configuracion</a></li>
+                        <li><a href="#cerraduras">Cerraduras</a></li>
+                            <%
+                                BD.cDatos datos = new BD.cDatos();
+                                String correin = (String) session.getAttribute("sessionMail");
+                                datos.conectar();
+                                ResultSet rs3;
+                                rs3 = datos.consulta1("call dimeNKA('" + correin + "');");
+                                while (rs3.next()) {
+                                    if (rs3.getString("estadots").equals("SI")) {
+                                        out.print("<li><a href='#NoKids'>Niños no</a></li>");
+                                    }
+                                }
+                                ResultSet rs4 = datos.consulta1("call dimePaquete('','" + correin + "');");
+                                while (rs4.next()) {
+                                    if (rs4.getString("pkte").equals("Basico")) {
+                                        out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
+                                        out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
+                                    } else {
+                                        if (rs4.getString("pkte").equals("Pro")) {
+                                            out.print("<li><a href='#'>Habitacion 1</a></li>");
+                                            out.print("<li><a href='#'>Habitacion 2</a></li>");
+                                            out.print("<li><a href='#'>Habitacion 3</a></li>");
+                                            out.print("<li><a href='#'>Habitacion 4</a></li>");
+                                        } else {
+                                            out.print("<li><a href='#'>Habitacion 1</a></li>");
+                                            out.print("<li><a href='#'>Habitacion 2</a></li>");
+                                            out.print("<li><a href='#'>Habitacion 3</a></li>");
+                                            out.print("<li><a href='#'>Habitacion 4</a></li>");
+                                            out.print("<li><a href='#'>Habitacion 5</a></li>");
+                                            out.print("<li><a href='#'>Habitacion 6</a></li>");
+                                        }
+                                    }
+                                }
+                            %>
+                        <li>
+                            <form class="navbar-form navbar-left" method="post" action="mandaDespensa" >
+                                <input type="submit" class="btn btn-warning" value="Despensa">
+                            </form>
+                        </li>
+
+                        <li>
+                            <form class="navbar-form navbar-left" method="post" action="Logout" >
+                                <input type="submit" class="btn btn-default" value="Cerrar Sesion">
+                            </form>
+                        </li>
+                    </ul>
+
+                </div>
+            </center>            
         </div>
     </nav>
     <!--Div Satus-->
@@ -98,7 +145,7 @@
                 <label for="sliderWife"></label>
             </div>
         </div>
-        <div class="row-fluid">
+        <!--<div class="row-fluid">
             <div class="text-center">
                 <br><br><br><br>
                 <h4 class="status">Enchufes</h4>
@@ -123,7 +170,7 @@
                 <input type="checkbox" class="sliderEstilos" id="sliderEnchufe4">
                 <label for="sliderEnchufe4"></label>
             </div>
-        </div>
+        </div>-->
         <div class="row-fluid">
             <div class="text-center">
                 <br><br><br><br>
@@ -231,8 +278,9 @@
                     <button type="submit" class ="btn btn-success">Aceptar</button>
                     <button type="reset" class="btn btn-warning">Cancelar</button>                
                     <br><br>
+
+                    <small>*La contraseña actual es necesaria para cualquier cambio</small>
                 </center>
-                <small>*La contraseña actual es necesaria para cualquier cambio</small>
                 <input type="hidden" name="uX" value="">
             </form>
         </div>
@@ -268,9 +316,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label">Correo electrónico:</label>
+                    <label class="col-sm-4 control-label">Tipo Usuario:</label>
                     <div class="col-sm-6">
-                        <input type="password" class="form-control" name="password" maxlength="15" placeholder="15 caract&eacute;res max" required>
+                        <select class="form-control" name="tipoUsr" required>
+                            <option>Premium</option>
+                            <option>Junior</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -372,21 +423,26 @@
     </div>
     <!--Div Cerradura-->
     <!--Niños no-->
-    <div id="NoKids" class= "container-fluid noTePeguesArriba" >
-        <div class="row">
-            <div class="page-header text-center noTePeguesArriba">
+    <%
+        rs3 = datos.consulta1("call dimeNKA('" + correin + "');");
+        while (rs3.next()) {
+            if (rs3.getString("estadots").equals("SI")) {
+                out.print("<script>alert('Alta Exitosa');</script>");
+    %>
+    <div id='NoKids' class= 'container-fluid noTePeguesArriba' >
+        <div class='row'>
+            <div class='page-header text-center noTePeguesArriba'>
                 <br>
                 <strong>Niños no</strong>
             </div>
         </div>
-        <div class="row">
-            <div class="text-center">                
-                <h4 class="status">Altura de sensor</h4>
+        <div class='row'>
+            <div class='text-center'>                
+                <h4 class='status'>Altura de sensor</h4>
             </div>
-            <div class="col-md-8 col-md-offset-2 text-center">
-                <form method="post" action="subeAltura.jsp">
+            <div class='col-md-8 col-md-offset-2 text-center'>
+                <form method='post' action='subeAltura.jsp'>
                     <%
-
                         String altuki = "", altot = "", correo = (String) session.getAttribute("sessionMail");
                         ResultSet rs2;
 
@@ -400,31 +456,550 @@
                         }
 
                     %>
-                    <input type="text" name="alturaMax" size="3" value="<%=altuki%>" required>
+                    <input type='text' name='alturaMax' size='3' value='<%=altuki%>' required>
 
                     <br/>
-                    Altura del Sensor de Piso (centímetros)<input id="Alturamin" type="range" min="0" max="2" step="0.1" />
+                    Altura del Sensor de Piso (centímetros)<input id='Alturamin' type='range' min='0' max='2' step='0.1' />
 
                     <br/><br/>
-                    <input type="text" size="3" name="alturaMin" value="<%=altot%>" required>
+                    <input type='text' size='3' name='alturaMin' value='<%=altot%>' required>
                     <br/>
-                    Altura del Sensor mínima<input id="Alturamin" type="range" min="0" max="2" step="0.1" />
+                    Altura del Sensor mínima<input id='Alturamin' type='range' min='0' max='2' step='0.1' />
                     <br/>
-                    <button type="submit" name="Aceptar" class ="btn btn-success">Confirmar</button>
+                    <button type='submit' name='Aceptar' class ='btn btn-success'>Confirmar</button>
                 </form>
             </div>
         </div>
     </div>
-    <!--Niños no-->
-    <!--Despensa-->
-    <!--<div id="alacena" class="container-fluid noTePeguesArriba">
-        <div class="row">
-            <div class=" page-header text-center noTePeguesArriba">
+    <%
+            }
+        }
+    %>
+    <div id='Habitacion1' class= 'container-fluid noTePeguesArriba' >
+        <div class='row'>
+            <div class='page-header text-center noTePeguesArriba'>
                 <br>
-                <strong>Alacena</strong>
+                <strong>Habitacion 1</strong>
             </div>
-        </div>-->
+        </div>
+        <div class='row'>
+            <%
+                String correuki = (String) session.getAttribute("sessionMail");
 
-    <!--Despensa-->
+                cDatos datukis = new cDatos();
+                datukis.conectar();
+
+                try {
+                    ResultSet rs5 = datukis.consulta1("call enchufeState('" + correuki + "','Habitacion 1');");
+                    int contador = 0;
+
+                    String[] uso = new String[4];
+                    String[] nombres = new String[4];
+                    while (rs5.next()) {
+                        uso[contador] = rs5.getString("estatus");
+                        nombres[contador] = rs5.getString("switchName");
+                        contador = contador + 1;
+                    }
+            %>
+
+            <div class="">
+                <div class=" col-md-12 bienvenida text-center">Luces</div>
+            </div>
+            <div class="">
+                <center>
+                    <!--<section>-->
+                    <!--<div class="form-group">-->
+                    <div class="page-header text-center">
+                        <h1>Gestión de Luces</h1>
+                    </div>
+                    Enchufe 1
+                    <br>
+                    <% if (uso[0].equals("0")) {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff1" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende1()">
+                                    <label for="Enchufe1"></label>
+                                    <input type="text" value="50" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <% } else {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff1" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende1()" checked>
+                                    <label for="Enchufe1"></label>
+                                    <input type="text" value="0" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <%
+                        }
+                    %>
+                    <br>
+                    Enchufe 2
+                    <br>
+                    <% if (uso[1].equals("0")) {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff2" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende2()">
+                                    <label for="Enchufe2"></label>
+                                    <input type="text" value="50" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <% } else {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff2" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende2()" checked>
+                                    <label for="Enchufe2"></label>
+                                    <input type="text" value="0" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <%
+                        }
+                    %>
+                    <br>
+                    Enchufe 3
+                    <br>
+                    <% if (uso[2].equals("0")) {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff3" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende3()">
+                                    <label for="Enchufe3"></label>
+                                    <input type="text" value="50" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <% } else {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff3" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende3()" checked>
+                                    <label for="Enchufe3"></label>
+                                    <input type="text" value="0" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                   <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <%
+                        }
+                    %>
+                    <br>
+                    Luz Principal
+                    <br>
+                    <% if (uso[3].equals("0")) {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff4" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende4()">
+                                    <label for="Luz"></label>
+                                    <input type="text" value="50" name="Voltaje" hidden>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <% } else {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff4" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende4()" checked>
+                                    <label for="Luz"></label>
+                                    <input type="text" value="0" name="Voltaje" hidden>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <%
+                        }
+                    %>
+                    <br>
+                    </center>
+                    <!--</section>-->
+            </div>
+        </div>
+        <%
+            } catch (Exception errots) {
+                out.print(errots.getMessage());
+            }
+        %>
+    </div>
+    <div id='Habitacion2' class= 'container-fluid noTePeguesArriba' >
+        <div class='row'>
+            <div class='page-header text-center noTePeguesArriba'>
+                <br>
+                <strong>Habitacion 2</strong>
+            </div>
+        </div>
+        <div class='row'>
+            <%
+                //String correuki = (String) session.getAttribute("sessionMail");
+
+                //cDatos datukis = new cDatos();
+                datukis.conectar();
+
+                try {
+                    ResultSet rs5 = datukis.consulta1("call enchufeState('" + correuki + "','Habitacion 2');");
+                    int contador = 0;
+
+                    String[] uso = new String[4];
+                    String[] nombres = new String[4];
+                    while (rs5.next()) {
+                        uso[contador] = rs5.getString("estatus");
+                        nombres[contador] = rs5.getString("switchName");
+                        contador = contador + 1;
+                    }
+            %>
+
+            <div class="">
+                <div class=" col-md-12 bienvenida text-center">Luces</div>
+            </div>
+            <div class="">
+                <center>
+                    <!--<section>-->
+                    <!--<div class="form-group">-->
+                    <div class="page-header text-center">
+                        <h1>Gestión de Luces</h1>
+                    </div>
+                    Enchufe 1
+                    <br>
+                    <% if (uso[0].equals("0")) {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff5" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe" onclick="apagaPrende5()">
+                                    <label for="Enchufe1"></label>
+                                    <input type="text" value="50" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <% } else {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff5" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende5()" checked>
+                                    <label for="Enchufe1"></label>
+                                    <input type="text" value="0" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <%
+                        }
+                    %>
+                    <br>
+                    Enchufe 2
+                    <br>
+                    <% if (uso[1].equals("0")) {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff6" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende6()">
+                                    <label for="Enchufe2"></label>
+                                    <input type="text" value="50" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <% } else {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff6" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende6()" checked>
+                                    <label for="Enchufe2"></label>
+                                    <input type="text" value="0" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <%
+                        }
+                    %>
+                    <br>
+                    Enchufe 3
+                    <br>
+                    <% if (uso[2].equals("0")) {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff7" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende7()">
+                                    <label for="Enchufe3"></label>
+                                    <input type="text" value="50" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <% } else {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff7" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende7()" checked>
+                                    <label for="Enchufe3"></label>
+                                    <input type="text" value="0" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                   <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <%
+                        }
+                    %>
+                    <br>
+                    Luz Principal
+                    <br>
+                    <% if (uso[3].equals("0")) {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff8" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende8()">
+                                    <label for="Luz"></label>
+                                    <input type="text" value="50" name="Voltaje" hidden>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <% } else {
+                    %>
+                    <table style="width:30%">
+                        <tr>
+                            <td>
+                                <form name="OnOff8" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende8()" checked>
+                                    <label for="Luz"></label>
+                                    <input type="text" value="0" name="Voltaje" hidden>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                </form>
+                            </td>
+                            <td style="padding-left:30px ; padding-top: 18px">
+                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                    <%
+                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
+                                    %>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
+                                </form>
+                        </tr>
+                    </table>
+                    <%
+                        }
+                    %>
+                    <br>
+                    </center>
+                    <!--</section>-->
+            </div>
+        </div>
+        <%
+            } catch (Exception errots) {
+                out.print(errots.getMessage());
+            }
+        %>
+    </div>
 </body>
 </html>

@@ -17,6 +17,15 @@
         <script src="BS/js/bootstrap.js"/></script>
     <script src="js/scripts.js"/></script>
 <link rel="stylesheet" href="Estilos/estiloTabla.css">
+<style>
+            body {
+                background: url("Imagenes/background.jpg") no-repeat fixed center;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
+        </style>
 
 <script>
     function confirmar() {
@@ -49,7 +58,11 @@
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="home.jsp">Regresar</a></li>
+                    <li>
+                        <form class="navbar-form navbar-left" method="post" action="goBack" >
+                            <input type="submit" class="btn btn-warning" value="Regresar a Home">
+                        </form>
+                    </li>
                     <!--<li><a href="#miCuenta">Mi cuenta</a></li>
                     <li><a href="#configuracion">Configuracion</a></li>
                     <li><a href="#cerraduras">Cerraduras</a></li>

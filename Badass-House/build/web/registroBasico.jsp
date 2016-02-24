@@ -77,7 +77,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="page-header veteArriba text-center">
-                    <h3>Registro</h3><small>Básico</small>
+                    <h3>Registro</h3>
                 </div>
                 <form id="Register" name="RegistroU" method="post" action="JSPAltaUsuario.jsp">
                     <div class="form-group">
@@ -127,8 +127,8 @@
                         <input type="password" class="form-control" name="password2" id="password2" maxlength="15" required onfocusout="validarPassword()">
                     </div>
                     <button type="submit" name="Aceptar" id="Aceptar" class ="btn btn-success" disabled>Confirmar</button>
-                    <!--<button type="reset" name="Cancelar" class ="btn btn-danger">Cancelar</button>
-                    <a href="index.html"><input type="button" name="Regresar" value="Regresar" class ="btn btn-warning"></a>-->
+                    <button type="reset" name="Cancelar" class ="btn btn-danger">Cancelar</button>
+                    <a href="index.html"><input type="button" name="Regresar" value="Regresar" class ="btn btn-warning"></a>
 
                     <br><br>
                     Ya Tienes Cuenta? <a href="login.html" target="_top">Iniciar Sesi&oacute;n</a>

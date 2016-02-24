@@ -10,10 +10,10 @@
         int res;
         res = datos.modificacion1("call simulaCorriente('" + correo + "','" + volt + "','" + contact + "','" + habit + "')");
         if (res == 1) {
-            out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/luces.jsp'>");
+            out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion1'>");
         } else {
             out.print("<script>alert('Errorts');</script>");
-            out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/luces.jsp'>");
+            out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion1'>");
         }
     } catch (Exception e) {
         out.print(e);
