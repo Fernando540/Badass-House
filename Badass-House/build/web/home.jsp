@@ -16,7 +16,7 @@
         <link rel="stylesheet" href="css/SlidersStyles.css" />
         <script src="BS/js/bootstrap.js"/></script>
     <script src="js/scripts.js"/></script>
-
+<link rel="stylesheet" href="Estilos/estiloTabla.css">
 <script type="text/javascript">
     function apagaPrende1() {
         document.OnOff1.submit();
@@ -368,7 +368,7 @@
                 ResultSet rs6;
                 datos.conectar();
                 rs6=datos.consulta1("call dimeNoti('"+correin+"');");
-                out.println("<center><table><tr><td><h3>Correo</h3></td><td><h3>Accion</h3></td><td><h3>Fecha</h3></td><td/></tr>");
+                out.println("<center><table><tr><th><h3>Correo</h3></th><th><h3>Accion</h3></th><th><h3>Fecha</h3></th></tr>");
                 while(rs6.next()){
                     out.print("<tr><td>"+rs6.getString("correin")+"</td>");
                     out.print("<td>"+rs6.getString("que")+"</td>");

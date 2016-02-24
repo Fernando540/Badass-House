@@ -151,6 +151,7 @@
                                 rs = conectar.consulta1("call dimeCuenta('" + numSerie + "');");
                                 while (rs.next()) {
                                     if (rs.getString("msj").equals("adelante")) {
+                                        System.out.println(rs.getString("msj"));
                                         conectar.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
                                         result = conectar.modificacion();
                                         conectar.regCasa(direccion, correo, numSerie);
