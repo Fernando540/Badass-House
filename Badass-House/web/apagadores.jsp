@@ -5,16 +5,24 @@
     String volt = request.getParameter("Voltaje");
     String contact = request.getParameter("contacto");
     String habit = request.getParameter("habit");
-    String redirect="";
-    
-    if(habit.equals("Habitacion 1")){
+    String redirect = "";
+
+    if (habit.equals("Habitacion 1")) {
         redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion1'>";
-    }else{
-        if(habit.equals("Habitacion 2")){
+    } else {
+        if (habit.equals("Habitacion 2")) {
             redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion2'>";
+        } else {
+            if (habit.equals("Habitacion 3")) {
+                redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion3'>";
+            } else {
+                if (habit.equals("Habitacion 4")) {
+                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion4'>";
+                }
+            }
         }
     }
-    
+
     try {
         datos.conectar();
         int res;
