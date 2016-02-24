@@ -427,7 +427,6 @@
         rs3 = datos.consulta1("call dimeNKA('" + correin + "');");
         while (rs3.next()) {
             if (rs3.getString("estadots").equals("SI")) {
-                out.print("<script>alert('Alta Exitosa');</script>");
     %>
     <div id='NoKids' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>
