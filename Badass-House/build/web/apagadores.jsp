@@ -18,6 +18,12 @@
             } else {
                 if (habit.equals("Habitacion 4")) {
                     redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion4'>";
+                } else {
+                    if (habit.equals("Habitacion 5")) {
+                        redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion5'>";
+                    } else {
+                        redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion6'>";
+                    }
                 }
             }
         }
