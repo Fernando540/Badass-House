@@ -360,8 +360,48 @@ select idHabitacion as habi from relCasaHab where idCasa=idCasuki;
 end;//
 create procedure dimeNoti(in mail nvarchar(35))
 begin
+declare activate int;
 declare idCasuki nvarchar(6);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
+set activate=(select activado from eventos where idCasa=idCasuki);
+if activate!='activado'then
 select correo as correin, acciones as que, fecha as prueba from notificaciones where idCasa=idCasuki;
+end if;
+select '' as correin, '' as que, '' as prueba from notificaciones where idCasa=idCasuki;
+end;//
+create procedure activaNoti(in mail nvarchar(35),tipo nvarchar(20))
+begin
+declare idCasuki nvarchar(6);
+declare estado nvarchar(100);
+declare idTipo int;
+set idCasuki=(select idCasa from relUsrCasa where correo=mail);
+if tipo='despensa' then
+	set idTipo=1;
+    set estado=(select activado from eventos where idCasa=idCasuki and idEvento=idTipo);
+	if estado='activado' then
+		update eventos set activado='desactivado' where idCasa=idCasuki;
+	else
+		update eventos set activado='activado' where idCasa=idCasuki;
+	end if;
+else
+	set idTipo=2;
+    set estado=(select activado from eventos where idCasa=idCasuki and idEvento=idTipo);
+	if estado='activado' then
+		update eventos set activado='desactivado' where idCasa=idCasuki;
+	else
+		update eventos set activado='activado' where idCasa=idCasuki;
+	end if;
+end if;
+
+
+end;//
+create procedure altaNoti(in idCasuki nvarchar(6))
+begin
+	declare cuenta int;
+    set cuenta=(select count(*) from eventos where idCasuki=idCasa and idTipo=1);
+    if cuenta=0 then
+		insert into eventos(idCasa,idEvento,activado) values(idCasuki,1,'activado');
+        insert into eventos(idCasa,idEvento,activado) values(idCasuki,2,'activado');
+    end if;
 end;//
 delimiter ;

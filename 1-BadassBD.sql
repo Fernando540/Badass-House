@@ -7,7 +7,7 @@ create table usuarios(Correo nvarchar(35) primary key,contrasenia blob,nombre nv
 create table casa(idCasa nvarchar(6) primary key,direccion nvarchar(30),paquete nvarchar(30));
 create table dispositivos(idDispositivo int(2) primary key,nombre nvarchar(30));
 create table tipoUsuario(idTipo int(2) primary key,tipo nvarchar(30));
-create table eventos(idEvento int(2) primary key,fecha timestamp default current_timestamp);
+create table eventos(idRel int auto_increment primary key,idCasa nvarchar(6),idEvento int(2) ,activado nvarchar(30));
 create table catalogoEventos(idTipo int(2) primary key, evento nvarchar(20));
 create table despensa(idDespensa int(2) primary key,estatus nvarchar(30));
 create table catalogoProductos(idUnico nvarchar(100) primary key, idProducto int(2));##,producto nvarchar(30));
