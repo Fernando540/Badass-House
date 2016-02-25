@@ -15,7 +15,8 @@
         <link rel="stylesheet" href="css/estilos.css" />
         <link rel="stylesheet" href="css/SlidersStyles.css" />
         <script src="BS/js/bootstrap.js"/></script>
-        <script src="js/scripts.js"/></script>
+    <script src="js/scripts.js"/></script>
+<link rel="stylesheet" href="Estilos/estiloTabla.css">
 </head>
 <body>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -53,7 +54,7 @@
                                 while (paqueton.next()) {
                                     paquete = paqueton.getString("pkte");
                                 }
-
+                                
                                 ResultSet rs4 = datos.consulta1("call dimePaquete('','" + correin + "');");
                                 while (rs4.next()) {
                                     if (rs4.getString("pkte").equals("Basico")) {
@@ -126,6 +127,32 @@
                 <label for="sliderWife"></label>
             </div>
         </div>
+        <!--<div class="row-fluid">
+            <div class="text-center">
+                <br><br><br><br>
+                <h4 class="status">Enchufes</h4>
+            </div>
+            <div class="col-md-3">
+                Enchufe 1
+                <input type="checkbox" class="sliderEstilos" id="sliderEnchufe1">
+                <label for="sliderEnchufe1"></label>
+            </div>
+            <div class="col-md-3">
+                Enchufe 2
+                <input type="checkbox" class="sliderEstilos" id="sliderEnchufe2">
+                <label for="sliderEnchufe2"></label>
+            </div>
+            <div class="col-md-3">
+                Enchufe 3
+                <input type="checkbox" class="sliderEstilos" id="sliderEnchufe3">
+                <label for="sliderEnchufe3"></label>
+            </div>
+            <div class="col-md-3">
+                Enchufe 4
+                <input type="checkbox" class="sliderEstilos" id="sliderEnchufe4">
+                <label for="sliderEnchufe4"></label>
+            </div>
+        </div>-->
         <div class="row-fluid">
             <div class="text-center">
                 <br><br><br><br>
@@ -318,26 +345,19 @@
             <div class="text-center">                
                 <h4 class="status">Notificaciones</h4>
             </div>
-            <div class="col-md-3">
-                Cerraduras
-                <input type="checkbox" class="sliderEstilos" id="sliderForce">
-                <label for="sliderForce"></label>
-            </div>
-            <div class="col-md-3">
-                Niños no
-                <input type="checkbox" class="sliderEstilos" id="sliderKids">
-                <label for="sliderKids"></label>
-            </div>
-            <div class="col-md-3">
-                Alacena
-                <input type="checkbox" class="sliderEstilos" id="sliderKitchen">
-                <label for="sliderKitchen"></label>
-            </div>
-            <div class="col-md-3">
-                Cuartos
-                <input type="checkbox" class="sliderEstilos" id="sliderWife">
-                <label for="sliderWife"></label>
-            </div>
+            <%
+                ResultSet rs6;
+                datos.conectar();
+                rs6=datos.consulta1("call dimeNoti('"+correin+"');");
+                out.println("<center><table><tr><th><h3>Correo</h3></th><th><h3>Accion</h3></th><th><h3>Fecha</h3></th></tr>");
+                while(rs6.next()){
+                    out.print("<tr><td>"+rs6.getString("correin")+"</td>");
+                    out.print("<td>"+rs6.getString("que")+"</td>");
+                    out.print("<td>"+rs6.getString("prueba")+"</td>");
+                    out.print("</tr>");
+                }
+                out.print("</center></table>");
+            %>
         </div>
     </div>
     <!--Div COnfiguración-->
@@ -382,6 +402,7 @@
         rs3 = datos.consulta1("call dimeNKA('" + correin + "');");
         while (rs3.next()) {
             if (rs3.getString("estadots").equals("SI")) {
+                out.print("<script>alert('Alta Exitosa');</script>");
     %>
     <div id='NoKids' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>
@@ -473,7 +494,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff1" action="apagadores.jsp" method="post">
+                                <form name="OnOff1" action="ApagaPrende.jsp" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende1()">
                                     <label for="Enchufe1"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -497,7 +518,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff1" action="apagadores.jsp" method="post">
+                                <form name="OnOff1" action="ApagaPrende.jsp" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende1()" checked>
                                     <label for="Enchufe1"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -527,7 +548,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff2" action="apagadores.jsp" method="post">
+                                <form name="OnOff2" action="ApagaPrende.jsp" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende2()">
                                     <label for="Enchufe2"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -551,7 +572,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff2" action="apagadores.jsp" method="post">
+                                <form name="OnOff2" action="ApagaPrende.jsp" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende2()" checked>
                                     <label for="Enchufe2"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -581,7 +602,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff3" action="apagadores.jsp" method="post">
+                                <form name="OnOff3" action="ApagaPrende.jsp" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende3()">
                                     <label for="Enchufe3"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -605,7 +626,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff3" action="apagadores.jsp" method="post">
+                                <form name="OnOff3" action="ApagaPrende.jsp" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende3()" checked>
                                     <label for="Enchufe3"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -635,7 +656,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff4" action="apagadores.jsp" method="post">
+                                <form name="OnOff4" action="ApagaPrende.jsp" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende4()">
                                     <label for="Luz"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -659,7 +680,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff4" action="apagadores.jsp" method="post">
+                                <form name="OnOff4" action="ApagaPrende.jsp" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende4()" checked>
                                     <label for="Luz"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -701,6 +722,9 @@
         </div>
         <div class='row'>
             <%
+                //String correuki = (String) session.getAttribute("sessionMail");
+
+                //cDatos datukis = new cDatos();
                 datukis.conectar();
 
                 try {
@@ -733,9 +757,9 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff5" action="apagadores.jsp" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe5" onclick="apagaPrende5()">
-                                    <label for="Enchufe5"></label>
+                                <form name="OnOff5" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende5()">
+                                    <label for="Enchufe1"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>
                                     <input type="text" value="Habitacion 2" name="habit" hidden>
@@ -757,9 +781,9 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff5" action="apagadores.jsp" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe5" onclick="apagaPrende5()" checked>
-                                    <label for="Enchufe5"></label>
+                                <form name="OnOff5" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende5()" checked>
+                                    <label for="Enchufe1"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>
                                     <input type="text" value="Habitacion 2" name="habit" hidden>
@@ -787,9 +811,9 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff6" action="apagadores.jsp" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe6" onclick="apagaPrende6()">
-                                    <label for="Enchufe6"></label>
+                                <form name="OnOff6" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende6()">
+                                    <label for="Enchufe2"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe2" name="contacto" hidden>
                                     <input type="text" value="Habitacion 2" name="habit" hidden>
@@ -811,9 +835,9 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff6" action="apagadores.jsp" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe6" onclick="apagaPrende6()" checked>
-                                    <label for="Enchufe6"></label>
+                                <form name="OnOff6" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende6()" checked>
+                                    <label for="Enchufe2"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe2" name="contacto" hidden>
                                     <input type="text" value="Habitacion 2" name="habit" hidden>
@@ -841,9 +865,9 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff7" action="apagadores.jsp" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe7" onclick="apagaPrende7()">
-                                    <label for="Enchufe7"></label>
+                                <form name="OnOff7" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende7()">
+                                    <label for="Enchufe3"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
                                     <input type="text" value="Habitacion 2" name="habit" hidden>
@@ -865,9 +889,9 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff7" action="apagadores.jsp" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe7" onclick="apagaPrende7()" checked>
-                                    <label for="Enchufe7"></label>
+                                <form name="OnOff7" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende7()" checked>
+                                    <label for="Enchufe3"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
                                     <input type="text" value="Habitacion 2" name="habit" hidden>
@@ -895,8 +919,8 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff8" action="apagadores.jsp" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz2" onclick="apagaPrende8()">
+                                <form name="OnOff8" action="ApagaPrende.jsp" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz2" onclick="apagaPrende8()" checked>
                                     <label for="Luz2"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Luz" name="contacto" hidden>
@@ -919,7 +943,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff8" action="apagadores.jsp" method="post">
+                                <form name="OnOff8" action="ApagaPrende.jsp" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz2" onclick="apagaPrende8()" checked>
                                     <label for="Luz2"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
