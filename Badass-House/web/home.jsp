@@ -356,8 +356,15 @@
             <%
                 ResultSet rs6;
                 datos.conectar();
-                rs6=datos.consulta1("call dimeNoti('"+correin+"');");
+                rs6=datos.consulta1("call dimeNoti('"+correin+"','1');");
                 out.println("<center><table><tr><th><h3>Correo</h3></th><th><h3>Accion</h3></th><th><h3>Fecha</h3></th></tr>");
+                while(rs6.next()){
+                    out.print("<tr><td>"+rs6.getString("correin")+"</td>");
+                    out.print("<td>"+rs6.getString("que")+"</td>");
+                    out.print("<td>"+rs6.getString("prueba")+"</td>");
+                    out.print("</tr>");
+                }
+                rs6=datos.consulta1("call dimeNoti('"+correin+"','2');");
                 while(rs6.next()){
                     out.print("<tr><td>"+rs6.getString("correin")+"</td>");
                     out.print("<td>"+rs6.getString("que")+"</td>");

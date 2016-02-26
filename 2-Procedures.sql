@@ -360,15 +360,16 @@ declare idCasuki nvarchar(6);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
 select idHabitacion as habi from relCasaHab where idCasa=idCasuki; 
 end;//
-create procedure dimeNoti(in mail nvarchar(35))
+create procedure dimeNoti(in mail nvarchar(35), idTipo nvarchar(2))
 begin
 declare activate int;
 declare idCasuki nvarchar(6);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
-set activate=(select activado from eventos where idCasa=idCasuki);
-if activate!='activado'then
-select correo as correin, acciones as que, fecha as prueba from notificaciones where idCasa=idCasuki;
-
+set activate=(select activado from eventos where idCasa=idCasuki and idEvento=idTipo);
+if activate='activado'then
+	select correo as correin, acciones as que, fecha as prueba from notificaciones where idCasa=idCasuki;
+else
+	select '' as correin, '' as que, '' as prueba from notificaciones where idCasa=idCasuki;
 end if;
 end;//
 create procedure activaNoti(in mail nvarchar(35),tipo nvarchar(20))
