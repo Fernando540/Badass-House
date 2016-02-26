@@ -49,10 +49,10 @@ public class UsoProducto extends HttpServlet {
                 res = datos.modificacion1("call UsoProducto('" + correo + "','" + code + "','" + canti + "');");
                 if (res == 1) {
                     out.print("<script>alert('Se han usado los elementos');</script>");
-                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp'>");
+                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/Despensa.jsp'>");
                 } else {
                     out.print("<script>alert('Errorts');</script>");
-                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp'>");
+                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/Despensa.jsp'>");
                 }
             } catch (Exception e) {
                 out.print(e);

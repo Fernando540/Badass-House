@@ -135,32 +135,6 @@
                 <label for="sliderWife"></label>
             </div>
         </div>
-        <!--<div class="row-fluid">
-            <div class="text-center">
-                <br><br><br><br>
-                <h4 class="status">Enchufes</h4>
-            </div>
-            <div class="col-md-3">
-                Enchufe 1
-                <input type="checkbox" class="sliderEstilos" id="sliderEnchufe1">
-                <label for="sliderEnchufe1"></label>
-            </div>
-            <div class="col-md-3">
-                Enchufe 2
-                <input type="checkbox" class="sliderEstilos" id="sliderEnchufe2">
-                <label for="sliderEnchufe2"></label>
-            </div>
-            <div class="col-md-3">
-                Enchufe 3
-                <input type="checkbox" class="sliderEstilos" id="sliderEnchufe3">
-                <label for="sliderEnchufe3"></label>
-            </div>
-            <div class="col-md-3">
-                Enchufe 4
-                <input type="checkbox" class="sliderEstilos" id="sliderEnchufe4">
-                <label for="sliderEnchufe4"></label>
-            </div>
-        </div>-->
         <div class="row-fluid">
             <div class="text-center">
                 <br><br><br><br>
@@ -246,12 +220,6 @@
                         <input type="text" class="form-control" placeholder="Apellido Materno" name="am" value="<%=am%>">
                     </div>
                 </div>
-                <!--<div class="form-group">
-                    <label class="col-sm-4 control-label">Correo:</label>
-                    <div class="col-sm-6">
-                        <input type="email" class="form-control" placeholder="nombre@dominio.com">
-                    </div>
-                </div>-->
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Contraseña nueva:</label>
                     <div class="col-sm-6">
@@ -271,7 +239,7 @@
 
                     <small>*La contraseña actual es necesaria para cualquier cambio</small>
                 </center>
-                <input type="hidden" name="uX" value="">
+                <input type="hidden" name="uX" value="<%=log%>">
             </form>
         </div>
         <div class="row">

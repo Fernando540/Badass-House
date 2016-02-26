@@ -63,11 +63,6 @@
                             <input type="submit" class="btn btn-warning" value="Regresar a Home">
                         </form>
                     </li>
-                    <!--<li><a href="#miCuenta">Mi cuenta</a></li>
-                    <li><a href="#configuracion">Configuracion</a></li>
-                    <li><a href="#cerraduras">Cerraduras</a></li>
-                    <li><a href="#NoKids">Niños no</a></li>
-                    <li><a href="Despensa.jsp">Alacena  </a> </li> -->
                     <li>
                         <form class="navbar-form navbar-left" method="post" action="Logout" >
                             <input type="submit" class="btn btn-default" value="Cerrar Sesion">
