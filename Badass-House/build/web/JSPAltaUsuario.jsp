@@ -166,7 +166,7 @@
                                                 if (rs.getString("privilegio").equals("1")) {
                                                    
                                                         conectar.consulta1("call ingresaProteccion('" + correo + "','" + nka + "');");
-                                                        
+                                                        conectar.consulta1("call altaNoti('"+numSerie+"');");
                                                             out.print("<script> alert('Bienvenido " + nombre + "');</script>");
                                                             sesion.setAttribute("sessionMail", correo);
                                                             sesion.setAttribute("sessionName", nombre);

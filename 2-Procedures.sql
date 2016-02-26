@@ -22,6 +22,8 @@ drop procedure if exists altaUsu;
 drop procedure if exists altaPrivi;
 drop procedure if exists dimeHab;
 drop procedure if exists dimeNoti;
+drop procedure if exists altaNoti;
+drop procedure if exists activaNoti;
 
 
 delimiter //
@@ -366,8 +368,8 @@ set idCasuki=(select idCasa from relUsrCasa where correo=mail);
 set activate=(select activado from eventos where idCasa=idCasuki);
 if activate!='activado'then
 select correo as correin, acciones as que, fecha as prueba from notificaciones where idCasa=idCasuki;
+
 end if;
-select '' as correin, '' as que, '' as prueba from notificaciones where idCasa=idCasuki;
 end;//
 create procedure activaNoti(in mail nvarchar(35),tipo nvarchar(20))
 begin
@@ -398,7 +400,7 @@ end;//
 create procedure altaNoti(in idCasuki nvarchar(6))
 begin
 	declare cuenta int;
-    set cuenta=(select count(*) from eventos where idCasuki=idCasa and idTipo=1);
+    set cuenta=(select count(*) from eventos where idCasuki=idCasa and idEvento=1);
     if cuenta=0 then
 		insert into eventos(idCasa,idEvento,activado) values(idCasuki,1,'activado');
         insert into eventos(idCasa,idEvento,activado) values(idCasuki,2,'activado');

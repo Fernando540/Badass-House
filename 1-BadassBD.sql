@@ -74,11 +74,11 @@ alter table relUsrTipo add foreign key(idTipo) references tipoUsuario(idTipo);
 alter table relDispositivoTipo add foreign key(idDispositivo) references dispositivos(idDispositivo);
 alter table relDispositivoTipo add foreign key(idDispositivo) references tipoUsuario(idTipo);
 
-alter table relUsrEvento add foreign key(Correo) references usuarios(Correo);
+/*alter table relUsrEvento add foreign key(Correo) references usuarios(Correo);
 alter table relUsrEvento add foreign key(idEvento) references eventos(idEvento);
 
 alter table relEventoCatalogo add foreign key(idEvento) references eventos(idEvento);
-alter table relEventoCatalogo add foreign key(idTipo) references catalogoEventos(idTipo);
+alter table relEventoCatalogo add foreign key(idTipo) references catalogoEventos(idTipo)*/
 
 alter table relDispCasa add foreign key(idCasa) references casa(idCasa);
 alter table relDispCasa add foreign key(idDispositivo) references dispositivos(idDispositivo);
