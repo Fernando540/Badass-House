@@ -22,13 +22,12 @@
     ResultSet rs;
     HttpSession sesion = request.getSession();
 
-    if (request.getParameter("nka").equals("")) {
-        out.print("<script> alert('Por Favor seleccione la proteccion');</script>");
-        out.print(registro);
-    } else {
-        nka = request.getParameter("nka");
-    }
-
+    /*if (request.getParameter("nka").equals("")) {
+     out.print("<script> alert('Por Favor seleccione la proteccion');</script>");
+     out.print(registro);
+     } else {
+     nka = request.getParameter("nka");
+     }*/
     if (request.getParameter("numSerie").equals("") || request.getParameter("numSerie").length() > 6) {
         out.print("<script> alert('Ingresa bien el numero de serie!!!!');</script>");
         out.print(registro);
@@ -164,18 +163,18 @@
                                             while (rs.next()) {
 
                                                 if (rs.getString("privilegio").equals("1")) {
-                                                   
-                                                        conectar.consulta1("call ingresaProteccion('" + correo + "','" + nka + "');");
-                                                        conectar.consulta1("call altaNoti('"+numSerie+"');");
-                                                            out.print("<script> alert('Bienvenido " + nombre + "');</script>");
-                                                            sesion.setAttribute("sessionMail", correo);
-                                                            sesion.setAttribute("sessionName", nombre);
-                                                            sesion.setAttribute("numSerie", numSerie);
-                                                            sesion.setAttribute("direccion", direccion);
-                                                            sesion.setAttribute("sessionStat", "logueado");
-                                                            
-                                                            out.print(index);
-                                                     
+
+                                                    conectar.consulta1("call ingresaProteccion('" + correo + "','" + nka + "');");
+                                                    conectar.consulta1("call altaNoti('" + numSerie + "');");
+                                                    out.print("<script> alert('Bienvenido " + nombre + "');</script>");
+                                                    sesion.setAttribute("sessionMail", correo);
+                                                    sesion.setAttribute("sessionName", nombre);
+                                                    sesion.setAttribute("numSerie", numSerie);
+                                                    sesion.setAttribute("direccion", direccion);
+                                                    sesion.setAttribute("sessionStat", "logueado");
+
+                                                    out.print(index);
+
                                                 } else {
                                                     out.print("<script> alert('Bienvenido " + nombre + "');</script>");
                                                     sesion.setAttribute("sessionMail", correo);
@@ -189,7 +188,7 @@
                                             out.print("<script> alert('Error');</script>");
                                             out.print(registro);
                                         }
-                                    }else{
+                                    } else {
                                         out.print("<script> alert('Ingresa a tu cuenta principal para agregar una nueva cuenta');</script>");
                                         out.print(registro);
                                     }

@@ -42,26 +42,30 @@
                                 String correin = (String) session.getAttribute("sessionMail");
                                 datos.conectar();
                                 ResultSet rs3;
-                                rs3 = datos.consulta1("call dimeNKA('" + correin + "');");
+                                rs3 = datos.consulta1("call dimePaquete('','" + correin + "');");
                                 while (rs3.next()) {
-                                    if (rs3.getString("estadots").equals("SI")) {
+                                    if (rs3.getString("pkte").equals("BasicoNKA") || rs3.getString("pkte").equals("ProNKA") || rs3.getString("pkte").equals("PlatinoNKA")) {
                                         out.print("<li><a href='#NoKids'>Niños no</a></li>");
                                     }
                                 }
-                                
+
                                 String paquete = "";
                                 ResultSet paqueton = datos.consulta1("call dimePaquete('','" + correin + "');");
                                 while (paqueton.next()) {
                                     paquete = paqueton.getString("pkte");
                                 }
-                                
+
                                 ResultSet rs4 = datos.consulta1("call dimePaquete('','" + correin + "');");
                                 while (rs4.next()) {
-                                    if (rs4.getString("pkte").equals("Basico")) {
+                                    if (rs4.getString("pkte").equals("Basico") || rs4.getString("pkte").equals("BasicoNKA")) {
+                                        out.print("<li class='dropdown'>");
+                                        out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
+                                        out.print("<ul class='dropdown-menu'>");
                                         out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
                                         out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
+                                        out.print("</ul>");
                                     } else {
-                                        if (rs4.getString("pkte").equals("Pro")) {
+                                        if (rs4.getString("pkte").equals("Pro") || rs4.getString("pkte").equals("ProNKA")) {
                                             out.print("<li class='dropdown'>");
                                             out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
                                             out.print("<ul class='dropdown-menu'>");
@@ -160,6 +164,74 @@
                 <input type="checkbox" class="sliderEstilos" id="sliderLlave4" checked>
                 <label for="sliderLlave4"></label>
             </div>
+        </div>
+        <div class="row-fluid">
+            <div class="text-center">
+                <br><br><br><br>
+                <h4 class="status">Activar Notificaciones</h4>
+            </div>
+            <%
+                ResultSet estadote;
+                estadote = datos.consulta1("call dimeEstado('" + correin + "','Despensa');");
+                while (estadote.next()) {
+                    if (estadote.getString("estaduki").equals("activado")) {
+
+            %>
+            <div class="col-md-3">
+                <form name="activaDespensuki" action="activaDespensa.jsp" method="post">
+                    Despensa
+                    <input type="checkbox" class="sliderEstilos"  id="despi" onclick="activa()" checked>
+                    <label for="Despensa"></label>
+                    <input type="text" value="Despensa" name="tipoNoti" hidden>
+                    <input type="submit" value="aceptar" name="tipoNoti" hidden>
+                </form>
+            </div>
+            <%            } else {
+            %>
+            <div class="col-md-3">
+                <form name="activaDespensuki" action="activaDespensa.jsp" method="post">
+                    Despensa
+                    <input type="checkbox" class="sliderEstilos"  id="despi" onclick="activa()" >
+                    <label for="Despensa"></label>
+                    <input type="text" value="Despensa" name="tipoNoti" hidden>
+                    <input type="submit" value="aceptar" name="tipoNoti" hidden>
+                </form>
+            </div>
+            <%
+                    }
+                }
+            %>
+            <%  
+                ResultSet estadote1;
+                estadote1 = datos.consulta1("call dimeEstado('" + correin + "','ForceClose');");
+                while (estadote1.next()) {
+                    if (estadote1.getString("estaduki").equals("activado")) {
+
+            %>
+            <div class="col-md-3">
+                <form name="activaDespensuki" action="activaDespensa.jsp" method="post">
+                    ForceClose
+                    <input type="checkbox" class="sliderEstilos"  id="close" onclick="activa()" checked>
+                    <label for="Despensa"></label>
+                    <input type="text" value="Despensa" name="tipoNoti" hidden>
+                    <input type="submit" value="aceptar" name="tipoNoti" hidden>
+                </form>
+            </div>
+            <%            } else {
+            %>
+            <div class="col-md-3">
+                <form name="activaDespensuki" action="activaDespensa.jsp" method="post">
+                    Despensa
+                    <input type="checkbox" class="sliderEstilos"  id="close" onclick="activa()" >
+                    <label for="Despensa"></label>
+                    <input type="text" value="Despensa" name="tipoNoti" hidden>
+                    <input type="submit" value="aceptar" name="tipoNoti" hidden>
+                </form>
+            </div>
+            <%
+                    }
+                }
+            %>
         </div>
     </div>
     <!--Div Satus-->
@@ -324,19 +396,19 @@
             <%
                 ResultSet rs6;
                 datos.conectar();
-                rs6=datos.consulta1("call dimeNoti('"+correin+"','1');");
+                rs6 = datos.consulta1("call dimeNoti('" + correin + "','Despensa',1);");
                 out.println("<center><table><tr><th><h3>Correo</h3></th><th><h3>Accion</h3></th><th><h3>Fecha</h3></th></tr>");
-                while(rs6.next()){
-                    out.print("<tr><td>"+rs6.getString("correin")+"</td>");
-                    out.print("<td>"+rs6.getString("que")+"</td>");
-                    out.print("<td>"+rs6.getString("prueba")+"</td>");
+                while (rs6.next()) {
+                    out.print("<tr><td>" + rs6.getString("correin") + "</td>");
+                    out.print("<td>" + rs6.getString("que") + "</td>");
+                    out.print("<td>" + rs6.getString("prueba") + "</td>");
                     out.print("</tr>");
                 }
-                rs6=datos.consulta1("call dimeNoti('"+correin+"','2');");
-                while(rs6.next()){
-                    out.print("<tr><td>"+rs6.getString("correin")+"</td>");
-                    out.print("<td>"+rs6.getString("que")+"</td>");
-                    out.print("<td>"+rs6.getString("prueba")+"</td>");
+                rs6 = datos.consulta1("call dimeNoti('" + correin + "','ForceClose',2);");
+                while (rs6.next()) {
+                    out.print("<tr><td>" + rs6.getString("correin") + "</td>");
+                    out.print("<td>" + rs6.getString("que") + "</td>");
+                    out.print("<td>" + rs6.getString("prueba") + "</td>");
                     out.print("</tr>");
                 }
                 out.print("</center></table>");
@@ -382,10 +454,10 @@
     <!--Div Cerradura-->
     <!--Niños no-->
     <%
-        rs3 = datos.consulta1("call dimeNKA('" + correin + "');");
+        rs3 = datos.consulta1("call dimePaquete('','" + correin + "');");
         while (rs3.next()) {
-            if (rs3.getString("estadots").equals("SI")) {
-                
+            if (rs3.getString("pkte").equals("BasicoNKA") || rs3.getString("pkte").equals("ProNKA") || rs3.getString("pkte").equals("PlatinoNKA")) {
+
     %>
     <div id='NoKids' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>
@@ -400,8 +472,7 @@
             </div>
             <div class='col-md-8 col-md-offset-2 text-center'>
                 <form method='post' action='subeAltura.jsp'>
-                    <%
-                        String altuki = "", altot = "", correo = (String) session.getAttribute("sessionMail");
+                    <%String altuki = "", altot = "", correo = (String) session.getAttribute("sessionMail");
                         ResultSet rs2;
 
                         rs2 = datos.consulta1("call dimeAltura('" + correo + "')");
@@ -624,7 +695,7 @@
                                     %>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
                                     <input type="text" value="Habitacion 1" name="habit" hidden>
-                                   <input type="submit" class="btn btn-warning" value="Mándalo">
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
                     </table>
@@ -686,8 +757,8 @@
                         }
                     %>
                     <br>
-                    </center>
-                    <!--</section>-->
+                </center>
+                <!--</section>-->
             </div>
         </div>
         <%
@@ -706,7 +777,6 @@
         <div class='row'>
             <%
                 //String correuki = (String) session.getAttribute("sessionMail");
-
                 //cDatos datukis = new cDatos();
                 datukis.conectar();
 
@@ -887,7 +957,7 @@
                                     %>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
                                     <input type="text" value="Habitacion 2" name="habit" hidden>
-                                   <input type="submit" class="btn btn-warning" value="Mándalo">
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
                     </table>
@@ -949,8 +1019,8 @@
                         }
                     %>
                     <br>
-                    </center>
-                    <!--</section>-->
+                </center>
+                <!--</section>-->
             </div>
         </div>
         <%
@@ -960,11 +1030,11 @@
         %>
     </div>
     <%
-                /*                      HABITACIONES 3 Y 4
-                ----------------------------------------------------------------
-                ----------------------------------------------------------------
-                */
-                if (paquete.equals("Pro")||paquete.equals("Platino")){
+        /*                      HABITACIONES 3 Y 4
+         ----------------------------------------------------------------
+         ----------------------------------------------------------------
+         */
+        if (paquete.equals("Pro") || paquete.equals("Platino")) {
     %>
     <div id='Habitacion3' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>
@@ -1154,7 +1224,7 @@
                                     %>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
                                     <input type="text" value="Habitacion 3" name="habit" hidden>
-                                   <input type="submit" class="btn btn-warning" value="Mándalo">
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
                     </table>
@@ -1216,8 +1286,8 @@
                         }
                     %>
                     <br>
-                    </center>
-                    <!--</section>-->
+                </center>
+                <!--</section>-->
             </div>
         </div>
         <%
@@ -1414,7 +1484,7 @@
                                     %>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
                                     <input type="text" value="Habitacion 4" name="habit" hidden>
-                                   <input type="submit" class="btn btn-warning" value="Mándalo">
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
                     </table>
@@ -1476,8 +1546,8 @@
                         }
                     %>
                     <br>
-                    </center>
-                    <!--</section>-->
+                </center>
+                <!--</section>-->
             </div>
         </div>
         <%
@@ -1487,15 +1557,14 @@
         %>
     </div>
     <%
-                }
-                
-                /*HABITACIONES 5 Y 6
-                ------------------------------------------------------------------------------------------------------------------
-                ------------------------------------------------------------------------------------------------------------------*/
+        }
+
+        /*HABITACIONES 5 Y 6
+         ------------------------------------------------------------------------------------------------------------------
+         ------------------------------------------------------------------------------------------------------------------*/
     %>
-    
-    <%
-                if (paquete.equals("Platino")){
+
+    <%        if (paquete.equals("Platino")) {
     %>
     <div id='Habitacion5' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>
@@ -1685,7 +1754,7 @@
                                     %>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
                                     <input type="text" value="Habitacion 5" name="habit" hidden>
-                                   <input type="submit" class="btn btn-warning" value="Mándalo">
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
                     </table>
@@ -1747,8 +1816,8 @@
                         }
                     %>
                     <br>
-                    </center>
-                    <!--</section>-->
+                </center>
+                <!--</section>-->
             </div>
         </div>
         <%
@@ -1945,7 +2014,7 @@
                                     %>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
                                     <input type="text" value="Habitacion 6" name="habit" hidden>
-                                   <input type="submit" class="btn btn-warning" value="Mándalo">
+                                    <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
                     </table>
@@ -2007,8 +2076,8 @@
                         }
                     %>
                     <br>
-                    </center>
-                    <!--</section>-->
+                </center>
+                <!--</section>-->
             </div>
         </div>
         <%
@@ -2018,8 +2087,8 @@
         %>
     </div>
     <%
-                }
+        }
     %>
-    
+
 </body>
 </html>

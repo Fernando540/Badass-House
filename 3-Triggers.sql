@@ -14,7 +14,7 @@ begin
 	set paktazo = (NEW.paquete);
     set noHabs = (select count(*) from habitaciones);
     
-	if (paktazo = 'Basico')then
+	if (paktazo = 'Basico' or paktazo='BasicoNKA')then
 		insert into habitaciones (nombre) values ('Habitacion 1');
         set noHabs = (noHabs+1);
         insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
@@ -22,7 +22,7 @@ begin
 		set noHabs = (noHabs+1);
         insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
 	else
-		if (paktazo = 'Pro')then
+		if (paktazo = 'Pro' or paktazo = 'ProNKA')then
 			insert into habitaciones (nombre) values ('Habitacion 1');
             set noHabs = (noHabs+1);
 			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
@@ -85,6 +85,8 @@ begin
     insert into relEnchuHab(idHabitacion,idEnchufe) values (room,totEnchufe);
 	
 end;//
+
+
 
 /*create trigger altaDespensa after insert on usuarios for each row
 begin

@@ -24,7 +24,7 @@ create table privilegios(idRel int(2) auto_increment primary key,idHabitacion in
 insert into catalogoeventos(idTipo,evento) values(1,'Modifico Despensa');
 insert into catalogoeventos(idTipo,evento) values(2,'Uso Force Close');
 
-create table notificaciones(idRel int(2) auto_increment primary key,idCasa nvarchar(6), correo nvarchar(35), acciones nvarchar(30), fecha timestamp default current_timestamp);
+create table notificaciones(idRel int(2) auto_increment primary key,idCasa nvarchar(6),evento nvarchar(30),estado nvarchar(20));
 ##Tabla de Eventos##
 
 ##Tabla NKA
@@ -53,7 +53,7 @@ create table relUsrCasa(idRel int(2) primary key auto_increment,Correo nvarchar(
 create table relUsrDispositivo(idRel int(2) primary key auto_increment,Correo nvarchar(35),idDispositivo int(2));
 create table relUsrTipo(idRel int(2) primary key auto_increment,Correo nvarchar(35),idTipo int(2));
 create table relDispositivoTipo(idRel int(2) primary key auto_increment,idDispositivo int(2),idTipo int(2));
-create table relUsrEvento(idRel int(2) primary key auto_increment,Correo nvarchar(35),idEvento int(2));
+create table relCasaUsrEvento(idRel int(2) primary key auto_increment,idCasa nvarchar(6),Correo nvarchar(35),tipoEvento int(2),evento nvarchar(100),fecha timestamp default current_timestamp);
 create table relEventoCatalogo(idRel int(2) primary key auto_increment,idEvento int(2),idTipo int(2));
 create table relDispCasa(idRel int(2) primary key auto_increment,idDispositivo int(2),idCasa nvarchar(6));
 ##create table relCasaDespensa(idRel int(2) primary key auto_increment,Correo nvarchar(35),idDespensa int(2));

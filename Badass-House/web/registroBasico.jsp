@@ -84,9 +84,9 @@
                         <label>Numero de Serie</label>
                         <input type="text" class="form-control" name="numSerie" maxlength="6" required >
                     </div>
-                    <div class="form-group">
+                   <!-- <div class="form-group">
                         <label>¿Protección para niños?&nbsp; SI<input type="radio" name="nka" value="SI">&nbsp; NO<input type="radio" name="nka" value="NO" checked></label>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label>Nombre</label>
                         <input type="text" class="form-control" name="nombre" maxlength="35" onkeypress="return noNumeros(event)" required >

@@ -24,7 +24,7 @@ drop procedure if exists dimeHab;
 drop procedure if exists dimeNoti;
 drop procedure if exists altaNoti;
 drop procedure if exists activaNoti;
-
+drop procedure if exists dimeEstado;
 
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
@@ -117,7 +117,7 @@ begin
 		end if;
 		
     end if;
-    insert into notificaciones(idCasa,correo,acciones) values(homeID,correin,'Modifico Despensa');
+    insert into relCasaUsrEvento(idCasa,correo,tipoEvento,evento) values(homeID,correin,1,'Modifico Despensa');
 end;//
 
 create procedure UsoProducto(in mail nvarchar(35), in codigo nvarchar(35),in canti int)
@@ -133,7 +133,7 @@ begin
     set total = (select cantidad from relDespensaProductos where idUnico=codigo and idDespensa=iDesp);
 	set ntotal = (total-canti);
     update relDespensaProductos set cantidad=(ntotal) where idUnico=codigo and idDespensa=iDesp;
-	insert into notificaciones(idCasa,correo,acciones) values(homeID,mail,'Modifico Despensa');
+	insert into relCasaUsrEvento(idCasa,correo,tipoEvento,evento) values(homeID,mail,1,'Modifico Despensa');
 end;//
 
 create procedure actualiza(in mail nvarchar(45), in usr nvarchar(45), in ap nvarchar(45), in am nvarchar(45), in opass blob, in npass blob)
@@ -175,7 +175,7 @@ begin
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
     DELETE FROM relDespensaProductos WHERE idDespensa=iDesp and idUnico=codigo;
     DELETE FROM catalogoproductos WHERE idUnico=codigo;
-    insert into notificaciones(idCasa,correo,acciones) values(homeID,mail,'Elimino un elemento de la Despensa');
+    insert into relCasaUsrEvento(idCasa,correo,tipoEvento,evento) values(homeID,mail,1,'Elimino un elemento de la Despensa');
 end;//
 
 
@@ -291,13 +291,13 @@ if coin=0 then
     end if;
 end if;
 end;//
-
+/*
 create procedure dimeNKA(in mail nvarchar(35))
 begin
 declare idCasuki nvarchar(6);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
 select estado as estadots from relCasaNka where idCasa=idCasuki;
-end;//
+end;//*/
 
 create procedure ingresaAltura(in mail nvarchar(20), in heightM nvarchar(3), in heightMin nvarchar(3))
 begin
@@ -360,51 +360,54 @@ declare idCasuki nvarchar(6);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
 select idHabitacion as habi from relCasaHab where idCasa=idCasuki; 
 end;//
-create procedure dimeNoti(in mail nvarchar(35), idTipo nvarchar(2))
+create procedure dimeNoti(in mail nvarchar(35),in tipo nvarchar(20), in idTipo int(2))
 begin
-declare activate int;
+declare activate nvarchar(100);
 declare idCasuki nvarchar(6);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
-set activate=(select activado from eventos where idCasa=idCasuki and idEvento=idTipo);
+set activate=(select estado from notificaciones where idCasa=idCasuki and evento=tipo);
 if activate='activado'then
-	select correo as correin, acciones as que, fecha as prueba from notificaciones where idCasa=idCasuki;
+	select correo as correin, evento as que, fecha as prueba from relCasaUsrEvento where idCasa=idCasuki and tipoEvento=idTipo;
 else
-	select '' as correin, '' as que, '' as prueba from notificaciones where idCasa=idCasuki;
+	select '' as correin, '' as que, '' as prueba;
 end if;
 end;//
 create procedure activaNoti(in mail nvarchar(35),tipo nvarchar(20))
 begin
 declare idCasuki nvarchar(6);
-declare estado nvarchar(100);
-declare idTipo int;
+declare estaduki nvarchar(100);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
-if tipo='despensa' then
-	set idTipo=1;
-    set estado=(select activado from eventos where idCasa=idCasuki and idEvento=idTipo);
-	if estado='activado' then
-		update eventos set activado='desactivado' where idCasa=idCasuki;
+if tipo='Despensa' then
+    set estaduki=(select estado from notificaciones where idCasa=idCasuki and evento=tipo);
+	if estaduki='activado' then
+		update notificaciones set estado='desactivado' where idCasa=idCasuki and evento=tipo;
 	else
-		update eventos set activado='activado' where idCasa=idCasuki;
+		update notificaciones set estado='activado' where idCasa=idCasuki and evento=tipo;
 	end if;
 else
-	set idTipo=2;
-    set estado=(select activado from eventos where idCasa=idCasuki and idEvento=idTipo);
-	if estado='activado' then
-		update eventos set activado='desactivado' where idCasa=idCasuki;
+	set estaduki=(select estado from notificaciones where idCasa=idCasuki and evento=tipo);
+	if estaduki='activado' then
+		update notificaciones set estado='desactivado' where idCasa=idCasuki and evento=tipo;
 	else
-		update eventos set activado='activado' where idCasa=idCasuki;
+		update notificaciones set estado='activado' where idCasa=idCasuki and evento=tipo;
 	end if;
 end if;
-
 
 end;//
 create procedure altaNoti(in idCasuki nvarchar(6))
 begin
 	declare cuenta int;
-    set cuenta=(select count(*) from eventos where idCasuki=idCasa and idEvento=1);
+    set cuenta=(select count(*) from notificaciones where idCasuki=idCasa and evento='Despensa');
     if cuenta=0 then
-		insert into eventos(idCasa,idEvento,activado) values(idCasuki,1,'activado');
-        insert into eventos(idCasa,idEvento,activado) values(idCasuki,2,'activado');
+		insert into notificaciones(idCasa,evento,estado) values(idCasuki,'Despensa','activado');
+        insert into notificaciones(idCasa,evento,estado) values(idCasuki,'ForceClose','activado');
     end if;
+end;//
+
+create procedure dimeEstado(in mail nvarchar(35), tipo nvarchar(20))
+begin
+declare idCasuki nvarchar(6);
+set idCasuki=(select idCasa from relUsrCasa where correo=mail);
+select estado as estaduki from notificaciones where idCasa=idCasuki and evento=tipo;
 end;//
 delimiter ;
