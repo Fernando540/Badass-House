@@ -201,7 +201,7 @@
                     }
                 }
             %>
-            <%  
+            <%
                 ResultSet estadote1;
                 estadote1 = datos.consulta1("call dimeEstado('" + correin + "','ForceClose');");
                 while (estadote1.next()) {
@@ -379,6 +379,52 @@
                 </center>
             </form>
         </div>
+        <div class="row">
+            <div class="text-center">
+                <h4 class="cuenta">Cuentas de la Casa</h4>
+            </div>            
+        </div>
+        <div class="row">
+            <%
+                ResultSet idCasa;
+                String idCas = "";
+                idCasa = datos.consulta1("select idCasa from relUsrCasa where correo='" + correin + "';");
+                while (idCasa.next()) {
+                    idCas = idCasa.getString("idCasa");
+                }
+                ResultSet users;
+                users = datos.consulta1("select correo from relUsrCasa where idCasa='" + idCas + "';");
+                out.print("<center><table><th>Correo</th><th>Tipo Usuario</th><th>Privilegios</th>");
+                while (users.next()) {
+                    String correok = users.getString("correo");
+                    ResultSet tipo = datos.consulta1("call dimeTipo('" + correok + "');");
+
+                    while (tipo.next()) {
+
+                        if (tipo.getString("privilegio").equals("2")) {
+                            out.print("<tr><td>" + correok + "</td><td>Junior</td>");
+                            ResultSet habi=datos.consulta1("select idHabitacion from relCasaHab where idCasa='"+idCas+"';");
+                            int id=0;
+                            while(habi.next()){
+                                id=Integer.parseInt(habi.getString("idHabitacion"));
+                            }
+                            out.print(id);
+                            out.print("<td> <form action='daPrivi.jsp' method='post'>"+
+                                    "idHabitacion<select name='idHabitacion'>"+
+                                    "<option>4</option></select>"+
+                                    "SI<input type='radio' name='permiso' value='SI'>&nbsp;NO<input type='radio' name='permiso' value='NO' checked>"+
+                                    "<input type='text' name='correo' value='"+correok+"' hidden><input type='submit' value='Aceptar'>"
+                                    + "</td></form></tr>");
+                        } else {
+                            out.print("<tr><td>" + correok + "</td><td>Premium</td><td>Todos</td></tr>");
+                        }
+
+                    }
+                }
+                out.print("</center></table>");
+
+            %>
+        </div>
     </div>
     <!--Div Mi Cuenta-->
     <!--Div Configuración-->
@@ -393,8 +439,7 @@
             <div class="text-center">                
                 <h4 class="status">Notificaciones</h4>
             </div>
-            <%
-                ResultSet rs6;
+            <%                ResultSet rs6;
                 datos.conectar();
                 rs6 = datos.consulta1("call dimeNoti('" + correin + "','Despensa',1);");
                 out.println("<center><table><tr><th><h3>Correo</h3></th><th><h3>Accion</h3></th><th><h3>Fecha</h3></th></tr>");
@@ -1034,7 +1079,7 @@
          ----------------------------------------------------------------
          ----------------------------------------------------------------
          */
-        if (paquete.equals("Pro") || paquete.equals("Platino")) {
+        if (paquete.equals("Pro") || paquete.equals("Platino") || paquete.equals("ProNKA") || paquete.equals("PlatinoNKA")) {
     %>
     <div id='Habitacion3' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>
@@ -1551,7 +1596,8 @@
             </div>
         </div>
         <%
-            } catch (Exception errots) {
+  
+             } catch (Exception errots) {
                 out.print(errots.getMessage());
             }
         %>
@@ -1564,7 +1610,7 @@
          ------------------------------------------------------------------------------------------------------------------*/
     %>
 
-    <%        if (paquete.equals("Platino")) {
+    <%        if (paquete.equals("Platino")|| paquete.equals("PlatinoNKA")) {
     %>
     <div id='Habitacion5' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>
