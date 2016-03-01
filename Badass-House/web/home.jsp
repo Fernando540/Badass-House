@@ -69,28 +69,28 @@
                                         out.print("<li class='dropdown'>");
                                         out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
                                         out.print("<ul class='dropdown-menu'>");
-                                        out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
-                                        out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
+                                        out.print("<li><a href='#Habitacion1'>"+habNames[0]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion2'>"+habNames[1]+"</a></li>");
                                         out.print("</ul>");
                                     } else if (rs4.getString("pkte").equals("Pro") || rs4.getString("pkte").equals("ProNKA")) {
                                         out.print("<li class='dropdown'>");
                                         out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
                                         out.print("<ul class='dropdown-menu'>");
-                                        out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
-                                        out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
-                                        out.print("<li><a href='#Habitacion3'>Habitacion 3</a></li>");
-                                        out.print("<li><a href='#Habitacion4'>Habitacion 4</a></li>");
+                                        out.print("<li><a href='#Habitacion1'>"+habNames[0]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion2'>"+habNames[1]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion3'>"+habNames[2]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion4'>"+habNames[3]+"</a></li>");
                                         out.print("</ul>");
                                     } else {
                                         out.print("<li class='dropdown'>");
                                         out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones <span class='caret'></span></a>");
                                         out.print("<ul class='dropdown-menu'>");
-                                        out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
-                                        out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
-                                        out.print("<li><a href='#Habitacion3'>Habitacion 3</a></li>");
-                                        out.print("<li><a href='#Habitacion4'>Habitacion 4</a></li>");
-                                        out.print("<li><a href='#Habitacion5'>Habitacion 5</a></li>");
-                                        out.print("<li><a href='#Habitacion6'>Habitacion 6</a></li>");
+                                        out.print("<li><a href='#Habitacion1'>"+habNames[0]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion2'>"+habNames[1]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion3'>"+habNames[2]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion4'>"+habNames[3]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion5'>"+habNames[4]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion6'>"+habNames[5]+"</a></li>");
                                         out.print("</ul>");
                                     }
                                 }
@@ -187,7 +187,7 @@
                 <form name="activaDespensuki" action="activaDespensa.jsp" method="post">
                     Despensa
                     <input type="checkbox" class="sliderEstilos"  id="despi" onclick="activa()" checked>
-                    <label for="Despensa"></label>
+                    <label for="despi"></label>
                     <input type="text" value="Despensa" name="tipoNoti" hidden>
                     <input type="submit" value="aceptar" name="tipoNoti" hidden>
                 </form>
@@ -198,7 +198,7 @@
                 <form name="activaDespensuki" action="activaDespensa.jsp" method="post">
                     Despensa
                     <input type="checkbox" class="sliderEstilos"  id="despi" onclick="activa()" >
-                    <label for="Despensa"></label>
+                    <label for="despi"></label>
                     <input type="text" value="Despensa" name="tipoNoti" hidden>
                     <input type="submit" value="aceptar" name="tipoNoti" hidden>
                 </form>
@@ -215,10 +215,10 @@
 
             %>
             <div class="col-md-3">
-                <form name="activaDespensuki" action="activaDespensa.jsp" method="post">
+                <form name="" action="" method="post">
                     ForceClose
-                    <input type="checkbox" class="sliderEstilos"  id="close" onclick="activa()" checked>
-                    <label for="Despensa"></label>
+                    <input type="checkbox" class="sliderEstilos"  id="close"checked>
+                    <label for="close"></label>
                     <input type="text" value="Despensa" name="tipoNoti" hidden>
                     <input type="submit" value="aceptar" name="tipoNoti" hidden>
                 </form>
@@ -226,10 +226,10 @@
             <%            } else {
             %>
             <div class="col-md-3">
-                <form name="activaDespensuki" action="activaDespensa.jsp" method="post">
+                <form name="" action="" method="post">
                     Despensa
-                    <input type="checkbox" class="sliderEstilos"  id="close" onclick="activa()" >
-                    <label for="Despensa"></label>
+                    <input type="checkbox" class="sliderEstilos"  id="close">
+                    <label for="close"></label>
                     <input type="text" value="Despensa" name="tipoNoti" hidden>
                     <input type="submit" value="aceptar" name="tipoNoti" hidden>
                 </form>
