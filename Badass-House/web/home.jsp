@@ -414,11 +414,29 @@
                             while (habi.next()) {
                                 id = Integer.parseInt(habi.getString("idHabitacion"));
                             }
+                            rs3 = datos.consulta1("call dimePaquete('','" + correin + "');");
+                            int cantidad = 0;
+                            while (rs3.next()) {
+                                if (rs3.getString("pkte").equals("Basico") || rs3.getString("pkte").equals("BasicoNKA")) {
+                                    cantidad = 2;
+                                } else {
+                                    if (rs3.getString("pkte").equals("Pro") || rs3.getString("pkte").equals("ProNKA")) {
+                                        cantidad = 4;
+                                    } else {
+                                        cantidad = 6;
+                                    }
+                                }
+                            }
                             out.print(id);
+                            ResultSet nombres;
+                            
                             out.print("<td> <form action='daPrivi.jsp' method='post'>"
-                                    + "idHabitacion<select name='idHabitacion'>"
-                                    + "<option>4</option></select>"
-                                    + "SI<input type='radio' name='permiso' value='SI'>&nbsp;NO<input type='radio' name='permiso' value='NO' checked>"
+                                    + "<select name='idHabitacion'>");
+                            for (int v = 0; v < cantidad; v++) {
+                                out.print("<option>" + habNames[v] + "</option>");
+                            }
+
+                            out.print("</select>SI<input type='radio' name='permiso' value='SI'>&nbsp;NO<input type='radio' name='permiso' value='NO' checked>"
                                     + "<input type='text' name='correo' value='" + correok + "' hidden><input type='submit' value='Aceptar'>"
                                     + "</td></form></tr>");
                         } else {
@@ -1134,7 +1152,7 @@
                 datukis.conectar();
 
                 try {
-                    ResultSet hab3 = datukis.consulta1("call enchufeState('" + correuki + "','"+habNames[2]+"');");
+                    ResultSet hab3 = datukis.consulta1("call enchufeState('" + correuki + "','" + habNames[2] + "');");
                     int contador = 0;
 
                     String[] uso = new String[4];
@@ -1405,7 +1423,7 @@
                 datukis.conectar();
 
                 try {
-                    ResultSet hab4 = datukis.consulta1("call enchufeState('" + correuki + "','"+habNames[3]+"');");
+                    ResultSet hab4 = datukis.consulta1("call enchufeState('" + correuki + "','" + habNames[3] + "');");
                     int contador = 0;
 
                     String[] uso = new String[4];
@@ -1686,7 +1704,7 @@
                 datukis.conectar();
 
                 try {
-                    ResultSet hab5 = datukis.consulta1("call enchufeState('" + correuki + "','"+habNames[4]+"');");
+                    ResultSet hab5 = datukis.consulta1("call enchufeState('" + correuki + "','" + habNames[4] + "');");
                     int contador = 0;
 
                     String[] uso = new String[4];
@@ -1957,7 +1975,7 @@
                 datukis.conectar();
 
                 try {
-                    ResultSet hab6 = datukis.consulta1("call enchufeState('" + correuki + "','"+habNames[5]+"');");
+                    ResultSet hab6 = datukis.consulta1("call enchufeState('" + correuki + "','" + habNames[5] + "');");
                     int contador = 0;
 
                     String[] uso = new String[4];

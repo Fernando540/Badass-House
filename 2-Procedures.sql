@@ -313,15 +313,21 @@ else
 end if;
 select mensaje as msj;
 end;//
-create procedure altaPrivi(in correo nvarchar(35),in idHabitacon int, in permixo nvarchar(10))
+create procedure altaPrivi(in mail nvarchar(35),in habName nvarchar(35), in permixo nvarchar(10))
 begin
 declare contador int;
-set contador=(select count(*) from privilegios where idHabitacion=idHabitacon and correoJunior=correo);
+declare homeID int;
+declare roomID int;
+
+set homeID=(select idCasa from relUsrCasa where correo=mail);
+set roomID = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where idCasa=homeID and habitaciones.nombre=habName);
+
+set contador=(select count(*) from privilegios where idHabitacion=roomID and correoJunior=mail);
 if contador=0 then
-	insert into privilegios(idHabitacion,correoJunior, permiso) values(idHabitacon,correo,permixo);
+	insert into privilegios(idHabitacion,correoJunior, permiso) values(roomID,mail,permixo);
 else
 	if permixo!='' then
-		update privilegios set permiso=permixo where idHabitacion=idHabitacon and correoJunior=correo;
+		update privilegios set permiso=permixo where idHabitacion=roomID and correoJunior=mail;
 	end if;
 end if;
 end;//
