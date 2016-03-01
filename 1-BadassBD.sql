@@ -33,7 +33,7 @@ create table relCasaNka(idRel int(2) auto_increment primary key, idCasa nvarchar
 
 
 ##Tabla de Habitaciones##
-create table habitaciones(idHabitacion int primary key auto_increment, nombre nvarchar(30));
+create table habitaciones(idHabitacion int primary key auto_increment, nombre nvarchar(35));
 create table relCasaHab(idRel int primary key auto_increment, idHabitacion int(2), idCasa nvarchar(6));
 alter table relCasaHab add foreign key(idCasa) references casa(idCasa);
 ##Tabla de Habitaciones##
@@ -44,7 +44,6 @@ create table relEnchuHab(idRel int primary key auto_increment, idHabitacion int,
 alter table relEnchuHab add foreign key(idHabitacion) references habitaciones(idHabitacion);
 alter table relEnchuHab add foreign key(idEnchufe) references enchufes(idEnchufe);
 ##
-
 
 ##Tablas principales
 

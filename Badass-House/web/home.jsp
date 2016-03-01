@@ -55,6 +55,14 @@
                                     paquete = paqueton.getString("pkte");
                                 }
 
+                                ResultSet habiNames = datos.consulta1("call habiNames('" + correin + "');");
+                                int itera = 0;
+                                String[] habNames = new String[6];
+                                while (habiNames.next()) {
+                                    habNames[itera] = habiNames.getString("habiName");
+                                    itera = itera + 1;
+                                }
+
                                 ResultSet rs4 = datos.consulta1("call dimePaquete('','" + correin + "');");
                                 while (rs4.next()) {
                                     if (rs4.getString("pkte").equals("Basico") || rs4.getString("pkte").equals("BasicoNKA")) {
@@ -64,28 +72,26 @@
                                         out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
                                         out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
                                         out.print("</ul>");
+                                    } else if (rs4.getString("pkte").equals("Pro") || rs4.getString("pkte").equals("ProNKA")) {
+                                        out.print("<li class='dropdown'>");
+                                        out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
+                                        out.print("<ul class='dropdown-menu'>");
+                                        out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
+                                        out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
+                                        out.print("<li><a href='#Habitacion3'>Habitacion 3</a></li>");
+                                        out.print("<li><a href='#Habitacion4'>Habitacion 4</a></li>");
+                                        out.print("</ul>");
                                     } else {
-                                        if (rs4.getString("pkte").equals("Pro") || rs4.getString("pkte").equals("ProNKA")) {
-                                            out.print("<li class='dropdown'>");
-                                            out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
-                                            out.print("<ul class='dropdown-menu'>");
-                                            out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
-                                            out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
-                                            out.print("<li><a href='#Habitacion3'>Habitacion 3</a></li>");
-                                            out.print("<li><a href='#Habitacion4'>Habitacion 4</a></li>");
-                                            out.print("</ul>");
-                                        } else {
-                                            out.print("<li class='dropdown'>");
-                                            out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones <span class='caret'></span></a>");
-                                            out.print("<ul class='dropdown-menu'>");
-                                            out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
-                                            out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
-                                            out.print("<li><a href='#Habitacion3'>Habitacion 3</a></li>");
-                                            out.print("<li><a href='#Habitacion4'>Habitacion 4</a></li>");
-                                            out.print("<li><a href='#Habitacion5'>Habitacion 5</a></li>");
-                                            out.print("<li><a href='#Habitacion6'>Habitacion 6</a></li>");
-                                            out.print("</ul>");
-                                        }
+                                        out.print("<li class='dropdown'>");
+                                        out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones <span class='caret'></span></a>");
+                                        out.print("<ul class='dropdown-menu'>");
+                                        out.print("<li><a href='#Habitacion1'>Habitacion 1</a></li>");
+                                        out.print("<li><a href='#Habitacion2'>Habitacion 2</a></li>");
+                                        out.print("<li><a href='#Habitacion3'>Habitacion 3</a></li>");
+                                        out.print("<li><a href='#Habitacion4'>Habitacion 4</a></li>");
+                                        out.print("<li><a href='#Habitacion5'>Habitacion 5</a></li>");
+                                        out.print("<li><a href='#Habitacion6'>Habitacion 6</a></li>");
+                                        out.print("</ul>");
                                     }
                                 }
                             %>
@@ -403,17 +409,17 @@
 
                         if (tipo.getString("privilegio").equals("2")) {
                             out.print("<tr><td>" + correok + "</td><td>Junior</td>");
-                            ResultSet habi=datos.consulta1("select idHabitacion from relCasaHab where idCasa='"+idCas+"';");
-                            int id=0;
-                            while(habi.next()){
-                                id=Integer.parseInt(habi.getString("idHabitacion"));
+                            ResultSet habi = datos.consulta1("select idHabitacion from relCasaHab where idCasa='" + idCas + "';");
+                            int id = 0;
+                            while (habi.next()) {
+                                id = Integer.parseInt(habi.getString("idHabitacion"));
                             }
                             out.print(id);
-                            out.print("<td> <form action='daPrivi.jsp' method='post'>"+
-                                    "idHabitacion<select name='idHabitacion'>"+
-                                    "<option>4</option></select>"+
-                                    "SI<input type='radio' name='permiso' value='SI'>&nbsp;NO<input type='radio' name='permiso' value='NO' checked>"+
-                                    "<input type='text' name='correo' value='"+correok+"' hidden><input type='submit' value='Aceptar'>"
+                            out.print("<td> <form action='daPrivi.jsp' method='post'>"
+                                    + "idHabitacion<select name='idHabitacion'>"
+                                    + "<option>4</option></select>"
+                                    + "SI<input type='radio' name='permiso' value='SI'>&nbsp;NO<input type='radio' name='permiso' value='NO' checked>"
+                                    + "<input type='text' name='correo' value='" + correok + "' hidden><input type='submit' value='Aceptar'>"
                                     + "</td></form></tr>");
                         } else {
                             out.print("<tr><td>" + correok + "</td><td>Premium</td><td>Todos</td></tr>");
@@ -553,7 +559,17 @@
         <div class='row'>
             <div class='page-header text-center noTePeguesArriba'>
                 <br>
-                <strong>Habitacion 1</strong>
+                <div id="HabName1">
+                    <strong><%out.println(habNames[0]);%></strong><br>
+                    <button type='button' class='btn btn-success' onclick="javascript:showMod1();"><i class='glyphicon glyphicon-pencil'></i></button>
+                </div>
+                <div id="modForm1" style="display:none; width: 20%; margin-left: 40%;">
+                    <form name="Names1" action="changeHabName">
+                        <input type="text" name="oldRoomName" value="<%out.println(habNames[0]);%>" hidden>
+                        <input type="text" class='form-control' name="newRoomName" value="<%out.println(habNames[0]);%>">
+                        <input type="button" class="btn btn-success" value="Renombrar" onclick="javascript:hideMod1();">
+                    </form>
+                </div>
             </div>
         </div>
         <div class='row'>
@@ -564,7 +580,7 @@
                 datukis.conectar();
 
                 try {
-                    ResultSet rs5 = datukis.consulta1("call enchufeState('" + correuki + "','Habitacion 1');");
+                    ResultSet rs5 = datukis.consulta1("call enchufeState('" + correuki + "','" + habNames[0] + "');");
                     int contador = 0;
 
                     String[] uso = new String[4];
@@ -598,7 +614,7 @@
                                     <label for="Enchufe1"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -607,7 +623,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -622,7 +638,7 @@
                                     <label for="Enchufe1"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -631,7 +647,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -652,7 +668,7 @@
                                     <label for="Enchufe2"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -661,7 +677,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -676,7 +692,7 @@
                                     <label for="Enchufe2"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -685,7 +701,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -706,7 +722,7 @@
                                     <label for="Enchufe3"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -715,7 +731,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -730,7 +746,7 @@
                                     <label for="Enchufe3"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -739,7 +755,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -760,7 +776,7 @@
                                     <label for="Luz"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -769,7 +785,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -784,7 +800,7 @@
                                     <label for="Luz"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -793,7 +809,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 1" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -816,7 +832,7 @@
         <div class='row'>
             <div class='page-header text-center noTePeguesArriba'>
                 <br>
-                <strong>Habitacion 2</strong>
+                <strong><%out.println(habNames[1]);%></strong>
             </div>
         </div>
         <div class='row'>
@@ -826,7 +842,7 @@
                 datukis.conectar();
 
                 try {
-                    ResultSet rs5 = datukis.consulta1("call enchufeState('" + correuki + "','Habitacion 2');");
+                    ResultSet rs5 = datukis.consulta1("call enchufeState('" + correuki + "','" + habNames[1] + "');");
                     int contador = 0;
 
                     String[] uso = new String[4];
@@ -860,7 +876,7 @@
                                     <label for="Enchufe5"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -869,7 +885,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -884,7 +900,7 @@
                                     <label for="Enchufe5"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -893,7 +909,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -914,7 +930,7 @@
                                     <label for="Enchufe6"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -923,7 +939,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -938,7 +954,7 @@
                                     <label for="Enchufe6"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -947,7 +963,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -968,7 +984,7 @@
                                     <label for="Enchufe7"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -977,7 +993,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -992,7 +1008,7 @@
                                     <label for="Enchufe7"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -1001,7 +1017,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -1022,7 +1038,7 @@
                                     <label for="Luz2"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
                                     <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -1031,7 +1047,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -1046,7 +1062,7 @@
                                     <label for="Luz2"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
                                     <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
@@ -1055,7 +1071,7 @@
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
                                     <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="Habitacion 2" name="habit" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
                                     <input type="submit" class="btn btn-warning" value="Mándalo">
                                 </form>
                         </tr>
@@ -1596,8 +1612,7 @@
             </div>
         </div>
         <%
-  
-             } catch (Exception errots) {
+            } catch (Exception errots) {
                 out.print(errots.getMessage());
             }
         %>
@@ -1610,7 +1625,7 @@
          ------------------------------------------------------------------------------------------------------------------*/
     %>
 
-    <%        if (paquete.equals("Platino")|| paquete.equals("PlatinoNKA")) {
+    <%        if (paquete.equals("Platino") || paquete.equals("PlatinoNKA")) {
     %>
     <div id='Habitacion5' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>

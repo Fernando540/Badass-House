@@ -25,6 +25,8 @@ drop procedure if exists dimeNoti;
 drop procedure if exists altaNoti;
 drop procedure if exists activaNoti;
 drop procedure if exists dimeEstado;
+drop procedure if exists habiNames;
+drop procedure if exists changeHabName;
 
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
@@ -205,30 +207,6 @@ begin
     end if;
 end;//
 
-/*create procedure relHab(in mail nvarchar(35),in nombre nvarchar(30))
-begin
-	declare idHabi int(2);
-    declare idCasuki nvarchar(6);
-    declare coincidencia int(2);
-    set idHabi=(select count(*) from habitaciones);
-	set idCasuki=(select idCasa from relUsrCasa where relUsrCasa.Correo=mail);
-    if idHabi=0 then
-		set idHabi=1;
-        insert into habitaciones(idHabitacion,nombre) values(idHabi,nombre);
-        insert into relCasaHab(idHabitacion, idCasa) values(idHabi,idCasuki);
-    else
-		set idHabi=idHabi+1;
-		set coincidencia=(select count(*) from relCasaHab where idHabitacion=idHabi);
-        if coincidencia<=0 then
-			
-			insert into habitaciones(idHabitacion,nombre) values(idHabi,nombre);
-			insert into relCasaHab(idHabitacion, idCasa) values(idHabi,idCasuki);
-		end if;
-		
-    end if;    
-end;//
-*/
-
 create procedure dimePaquete(in serie nvarchar(35),in mail nvarchar(35))
 begin
 	declare numSerie nvarchar(40);
@@ -253,7 +231,7 @@ begin
     
 end;//
 
-create procedure enchufeState(in mail nvarchar(35),habiName nvarchar(15))
+create procedure enchufeState(in mail nvarchar(35),habiName nvarchar(35))
 begin
     declare idCasi nvarchar(6);
 	declare idHabi int;
@@ -264,7 +242,7 @@ begin
 	select enchufes.uso as estatus, enchufes.Nombre as switchName from enchufes inner join relenchuhab on enchufes.idEnchufe = relenchuhab.idEnchufe where relenchuhab.idHabitacion=idHabi;
 end;//
 
-create procedure simulaCorriente(in mailuki nvarchar(35),in corriente int, in contacto nvarchar(30),in habName nvarchar(30))
+create procedure simulaCorriente(in mailuki nvarchar(35),in corriente int, in contacto nvarchar(30),in habName nvarchar(35))
 begin
     declare homeID nvarchar(6);
     declare idHabi int;
@@ -291,13 +269,6 @@ if coin=0 then
     end if;
 end if;
 end;//
-/*
-create procedure dimeNKA(in mail nvarchar(35))
-begin
-declare idCasuki nvarchar(6);
-set idCasuki=(select idCasa from relUsrCasa where correo=mail);
-select estado as estadots from relCasaNka where idCasa=idCasuki;
-end;//*/
 
 create procedure ingresaAltura(in mail nvarchar(20), in heightM nvarchar(3), in heightMin nvarchar(3))
 begin
@@ -410,4 +381,23 @@ declare idCasuki nvarchar(6);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
 select estado as estaduki from notificaciones where idCasa=idCasuki and evento=tipo;
 end;//
+
+create procedure habiNames(in mail nvarchar(35))
+begin
+declare idCasi nvarchar(6);
+set idCasi=(select idCasa from relUsrCasa where correo=mail);
+
+select habitaciones.nombre as habiName from habitaciones inner join relCasaHab on habitaciones.idHabitacion = relCasaHab.idHabitacion where relcasahab.idCasa=idCasi;
+end;//
+
+create procedure changeHabName(in mail nvarchar(35), in oldName nvarchar(35),in newName nvarchar(35))
+begin
+    declare homeID nvarchar(6);
+    declare roomID int;
+    set homeID = (select idCasa from relUsrCasa where Correo = mail);
+    set roomID = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where idCasa=homeID and habitaciones.nombre=oldName);
+    
+    update habitaciones set nombre=newName where idHabitacion=roomID;
+end;//
+
 delimiter ;
