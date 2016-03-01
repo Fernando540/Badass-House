@@ -55,12 +55,12 @@
     } else {
         aMaterno = request.getParameter("aMaterno");
     }
-    if (request.getParameter("tipoUsr").equals("")) {
+    /*if (request.getParameter("tipoUsr").equals("")) {
         out.print("<script> alert('Ingresa un tipo usuario');</script>");
         out.print(registro);
     } else {
         tipoUsr = request.getParameter("tipoUsr");
-    }
+    }*/
     if (request.getParameter("direccion").equals("")) {
         out.print("<script> alert('Ingresa la direccion!!!!');</script>");
         out.print(registro);
@@ -156,7 +156,7 @@
                                         conectar.regCasa(direccion, correo, numSerie);
                                         conectar.modificacion();
                                         //conectar.modificacion1("insert into usu(correo,tipo) values('" + correo + "','" + tipoUsr + "')");
-                                        conectar.modificacion1("call altaTipo('" + correo + "','" + tipoUsr + "');");
+                                        conectar.modificacion1("call altaTipo('" + correo + "','Premium');");
 
                                         if (result == 1) {
                                             rs = conectar.consulta1("call dimeTipo('" + correo + "');");
@@ -180,7 +180,7 @@
                                                     sesion.setAttribute("sessionMail", correo);
                                                     sesion.setAttribute("sessionName", nombre);
                                                     sesion.setAttribute("sessionStat", "logueado");
-                                                    out.print(index1);
+                                                    out.print(index);
                                                 }
                                             }
 

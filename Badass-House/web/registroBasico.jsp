@@ -99,13 +99,13 @@
                         <label>Apellido Materno</label>
                         <input type="text" class="form-control" name="aMaterno" maxlength="35" onkeypress="return noNumeros(event)" required >
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label>Tipo Usuario</label>
                         <select class="form-control" name="tipoUsr" required>
                             <option>Premium</option>
                             <option>Junior</option>
                         </select>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label>Direccion</label>
                         <input type="text" class="form-control" name="direccion" maxlength="35" placeholder="Col: Calle: No.:" required>

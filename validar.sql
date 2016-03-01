@@ -8,6 +8,7 @@ select * from relCasaDespensa;
 select * from relUsrCasa;
 select * from relDespensaProductos;
 select * from catalogoProductos;
+select * from relUsrTipo;
 
 select * from habitaciones;
 select * from relCasaHab;
@@ -25,3 +26,6 @@ select enchufes.idEnchufe from enchufes inner join relEnchuHab on enchufes.idEnc
 select habitaciones.nombre as habiName from habitaciones inner join relCasaHab on habitaciones.idHabitacion = relCasaHab.idHabitacion where relcasahab.idCasa='abc123';
 
 select * from notificaciones;
+select * from privilegios;
+select habitaciones.nombre as roomName from privilegios inner join habitaciones on habitaciones.idHabitacion = privilegios.idHabitacion where privilegios.correoJunior='fer@fer.com' and privilegios.permiso='SI';
+call altaPrivi('f@f.com','Habitacion 1','SI');

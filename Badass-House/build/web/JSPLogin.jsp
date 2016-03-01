@@ -69,7 +69,7 @@
                                 sesion.setAttribute("sessionName", nameUsr);
                                 sesion.setAttribute("sessionStat", "logueado");
                                 sesion.setMaxInactiveInterval(40 * 60);
-                                out.print(index1);
+                                out.print(index);
                             }
                         }
 

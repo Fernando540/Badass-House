@@ -27,6 +27,7 @@ drop procedure if exists activaNoti;
 drop procedure if exists dimeEstado;
 drop procedure if exists habiNames;
 drop procedure if exists changeHabName;
+drop procedure if exists dimePermiso;
 
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
@@ -313,21 +314,22 @@ else
 end if;
 select mensaje as msj;
 end;//
+
 create procedure altaPrivi(in mail nvarchar(35),in habName nvarchar(35), in permixo nvarchar(10))
 begin
 declare contador int;
-declare homeID int;
+declare homeID nvarchar(6);
 declare roomID int;
 
 set homeID=(select idCasa from relUsrCasa where correo=mail);
 set roomID = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where idCasa=homeID and habitaciones.nombre=habName);
-
+insert into privilegios(idHabitacion,correoJunior, permiso) values (roomID,mail,permixo);
 set contador=(select count(*) from privilegios where idHabitacion=roomID and correoJunior=mail);
 if contador=0 then
 	insert into privilegios(idHabitacion,correoJunior, permiso) values(roomID,mail,permixo);
 else
 	if permixo!='' then
-		update privilegios set permiso=permixo where idHabitacion=roomID and correoJunior=mail;
+		update privilegios set permiso=permixo where idHabitacion=roomID;
 	end if;
 end if;
 end;//
@@ -405,5 +407,12 @@ begin
     
     update habitaciones set nombre=newName where idHabitacion=roomID;
 end;//
+
+
+create procedure dimePermiso(in mail nvarchar(35))
+begin 
+    select habitaciones.nombre as roomName from privilegios inner join habitaciones on habitaciones.idHabitacion = privilegios.idHabitacion where privilegios.correoJunior=mail and privilegios.permiso='SI';
+end;//
+
 
 delimiter ;

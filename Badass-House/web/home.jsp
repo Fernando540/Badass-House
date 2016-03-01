@@ -49,6 +49,12 @@
                                     }
                                 }
 
+                                String tipoUsuario = "";
+                                ResultSet tipoUsr = datos.consulta1("call dimeTipo('" + correin + "');");
+                                while (tipoUsr.next()) {
+                                    tipoUsuario = tipoUsr.getString("privilegio");
+                                }
+
                                 String paquete = "";
                                 ResultSet paqueton = datos.consulta1("call dimePaquete('','" + correin + "');");
                                 while (paqueton.next()) {
@@ -63,34 +69,57 @@
                                     itera = itera + 1;
                                 }
 
+                                String[] habPermitidas = new String[6];
+                                int cuenta = 0;
+                                if (tipoUsuario.equals("2")) {
+                                    ResultSet roomsJR = datos.consulta1("call dimePermiso('" + correin + "');");
+                                    while (roomsJR.next()) {
+                                        habPermitidas[cuenta] = roomsJR.getString("roomName");
+                                        cuenta = cuenta + 1;
+                                    }
+                                }
+
                                 ResultSet rs4 = datos.consulta1("call dimePaquete('','" + correin + "');");
                                 while (rs4.next()) {
                                     if (rs4.getString("pkte").equals("Basico") || rs4.getString("pkte").equals("BasicoNKA")) {
-                                        out.print("<li class='dropdown'>");
-                                        out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
-                                        out.print("<ul class='dropdown-menu'>");
-                                        out.print("<li><a href='#Habitacion1'>"+habNames[0]+"</a></li>");
-                                        out.print("<li><a href='#Habitacion2'>"+habNames[1]+"</a></li>");
-                                        out.print("</ul>");
+                                        if (tipoUsuario.equals("1")) {
+                                            out.print("<li class='dropdown'>");
+                                            out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
+                                            out.print("<ul class='dropdown-menu'>");
+                                            out.print("<li><a href='#Habitacion1'>" + habNames[0] + "</a></li>");
+                                            out.print("<li><a href='#Habitacion2'>" + habNames[1] + "</a></li>");
+                                            out.print("</ul>");
+                                        } else {
+                                            out.print("<li class='dropdown'>");
+                                            out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
+                                            out.print("<ul class='dropdown-menu'>");
+
+                                            for (cuenta = 0; cuenta < habPermitidas.length; cuenta++) {
+                                                if (habPermitidas[cuenta] != null) {
+                                                    out.print("<li><a href='#Habitacion" + String.valueOf(cuenta + 1) + "'>" + habPermitidas[cuenta] + "</a></li>");
+                                                }
+                                            }
+                                            out.print("</ul>");
+                                        }
                                     } else if (rs4.getString("pkte").equals("Pro") || rs4.getString("pkte").equals("ProNKA")) {
                                         out.print("<li class='dropdown'>");
                                         out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
                                         out.print("<ul class='dropdown-menu'>");
-                                        out.print("<li><a href='#Habitacion1'>"+habNames[0]+"</a></li>");
-                                        out.print("<li><a href='#Habitacion2'>"+habNames[1]+"</a></li>");
-                                        out.print("<li><a href='#Habitacion3'>"+habNames[2]+"</a></li>");
-                                        out.print("<li><a href='#Habitacion4'>"+habNames[3]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion1'>" + habNames[0] + "</a></li>");
+                                        out.print("<li><a href='#Habitacion2'>" + habNames[1] + "</a></li>");
+                                        out.print("<li><a href='#Habitacion3'>" + habNames[2] + "</a></li>");
+                                        out.print("<li><a href='#Habitacion4'>" + habNames[3] + "</a></li>");
                                         out.print("</ul>");
                                     } else {
                                         out.print("<li class='dropdown'>");
                                         out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones <span class='caret'></span></a>");
                                         out.print("<ul class='dropdown-menu'>");
-                                        out.print("<li><a href='#Habitacion1'>"+habNames[0]+"</a></li>");
-                                        out.print("<li><a href='#Habitacion2'>"+habNames[1]+"</a></li>");
-                                        out.print("<li><a href='#Habitacion3'>"+habNames[2]+"</a></li>");
-                                        out.print("<li><a href='#Habitacion4'>"+habNames[3]+"</a></li>");
-                                        out.print("<li><a href='#Habitacion5'>"+habNames[4]+"</a></li>");
-                                        out.print("<li><a href='#Habitacion6'>"+habNames[5]+"</a></li>");
+                                        out.print("<li><a href='#Habitacion1'>" + habNames[0] + "</a></li>");
+                                        out.print("<li><a href='#Habitacion2'>" + habNames[1] + "</a></li>");
+                                        out.print("<li><a href='#Habitacion3'>" + habNames[2] + "</a></li>");
+                                        out.print("<li><a href='#Habitacion4'>" + habNames[3] + "</a></li>");
+                                        out.print("<li><a href='#Habitacion5'>" + habNames[4] + "</a></li>");
+                                        out.print("<li><a href='#Habitacion6'>" + habNames[5] + "</a></li>");
                                         out.print("</ul>");
                                     }
                                 }
@@ -179,6 +208,7 @@
             <%
                 ResultSet estadote;
                 estadote = datos.consulta1("call dimeEstado('" + correin + "','Despensa');");
+
                 while (estadote.next()) {
                     if (estadote.getString("estaduki").equals("activado")) {
 
@@ -210,6 +240,7 @@
             <%
                 ResultSet estadote1;
                 estadote1 = datos.consulta1("call dimeEstado('" + correin + "','ForceClose');");
+
                 while (estadote1.next()) {
                     if (estadote1.getString("estaduki").equals("activado")) {
 
@@ -395,12 +426,15 @@
                 ResultSet idCasa;
                 String idCas = "";
                 idCasa = datos.consulta1("select idCasa from relUsrCasa where correo='" + correin + "';");
+
                 while (idCasa.next()) {
                     idCas = idCasa.getString("idCasa");
                 }
                 ResultSet users;
                 users = datos.consulta1("select correo from relUsrCasa where idCasa='" + idCas + "';");
-                out.print("<center><table><th>Correo</th><th>Tipo Usuario</th><th>Privilegios</th>");
+
+                out.print(
+                        "<center><table><th>Correo</th><th>Tipo Usuario</th><th>Privilegios</th>");
                 while (users.next()) {
                     String correok = users.getString("correo");
                     ResultSet tipo = datos.consulta1("call dimeTipo('" + correok + "');");
@@ -409,11 +443,7 @@
 
                         if (tipo.getString("privilegio").equals("2")) {
                             out.print("<tr><td>" + correok + "</td><td>Junior</td>");
-                            ResultSet habi = datos.consulta1("select idHabitacion from relCasaHab where idCasa='" + idCas + "';");
-                            int id = 0;
-                            while (habi.next()) {
-                                id = Integer.parseInt(habi.getString("idHabitacion"));
-                            }
+
                             rs3 = datos.consulta1("call dimePaquete('','" + correin + "');");
                             int cantidad = 0;
                             while (rs3.next()) {
@@ -427,9 +457,7 @@
                                     }
                                 }
                             }
-                            out.print(id);
-                            ResultSet nombres;
-                            
+
                             out.print("<td> <form action='daPrivi.jsp' method='post'>"
                                     + "<select name='idHabitacion'>");
                             for (int v = 0; v < cantidad; v++) {
@@ -445,7 +473,9 @@
 
                     }
                 }
-                out.print("</center></table>");
+
+                out.print(
+                        "</center></table>");
 
             %>
         </div>
@@ -464,9 +494,12 @@
                 <h4 class="status">Notificaciones</h4>
             </div>
             <%                ResultSet rs6;
+
                 datos.conectar();
                 rs6 = datos.consulta1("call dimeNoti('" + correin + "','Despensa',1);");
-                out.println("<center><table><tr><th><h3>Correo</h3></th><th><h3>Accion</h3></th><th><h3>Fecha</h3></th></tr>");
+
+                out.println(
+                        "<center><table><tr><th><h3>Correo</h3></th><th><h3>Accion</h3></th><th><h3>Fecha</h3></th></tr>");
                 while (rs6.next()) {
                     out.print("<tr><td>" + rs6.getString("correin") + "</td>");
                     out.print("<td>" + rs6.getString("que") + "</td>");
@@ -474,13 +507,16 @@
                     out.print("</tr>");
                 }
                 rs6 = datos.consulta1("call dimeNoti('" + correin + "','ForceClose',2);");
+
                 while (rs6.next()) {
                     out.print("<tr><td>" + rs6.getString("correin") + "</td>");
                     out.print("<td>" + rs6.getString("que") + "</td>");
                     out.print("<td>" + rs6.getString("prueba") + "</td>");
                     out.print("</tr>");
                 }
-                out.print("</center></table>");
+
+                out.print(
+                        "</center></table>");
             %>
         </div>
     </div>
@@ -524,6 +560,7 @@
     <!--Niños no-->
     <%
         rs3 = datos.consulta1("call dimePaquete('','" + correin + "');");
+
         while (rs3.next()) {
             if (rs3.getString("pkte").equals("BasicoNKA") || rs3.getString("pkte").equals("ProNKA") || rs3.getString("pkte").equals("PlatinoNKA")) {
 
@@ -576,6 +613,14 @@
          ----------------------------------------------------------------
          ----------------------------------------------------------------
          */
+        int coincidencia;
+        coincidencia = 0;
+        for (int iterator = 0; iterator < habPermitidas.length; iterator++) {
+            if (habPermitidas[iterator] == habNames[0]) {
+                coincidencia = 1;
+            }
+        }
+        //if (tipoUsuario.equals("1") || coincidencia == 1) {
     %>
     <div id='Habitacion1' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>
@@ -600,6 +645,7 @@
                 String correuki = (String) session.getAttribute("sessionMail");
 
                 cDatos datukis = new cDatos();
+
                 datukis.conectar();
 
                 try {
@@ -846,9 +892,17 @@
             </div>
         </div>
         <%
-            } catch (Exception errots) {
-                out.print(errots.getMessage());
+                } catch (Exception errots) {
+                    out.print(errots.getMessage());
+                }
+            
+            coincidencia = 0;
+            for (int iterator = 0; iterator < habPermitidas.length; iterator++) {
+                if (habPermitidas[iterator] == habNames[1]) {
+                    coincidencia = 1;
+                }
             }
+            //if (tipoUsuario.equals("1") || coincidencia == 1) {
         %>
     </div>
     <div id='Habitacion2' class= 'container-fluid noTePeguesArriba' >
@@ -1117,17 +1171,18 @@
             </div>
         </div>
         <%
-            } catch (Exception errots) {
-                out.print(errots.getMessage());
-            }
+                } catch (Exception errots) {
+                    out.print(errots.getMessage());
+                }
+            
         %>
     </div>
-    <%
-        /*                      HABITACIONES 3 Y 4
+    <%        /*                      HABITACIONES 3 Y 4
          ----------------------------------------------------------------
          ----------------------------------------------------------------
          */
-        if (paquete.equals("Pro") || paquete.equals("Platino") || paquete.equals("ProNKA") || paquete.equals("PlatinoNKA")) {
+        if (paquete.equals(
+                "Pro") || paquete.equals("Platino") || paquete.equals("ProNKA") || paquete.equals("PlatinoNKA")) {
     %>
     <div id='Habitacion3' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>
@@ -1679,7 +1734,8 @@
          ------------------------------------------------------------------------------------------------------------------*/
     %>
 
-    <%        if (paquete.equals("Platino") || paquete.equals("PlatinoNKA")) {
+    <%        if (paquete.equals(
+                "Platino") || paquete.equals("PlatinoNKA")) {
     %>
     <div id='Habitacion5' class= 'container-fluid noTePeguesArriba' >
         <div class='row'>
