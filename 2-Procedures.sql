@@ -72,8 +72,10 @@ begin
     declare coinDesp int;
     
     set coinDesp = (select count(*)from relCasaDespensa where idCasa= seriuki);
+    if adress!='' then
+		update casa set direccion = adress where idCasa=seriuki;
+    end if;
     
-    update casa set direccion = adress where idCasa=seriuki;
 
     set noDespensas = (select count(*) from despensa);
     if noDespensas = 0 then

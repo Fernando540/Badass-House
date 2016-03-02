@@ -64,7 +64,7 @@
                                 out.print(index);
 
                             } else {
-                                out.print("<script> alert('Bienvenido " + correo + "');</script>");
+                                out.print("<script> alert('Bienvenido " + nameUsr + "');</script>");
                                 sesion.setAttribute("sessionMail", correo);
                                 sesion.setAttribute("sessionName", nameUsr);
                                 sesion.setAttribute("sessionStat", "logueado");
