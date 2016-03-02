@@ -254,30 +254,98 @@
             </div>
         </div-->
         <div class="row-fluid">
+            <%
+        BD.cDatos datoss = new BD.cDatos();
+                datoss.conectar();
+                try {
+                    ResultSet c = datos.consulta1("call statusGas('" + correin + "');");
+                    int cont = 0;
+
+                    String[] us = new String[2];
+                    String[] name = new String[2];
+                    while (c.next()) {
+                        us[cont] = c.getString("estatus");
+                        name[cont] = c.getString("llaveNombre");
+                        cont = cont + 1;
+                    }
+                        %>
             <div class="text-center">
                 <br><br><br><br>
                 <h4 class="status">Llaves de gas</h4>
             </div>
+            <% if(us[0].equals("0")){
+                    %>
+            
             <div class="col-md-3">
+                <form name="Gas1" action="llaveGas" method="post">
                 Llave 1 
-                <input type="checkbox" class="sliderEstilos" id="sliderLlave1" checked>
+                <input type="checkbox" class="sliderEstilos" id="sliderLlave1" onclick="sendStat1()" >
                 <label for="sliderLlave1"></label>
+                <input type="text" name="ppm1" value="900" hidden>
+                <input type="text" name="key1" value="Llave1" hidden>
+                </form>
+                <form name="Gas11" action="llaveGas" method="post">
+                <input type="text" value="<%= us[0] %>" name="ppm1" placeholder = "Valor en PPM">
+                <input type="text" name="key1" value="Llave1" hidden>
+                <input type="submit" class="btn btn-warning" value="Mándalo">      
+                </form>
             </div>
+            
+                    <% } else{
+%>
+            
             <div class="col-md-3">
+                <form name="Gas2" action="llaveGas" method="post">
+                Llave 1 
+                <input type="checkbox" class="sliderEstilos" id="sliderLlave1" onclick="sendStat2()" checked>
+                <label for="sliderLlave1"></label>
+                <input type="text" name="ppm1" value="900" hidden>
+                <input type="text" name="key1" value="Llave1" hidden>
+                </form>
+                <form name="Gas22" action="llaveGas" method="post">
+                <input type="text" value="<%= us[0] %>" name="ppm1" placeholder = "Valor en PPM">
+                <input type="text" name="key1" value="Llave1" hidden>
+                <input type="submit" class="btn btn-warning" value="Mándalo">     
+                </form>
+            </div>
+            <% }  if(us[1].equals("0")){
+                    %>
+            <div class="col-md-3">
+                <form name="Gas3" action="llaveGas" method="post">
                 Llave 2
-                <input type="checkbox" class="sliderEstilos" id="sliderLlave2" checked>
+                <input type="checkbox" class="sliderEstilos" id="sliderLlave2" onclick="sendStat3()" >
                 <label for="sliderLlave2"></label>
+                <input type="text" name="ppm2" value="900" hidden>
+                <input type="text" name="key2" value="Llave2" hidden>
+                </form>
+                <form name="Gas33" action="llaveGas" method="post">
+                <input type="text" value="<%= us[1] %>" name="ppm1" placeholder = "Valor en PPM">
+                <input type="text" name="key1" value="Llave2" hidden>
+                <input type="submit" class="btn btn-warning" value="Mándalo">      
+                </form>
             </div>
+                    <% } else{
+%>
             <div class="col-md-3">
-                Llave 3
-                <input type="checkbox" class="sliderEstilos" id="sliderLlave3" checked>
-                <label for="sliderLlave3"></label>
+                <form name="Gas4" action="llaveGas" method="post">
+                Llave 2 
+                <input type="checkbox" class="sliderEstilos" id="sliderLlave2" onclick="sendStat4()" checked>
+                <label for="sliderLlave2"></label>
+                <input type="text" name="ppm1" value="900" hidden>
+                <input type="text" name="key1" value="Llave2" hidden>
+                </form>
+                <form name="Gas44" action="llaveGas" method="post">
+                <input type="text" value="<%= us[1] %>" name="ppm1" placeholder = "Valor en PPM">
+                <input type="text" name="key1" value="Llave2" hidden>
+                <input type="submit" class="btn btn-warning" value="Mándalo">  
+                </form>    
             </div>
-            <div class="col-md-3">
-                Llave 4
-                <input type="checkbox" class="sliderEstilos" id="sliderLlave4" checked>
-                <label for="sliderLlave4"></label>
-            </div>
+            <% } 
+                }   catch(Exception es){
+                        
+                    }  
+        
+        %>
         </div>
         <div class="row-fluid">
             <div class="text-center">

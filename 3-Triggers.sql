@@ -10,10 +10,26 @@ begin
     declare paktazo nvarchar(30);
     declare noHabs int;
     declare noPuertas int;
+    declare totLlaves int;
+    set homeID = (NEW.idCasa);
+    
+    ##-------------------------------------------------------------->
+	
+    set totLlaves = (select count(*) from llavesGas);
+    
+    set totLlaves = (totLlaves+1);
+    insert into llavesGas(idLlave, nombre,usoPpm) values(totLlaves,'Llave principal',0);
+    insert into relLlaves(idCasa,idLlave) values (homeID,totLlaves);
+    
+    set totLlaves = (totLlaves+1);
+    insert into llavesGas(idLlave, nombre,usoPpm) values(totLlaves,'Llave2',0);
+    insert into relLlaves(idCasa,idLlave) values (homeID,totLlaves);
+    
+    ##-------------------------------------------------------------->
 
 	set noPuertas = (select count(*) from Puertas);
     
-	set homeID = (NEW.idCasa);
+	
 	set paktazo = (NEW.paquete);
     set noHabs = (select count(*) from habitaciones);
     
@@ -152,4 +168,4 @@ begin
 		insert into relCasaDespensa(idRel,Correo,idDespensa) values((idDespRel+1),new.Correo,(idDesp+1));
     end if;
 
-end;***/
+end;***/      
