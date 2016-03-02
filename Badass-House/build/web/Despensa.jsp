@@ -77,7 +77,7 @@
             <h1>Cocina de ${sessionScope.sessionName}</h1>
             <br>
             <br>
-            <form method="post" action="Despensa1.jsp">
+            <form method="post" action="Despensa1">
                 Código de barras<input type="text" placeholder="Codigo de Barras" maxlenght="35" name="codigo" required>
                 &nbsp;&nbsp;
                 Nombre<input type="text" placeholder="Nombre para identificar" maxlenght="35" name="nombre" required>

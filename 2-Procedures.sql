@@ -28,6 +28,8 @@ drop procedure if exists dimeEstado;
 drop procedure if exists habiNames;
 drop procedure if exists changeHabName;
 drop procedure if exists dimePermiso;
+drop procedure if exists dimePuertas;
+drop procedure if exists abreCierra;
 
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
@@ -325,7 +327,7 @@ declare roomID int;
 
 set homeID=(select idCasa from relUsrCasa where correo=mail);
 set roomID = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where idCasa=homeID and habitaciones.nombre=habName);
-insert into privilegios(idHabitacion,correoJunior, permiso) values (roomID,mail,permixo);
+
 set contador=(select count(*) from privilegios where idHabitacion=roomID and correoJunior=mail);
 if contador=0 then
 	insert into privilegios(idHabitacion,correoJunior, permiso) values(roomID,mail,permixo);
@@ -416,5 +418,34 @@ begin
     select habitaciones.nombre as roomName from privilegios inner join habitaciones on habitaciones.idHabitacion = privilegios.idHabitacion where privilegios.correoJunior=mail and privilegios.permiso='SI';
 end;//
 
+create procedure dimePuertas(in mail nvarchar(35))
+begin
+declare homeID nvarchar(6);
+set homeID = (select idCasa from relUsrCasa where Correo = mail);
+select idPuerta as codigo from relCasaPuertas where idCasa=homeID;
+end;//
 
+create procedure abreCierra(in mail nvarchar(35), id nvarchar(10))
+begin
+declare homeID nvarchar(6);
+declare state nvarchar(100);
+set homeID = (select idCasa from relUsrCasa where Correo = mail);
+set state=(select estado from relCasaPuertas where idCasa=homeID and idPuerta=id);
+if state='Cerrada' then
+	update relCasaPuertas set estado='Abierta' where idCasa=homeID and idPuerta=id;
+    ##insert into relCasaUsrEvento(idCasa,correo,tipoEvento,evento) values(homeID,correin,2,'Abrio Puerta');
+else
+	update relCasaPuertas set estado='Cerrada' where idCasa=homeID and idPuerta=id;
+    ##insert into relCasaUsrEvento(idCasa,correo,tipoEvento,evento) values(homeID,correin,2,'Cerro Puerta');
+end if;
+end;//
+
+create procedure dimeAbierto(in mail nvarchar(35), id nvarchar(10))
+begin
+declare homeID nvarchar(6);
+declare state nvarchar(100);
+set homeID = (select idCasa from relUsrCasa where Correo = mail);
+set state=(select estado from relCasaPuertas where idCasa=homeID and idPuerta=id);
+select state;
+end;//
 delimiter ;

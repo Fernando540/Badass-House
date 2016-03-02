@@ -9,18 +9,32 @@ begin
 	declare homeID nvarchar(6);
     declare paktazo nvarchar(30);
     declare noHabs int;
+    declare noPuertas int;
+
+	set noPuertas = (select count(*) from Puertas);
     
 	set homeID = (NEW.idCasa);
 	set paktazo = (NEW.paquete);
     set noHabs = (select count(*) from habitaciones);
     
 	if (paktazo = 'Basico' or paktazo='BasicoNKA')then
+		##Habitaciones
 		insert into habitaciones (nombre) values ('Habitacion 1');
         set noHabs = (noHabs+1);
         insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
 		insert into habitaciones (nombre) values ('Habitacion 2');
 		set noHabs = (noHabs+1);
         insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+        ##Habitaciones
+        ##Puertas
+        
+		insert into Puertas(nombre) values('Puerta Frente');
+		set noPuertas=(noPuertas+1);
+		insert into relCasaPuertas(idPuerta,idCasa,estado) values(noPuertas,homeID,'Cerrada');
+		insert into Puertas(nombre) values('Puerta Atras');
+		set noPuertas=(noPuertas+1);
+		insert into relCasaPuertas(idPuerta,idCasa,estado) values(noPuertas,homeID,'Cerrada');
+        ##Puertas
 	else
 		if (paktazo = 'Pro' or paktazo = 'ProNKA')then
 			insert into habitaciones (nombre) values ('Habitacion 1');
@@ -35,6 +49,15 @@ begin
 			insert into habitaciones (nombre) values ('Habitacion 4');
             set noHabs = (noHabs+1);
 			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+            ##Puertas
+			
+			insert into Puertas(nombre) values('Puerta Frente');
+			set noPuertas=(noPuertas+1);
+			insert into relCasaPuertas(idPuerta,idCasa,estado) values(noPuertas,homeID,'Cerrada');
+			insert into Puertas(nombre) values('Puerta Atras');
+			set noPuertas=(noPuertas+1);
+			insert into relCasaPuertas(idPuerta,idCasa,estado) values(noPuertas,homeID,'Cerrada');
+			##Puertas
 		else
 			insert into habitaciones (nombre) values ('Habitacion 1');
             set noHabs = (noHabs+1);
@@ -54,6 +77,15 @@ begin
 			insert into habitaciones (nombre) values ('Habitacion 6');
             set noHabs = (noHabs+1);
 			insert into relCasaHab (idHabitacion,idCasa) values (noHabs,homeID);
+            ##Puertas
+			
+			insert into Puertas(nombre) values('Puerta Frente');
+			set noPuertas=(noPuertas+1);
+			insert into relCasaPuertas(idPuerta,idCasa,estado) values(noPuertas,homeID,'Cerrada');
+			insert into Puertas(nombre) values('Puerta Atras');
+			set noPuertas=(noPuertas+1);
+			insert into relCasaPuertas(idPuerta,idCasa,estado) values(noPuertas,homeID,'Cerrada');
+			##Puertas
 		end if;
 	end if;
 
@@ -86,7 +118,19 @@ begin
 	
 end;//
 
-
+/*create trigger ingresaPuertas after insert on casa for each row
+begin
+declare homeID nvarchar(6);
+declare noPuertas int;
+set homeID = (NEW.idCasa);
+set noPuertas = (select count(*) from Puertas);
+insert into Puertas(nombre) values('Puerta Frente');
+set noPuertas=(noPuertas+1);
+insert into relCasaPuertas(idPuerta,idCasa) values(noPuertas,homeID,'Cerrada');
+insert into Puertas(nombre) values('Puerta Atras');
+set noPuertas=(noPuertas+1);
+insert into relCasaPuertas(idPuerta,idCasa) values(noPuertas,homeID,'Cerrada');
+end;//*/
 
 /*create trigger altaDespensa after insert on usuarios for each row
 begin

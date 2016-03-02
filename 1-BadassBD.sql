@@ -31,6 +31,11 @@ create table notificaciones(idRel int(2) auto_increment primary key,idCasa nvarc
 create table relCasaNka(idRel int(2) auto_increment primary key, idCasa nvarchar(6), estado nvarchar(30),alturaMax nvarchar(3), alturaMin nvarchar(3));
 ##Tabla NKA
 
+##Tabla de Habitaciones##
+create table Puertas(idPuerta int primary key auto_increment, nombre nvarchar(35));
+create table relCasaPuertas(idRel int primary key auto_increment, idPuerta int(2), idCasa nvarchar(6),estado nvarchar(30));
+alter table relCasaPuertas add foreign key(idCasa) references casa(idCasa);
+##Tabla de Puertas##
 
 ##Tabla de Habitaciones##
 create table habitaciones(idHabitacion int primary key auto_increment, nombre nvarchar(35));

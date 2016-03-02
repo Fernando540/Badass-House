@@ -41,6 +41,13 @@
                             while (tipoUsr.next()) {
                                 tipoUsuario = tipoUsr.getString("privilegio");
                             }
+                            ResultSet dimePuertas = datos.consulta1("call dimePuertas('" + correin + "');");
+                            String id[] = new String[2];
+                            int num = 0;
+                            while (dimePuertas.next()) {
+                                id[num] = dimePuertas.getString("codigo");
+                                num++;
+                            }
                             if (tipoUsuario.equals("1")) {
                         %>
 
@@ -382,7 +389,7 @@
             <h4 class="cuenta">Mis datos</h4>
         </div>
         <div class="row">
-            <form class="form-horizontal" action="JSPConfig.jsp" method="post"><!-- Aquí van las funciones del form-->
+            <form class="form-horizontal" action="JSPConfig" method="post"><!-- Aquí van las funciones del form-->
                 <div class="form-group">                     
                     <label class="col-sm-4 control-label">Cuenta: <%=log%></label>
                 </div>
@@ -435,7 +442,7 @@
             </div>            
         </div>
         <div class="row">
-            <form class="form-horizontal" action="JSPAltaCuenta.jsp" method="post"><!-- Aquí van las funciones del form--> 
+            <form class="form-horizontal" action="JSPAltaCuenta" method="post"><!-- Aquí van las funciones del form--> 
                 <div class="form-group">
                     <label class="col-sm-4 control-label">Numero de serie:</label>
                     <div class="col-sm-6">
@@ -536,7 +543,7 @@
                                 }
                             }
 
-                            out.print("<td> <form action='daPrivi.jsp' method='post'>"
+                            out.print("<td> <form action='daPrivi' method='post'>"
                                     + "<select name='idHabitacion'>");
                             for (int v = 0; v < cantidad; v++) {
                                 out.print("<option>" + habNames[v] + "</option>");
@@ -617,16 +624,66 @@
                 <h4>Cerraduras</h4>
             </div>
             <div class="col-md-3">
-                Cerradura 1 
-                <input type="checkbox" class="sliderEstilos" id="sliderCerradura1" checked>
-                <label for="sliderCerradura1"></label>
+                Puerta Frente
+                <%
+                    ResultSet abierto = datos.consulta1("call dimeAbierto('" + correin + "','" + id[0] + "');");
+                    String estado = "";
+                    while (abierto.next()) {
+                        estado = abierto.getString("state");
+                    }
+                    if (estado.equals("Abierta")) {
+                %>
+                <form name="frontdoor" action="opCl" method="post">
+                    <input type="checkbox" class="sliderEstilos" id="sliderCerradura1" onclick="cierra()" checked>
+                    <label for="sliderCerradura1"></label>
+                    <input type="text" name="idPuerta" value="<%=id[0]%>" hidden>
+
+                </form>
+                <%
+                } else {
+                %>
+                <form name="frontdoor" action="opCl" method="post">
+                    <input type="checkbox" class="sliderEstilos" id="sliderCerradura1" onclick="cierra()" >
+                    <label for="sliderCerradura1"></label>
+                    <input type="text" name="idPuerta" value="<%=id[0]%>" hidden>
+
+                </form>
+
+                <%
+                }%>
             </div>
             <div class="col-md-3">
-                Cerradura 2
-                <input type="checkbox" class="sliderEstilos" id="sliderCerradura2" checked>
-                <label for="sliderCerradura2"></label>
+                Puerta Atras
+                <%
+                    abierto = datos.consulta1("call dimeAbierto('" + correin + "','" + id[1] + "');");
+
+                    while (abierto.next()) {
+                        estado = abierto.getString("state");
+                    }
+                    if (estado.equals("Abierta")) {
+                %>
+
+
+                <form name="backdoor" action="opCl" method="post">
+                    <input type="checkbox" class="sliderEstilos" id="sliderCerradura2" onclick="cierra1()" checked>
+                    <label for="sliderCerradura2"></label>
+                    <input type="text" name="idPuerta" value="<%=id[1]%>" hidden>
+
+                </form>
+                <%
+                } else {
+                %>
+                <form name="backdoor" action="opCl" method="post">
+                    <input type="checkbox" class="sliderEstilos" id="sliderCerradura2" onclick="cierra1()">
+                    <label for="sliderCerradura2"></label>
+                    <input type="text" name="idPuerta" value="<%=id[1]%>" hidden>
+
+                </form>
+                <%
+                    }
+                %>
             </div>
-            <div class="col-md-3">
+            <!--<div class="col-md-3">
                 Cerradura 3
                 <input type="checkbox" class="sliderEstilos" id="sliderCerradura3" checked>
                 <label for="sliderCerradura3"></label>
@@ -636,7 +693,7 @@
                 <input type="checkbox" class="sliderEstilos" id="sliderCerradura4" checked>
                 <label for="sliderCerradura4"></label>
             </div>
-            <br><br><br><br>
+            <br><br><br><br-->
         </div>
     </div>
     <!--Div Cerradura-->
@@ -768,7 +825,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff1" action="apagadores.jsp" method="post">
+                                <form name="OnOff1" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende1()">
                                     <label for="Enchufe1"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -777,7 +834,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -792,7 +849,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff1" action="apagadores.jsp" method="post">
+                                <form name="OnOff1" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende1()" checked>
                                     <label for="Enchufe1"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -801,7 +858,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -822,7 +879,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff2" action="apagadores.jsp" method="post">
+                                <form name="OnOff2" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende2()">
                                     <label for="Enchufe2"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -831,7 +888,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -846,7 +903,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff2" action="apagadores.jsp" method="post">
+                                <form name="OnOff2" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende2()" checked>
                                     <label for="Enchufe2"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -855,7 +912,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -876,7 +933,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff3" action="apagadores.jsp" method="post">
+                                <form name="OnOff3" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende3()">
                                     <label for="Enchufe3"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -885,7 +942,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -900,7 +957,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff3" action="apagadores.jsp" method="post">
+                                <form name="OnOff3" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende3()" checked>
                                     <label for="Enchufe3"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -909,7 +966,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -930,7 +987,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff4" action="apagadores.jsp" method="post">
+                                <form name="OnOff4" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende4()">
                                     <label for="Luz"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -939,7 +996,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -954,7 +1011,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff4" action="apagadores.jsp" method="post">
+                                <form name="OnOff4" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende4()" checked>
                                     <label for="Luz"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -963,7 +1020,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -987,7 +1044,7 @@
                 }
             }
             int coincidencia1 = 0;
-            System.out.println(habPermitidas[0]);
+            System.out.println(habNames[1]);
 
             for (int iterator = 0; iterator < habPermitidas.length; iterator++) {
                 if (habPermitidas[iterator] != null) {
@@ -1053,7 +1110,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff5" action="apagadores.jsp" method="post">
+                                <form name="OnOff5" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe5" onclick="apagaPrende5()">
                                     <label for="Enchufe5"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1062,7 +1119,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1077,7 +1134,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff5" action="apagadores.jsp" method="post">
+                                <form name="OnOff5" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe5" onclick="apagaPrende5()" checked>
                                     <label for="Enchufe5"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1086,7 +1143,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1107,7 +1164,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff6" action="apagadores.jsp" method="post">
+                                <form name="OnOff6" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe6" onclick="apagaPrende6()">
                                     <label for="Enchufe6"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1116,7 +1173,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1131,7 +1188,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff6" action="apagadores.jsp" method="post">
+                                <form name="OnOff6" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe6" onclick="apagaPrende6()" checked>
                                     <label for="Enchufe6"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1140,7 +1197,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1161,7 +1218,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff7" action="apagadores.jsp" method="post">
+                                <form name="OnOff7" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe7" onclick="apagaPrende7()">
                                     <label for="Enchufe7"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1170,7 +1227,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1185,7 +1242,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff7" action="apagadores.jsp" method="post">
+                                <form name="OnOff7" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe7" onclick="apagaPrende7()" checked>
                                     <label for="Enchufe7"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1194,7 +1251,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1215,7 +1272,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff8" action="apagadores.jsp" method="post">
+                                <form name="OnOff8" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz2" onclick="apagaPrende8()">
                                     <label for="Luz2"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1224,7 +1281,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1239,7 +1296,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff8" action="apagadores.jsp" method="post">
+                                <form name="OnOff8" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz2" onclick="apagaPrende8()" checked>
                                     <label for="Luz2"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1248,7 +1305,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1280,7 +1337,6 @@
          */
         if (paquete.equals("Pro") || paquete.equals("Platino") || paquete.equals("ProNKA") || paquete.equals("PlatinoNKA")) {
             coincidencia = 0;
-            System.out.println(habPermitidas[0]);
 
             for (int iterator = 0; iterator < habPermitidas.length; iterator++) {
                 if (habPermitidas[iterator] != null) {
@@ -1345,7 +1401,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff9" action="apagadores.jsp" method="post">
+                                <form name="OnOff9" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe9" onclick="apagaPrende9()">
                                     <label for="Enchufe9"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1354,7 +1410,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1369,7 +1425,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff9" action="apagadores.jsp" method="post">
+                                <form name="OnOff9" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe9" onclick="apagaPrende9()" checked>
                                     <label for="Enchufe9"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1378,7 +1434,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1399,7 +1455,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff10" action="apagadores.jsp" method="post">
+                                <form name="OnOff10" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe10" onclick="apagaPrende10()">
                                     <label for="Enchufe10"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1408,7 +1464,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1423,7 +1479,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff10" action="apagadores.jsp" method="post">
+                                <form name="OnOff10" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe10" onclick="apagaPrende10()" checked>
                                     <label for="Enchufe10"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1432,7 +1488,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1453,7 +1509,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff11" action="apagadores.jsp" method="post">
+                                <form name="OnOff11" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe11" onclick="apagaPrende11()">
                                     <label for="Enchufe11"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1462,7 +1518,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1477,7 +1533,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff11" action="apagadores.jsp" method="post">
+                                <form name="OnOff11" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe11" onclick="apagaPrende11()" checked>
                                     <label for="Enchufe11"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1486,7 +1542,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1507,7 +1563,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff12" action="apagadores.jsp" method="post">
+                                <form name="OnOff12" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz3" onclick="apagaPrende12()">
                                     <label for="Luz3"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1516,7 +1572,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1531,7 +1587,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff12" action="apagadores.jsp" method="post">
+                                <form name="OnOff12" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz3" onclick="apagaPrende12()" checked>
                                     <label for="Luz3"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1540,7 +1596,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1630,7 +1686,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff13" action="apagadores.jsp" method="post">
+                                <form name="OnOff13" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe13" onclick="apagaPrende13()">
                                     <label for="Enchufe13"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1639,7 +1695,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1654,7 +1710,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff13" action="apagadores.jsp" method="post">
+                                <form name="OnOff13" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe13" onclick="apagaPrende13()" checked>
                                     <label for="Enchufe13"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1663,7 +1719,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1684,7 +1740,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff14" action="apagadores.jsp" method="post">
+                                <form name="OnOff14" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe14" onclick="apagaPrende14()">
                                     <label for="Enchufe14"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1693,7 +1749,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1708,7 +1764,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff14" action="apagadores.jsp" method="post">
+                                <form name="OnOff14" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe10" onclick="apagaPrende14()" checked>
                                     <label for="Enchufe14"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1717,7 +1773,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1738,7 +1794,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff15" action="apagadores.jsp" method="post">
+                                <form name="OnOff15" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe15" onclick="apagaPrende15()">
                                     <label for="Enchufe15"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1747,7 +1803,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1762,7 +1818,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff15" action="apagadores.jsp" method="post">
+                                <form name="OnOff15" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe15" onclick="apagaPrende15()" checked>
                                     <label for="Enchufe15"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1771,7 +1827,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1792,7 +1848,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff16" action="apagadores.jsp" method="post">
+                                <form name="OnOff16" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz4" onclick="apagaPrende16()">
                                     <label for="Luz4"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1801,7 +1857,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1816,7 +1872,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff16" action="apagadores.jsp" method="post">
+                                <form name="OnOff16" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz4" onclick="apagaPrende16()" checked>
                                     <label for="Luz4"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1825,7 +1881,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1925,7 +1981,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff17" action="apagadores.jsp" method="post">
+                                <form name="OnOff17" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe17" onclick="apagaPrende17()">
                                     <label for="Enchufe17"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1934,7 +1990,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1949,7 +2005,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff17" action="apagadores.jsp" method="post">
+                                <form name="OnOff17" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe17" onclick="apagaPrende17()" checked>
                                     <label for="Enchufe17"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -1958,7 +2014,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -1979,7 +2035,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff18" action="apagadores.jsp" method="post">
+                                <form name="OnOff18" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe18" onclick="apagaPrende18()">
                                     <label for="Enchufe18"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -1988,7 +2044,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2003,7 +2059,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff18" action="apagadores.jsp" method="post">
+                                <form name="OnOff18" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe18" onclick="apagaPrende18()" checked>
                                     <label for="Enchufe18"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -2012,7 +2068,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2033,7 +2089,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff19" action="apagadores.jsp" method="post">
+                                <form name="OnOff19" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe19" onclick="apagaPrende19()">
                                     <label for="Enchufe19"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -2042,7 +2098,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2057,7 +2113,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff19" action="apagadores.jsp" method="post">
+                                <form name="OnOff19" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe19" onclick="apagaPrende19()" checked>
                                     <label for="Enchufe19"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -2066,7 +2122,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2087,7 +2143,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff20" action="apagadores.jsp" method="post">
+                                <form name="OnOff20" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz5" onclick="apagaPrende20()">
                                     <label for="Luz5"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -2096,7 +2152,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2111,7 +2167,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff20" action="apagadores.jsp" method="post">
+                                <form name="OnOff20" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz5" onclick="apagaPrende20()" checked>
                                     <label for="Luz5"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -2120,7 +2176,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2210,7 +2266,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff21" action="apagadores.jsp" method="post">
+                                <form name="OnOff21" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe21" onclick="apagaPrende21()">
                                     <label for="Enchufe21"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -2219,7 +2275,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2234,7 +2290,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff21" action="apagadores.jsp" method="post">
+                                <form name="OnOff21" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe21" onclick="apagaPrende21()" checked>
                                     <label for="Enchufe21"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -2243,7 +2299,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2264,7 +2320,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff22" action="apagadores.jsp" method="post">
+                                <form name="OnOff22" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe22" onclick="apagaPrende22()">
                                     <label for="Enchufe22"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -2273,7 +2329,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2288,7 +2344,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff22" action="apagadores.jsp" method="post">
+                                <form name="OnOff22" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe22" onclick="apagaPrende22()" checked>
                                     <label for="Enchufe22"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -2297,7 +2353,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2318,7 +2374,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff23" action="apagadores.jsp" method="post">
+                                <form name="OnOff23" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe23" onclick="apagaPrende23()">
                                     <label for="Enchufe23"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -2327,7 +2383,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2342,7 +2398,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff23" action="apagadores.jsp" method="post">
+                                <form name="OnOff23" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Enchufe23" onclick="apagaPrende23()" checked>
                                     <label for="Enchufe23"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -2351,7 +2407,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2372,7 +2428,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff24" action="apagadores.jsp" method="post">
+                                <form name="OnOff24" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz6" onclick="apagaPrende24()">
                                     <label for="Luz6"></label>
                                     <input type="text" value="50" name="Voltaje" hidden>
@@ -2381,7 +2437,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
@@ -2396,7 +2452,7 @@
                     <table style="width:30%">
                         <tr>
                             <td>
-                                <form name="OnOff24" action="apagadores.jsp" method="post">
+                                <form name="OnOff24" action="apagadores" method="post">
                                     <input type="checkbox" class="sliderEstilos" id="Luz6" onclick="apagaPrende24()" checked>
                                     <label for="Luz6"></label>
                                     <input type="text" value="0" name="Voltaje" hidden>
@@ -2405,7 +2461,7 @@
                                 </form>
                             </td>
                             <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores.jsp" method="post">
+                                <form class="form-horizontal" action="apagadores" method="post">
                                     <%
                                         out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
                                     %>
