@@ -298,7 +298,7 @@ if coin=0 then
 end if;
 end;//
 
-create procedure ingresaAltura(in mail nvarchar(20), in heightM nvarchar(3), in heightMin nvarchar(3))
+create procedure ingresaAltura(in mail nvarchar(35), in heightM nvarchar(3), in heightMin nvarchar(3))
 begin
 declare idCasuki nvarchar(6);
 set idCasuki=(select idCasa from relUsrCasa where correo=mail);
