@@ -277,7 +277,7 @@ begin
     declare idContact int;
     
     set homeID = (select idCasa from relUsrCasa where Correo = mail);
-    set idContact = (select llavesGas.idLlave from llavesGas
+    set idContact = (select llavesGas.idLlave from llavesGas 
     inner join relLlaves on llavesGas.idLlave = relLlaves.idLlave where relLlaves.idCasa=homeID and llavesGas.nombre=nombreLlave);
     
     update llavesGas set usoPpm=flujoPpm where idLlave=idContact;

@@ -31,4 +31,6 @@ select habitaciones.nombre as habiName from habitaciones inner join relCasaHab o
 select * from notificaciones;
 select * from privilegios;
 select habitaciones.nombre as roomName from privilegios inner join habitaciones on habitaciones.idHabitacion = privilegios.idHabitacion where privilegios.correoJunior='fer@fer.com' and privilegios.permiso='SI';
-call altaPrivi('f@f.com','Habitacion 1','SI');
+call flujogas('fer@gmail.com',900,'Llave principal');
+
+insert into casa(idCasa,paquete) values('PEENES','Huevos1');

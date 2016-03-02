@@ -18,6 +18,7 @@ begin
     set totLlaves = (select count(*) from llavesGas);
     
     set totLlaves = (totLlaves+1);
+    
     insert into llavesGas(idLlave, nombre,usoPpm) values(totLlaves,'Llave principal',0);
     insert into relLlaves(idCasa,idLlave) values (homeID,totLlaves);
     
