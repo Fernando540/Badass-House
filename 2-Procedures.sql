@@ -30,6 +30,8 @@ drop procedure if exists changeHabName;
 drop procedure if exists dimePermiso;
 drop procedure if exists dimePuertas;
 drop procedure if exists abreCierra;
+drop procedure if exists statusGas;
+drop procedure if exists flujoGas;
 
 delimiter //
 create procedure valida(in usr nvarchar(45), in pass blob)
@@ -258,6 +260,27 @@ begin
     set idContact = (select enchufes.idEnchufe from enchufes inner join relEnchuHab on enchufes.idEnchufe = relEnchuHab.idEnchufe where relEnchuHab.idHabitacion=idHabi and enchufes.Nombre=contacto);
     
     update enchufes set uso=corriente where idEnchufe=idContact;
+end;//
+
+create procedure statusGas (in correo0 nvarchar(35))
+begin
+	declare idHome nvarchar(6);
+    set idHome = (select idCasa from relUsrCasa where Correo = correo0);
+    
+    	select llavesGas.usoPpm as estatus, llavesGas.nombre as llaveNombre from llavesGas 
+        inner join relLlaves on llavesGas.idLlave = relLlaves.idLlave where relLlaves.idCasa=idHome;
+end; // 
+
+create procedure flujoGas (in mail nvarchar(35),in flujoPpm int, in nombreLlave nvarchar(30))
+begin
+    declare homeID nvarchar(6);
+    declare idContact int;
+    
+    set homeID = (select idCasa from relUsrCasa where Correo = mail);
+    set idContact = (select llavesGas.idLlave from llavesGas
+    inner join relLlaves on llavesGas.idLlave = relLlaves.idLlave where relLlaves.idCasa=homeID and llavesGas.nombre=nombreLlave);
+    
+    update llavesGas set usoPpm=flujoPpm where idLlave=idContact;
 end;//
 
 create procedure ingresaProteccion(in mail nvarchar(35),in estadots nvarchar(30))

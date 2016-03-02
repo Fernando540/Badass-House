@@ -50,6 +50,13 @@ alter table relEnchuHab add foreign key(idHabitacion) references habitaciones(id
 alter table relEnchuHab add foreign key(idEnchufe) references enchufes(idEnchufe);
 ##
 
+##Tabla de Llaves de Gas
+create table llavesGas(idLlave int primary key auto_increment, nombre nvarchar(20),usoPpm int);
+create table relLlaves(idRel int primary key auto_increment, idCasa nvarchar(6), idLlave int);
+alter table relLlaves add foreign key(idCasa) references casa(idCasa);
+alter table relLlaves add foreign key(idLlave) references llavesGas(idLlave);
+##
+
 ##Tablas principales
 
 ##Tablas relacionales

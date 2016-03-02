@@ -16,6 +16,9 @@ select * from relCasaHab;
 select * from enchufes;
 select * from relEnchuHab;
 
+select * from llavesGas;
+select * from relLlaves;
+
 delete from usuarios where Correo = 'fernandojos44@gmail.com';
 
 select * from relCasaHab;
