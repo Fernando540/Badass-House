@@ -41,18 +41,24 @@ public class UsoProducto extends HttpServlet {
             String correo = (String) sesion.getAttribute("sessionMail");
             String code = request.getParameter("codigo");;
             String canti = request.getParameter("Cantidad");
-            System.out.println(code);
+            String redirect = ("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/Despensa.jsp'>");
             
+
             try {
                 datos.conectar();
                 int res;
-                res = datos.modificacion1("call UsoProducto('" + correo + "','" + code + "','" + canti + "');");
-                if (res == 1) {
-                    out.print("<script>alert('Se han usado los elementos');</script>");
-                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/Despensa.jsp'>");
+                if (canti.equals("0")|| canti.equals(null)) {
+                    out.print("<script>alert('Ya hay P U T I T O!!');</script>");
+                    out.print(redirect);
                 } else {
-                    out.print("<script>alert('Errorts');</script>");
-                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/Despensa.jsp'>");
+                    res = datos.modificacion1("call UsoProducto('" + correo + "','" + code + "','" + canti + "');");
+                    if (res == 1) {
+                        out.print("<script>alert('Se han usado los elementos');</script>");
+                        out.print(redirect);
+                    } else {
+                        out.print("<script>alert('Errorts');</script>");
+                        out.print(redirect);
+                    }
                 }
             } catch (Exception e) {
                 out.print(e);

@@ -18,14 +18,14 @@
     <script src="js/scripts.js"/></script>
 <link rel="stylesheet" href="Estilos/estiloTabla.css">
 <style>
-            body {
-                background: url("Imagenes/background.jpg") no-repeat fixed center;
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
-                background-size: cover;
-            }
-        </style>
+    body {
+        background: url("Imagenes/background.jpg") no-repeat fixed center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+</style>
 
 <script>
     function confirmar() {
@@ -117,9 +117,15 @@
                     out.println("<td>" + rs.getObject("numero") + "</td>");
 
                     int cont = Integer.parseInt(rs.getString("numero"));
-                    out.println("<td><form action='UsoProducto' method='post'><select name='Cantidad'>");
-                    for (int n = 1; n <= cont; n++) {
-                        out.println("<option>" + n + "</option>");
+                    String valid = rs.getString("numero");
+                    if (valid.equals(null)||valid.equals("0")) {
+                        out.println("<td><form action='UsoProducto' method='post'><select name='Cantidad'>");
+                        out.println("<option>0</option>");
+                    } else {
+                        out.println("<td><form action='UsoProducto' method='post'><select name='Cantidad'>");
+                        for (int n = 1; n <= cont; n++) {
+                            out.println("<option>" + n + "</option>");
+                        }
                     }
                     out.println("</select><input type='text' value='" + rs.getString("barcode") + "' name='codigo' hidden><input type='submit' value='Usar'/></form></td>");
                     out.println("</tr>");
