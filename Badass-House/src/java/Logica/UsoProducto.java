@@ -48,7 +48,7 @@ public class UsoProducto extends HttpServlet {
                 datos.conectar();
                 int res;
                 if (canti.equals("0")|| canti.equals(null)) {
-                    out.print("<script>alert('Ya hay P U T I T O!!');</script>");
+                    out.print("<script>alert('Ya no hay de eso!!');</script>");
                     out.print(redirect);
                 } else {
                     res = datos.modificacion1("call UsoProducto('" + correo + "','" + code + "','" + canti + "');");

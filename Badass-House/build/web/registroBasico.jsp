@@ -47,7 +47,7 @@
         correo2 = document.getElementById("correo2").value;
 
         if (correo2 === correo1) {
-            alert("Los correos coinciden, ingresa tu contraseña");
+            //alert("Los correos coinciden, ingresa tu contraseña");
         } else {
             alert("Los correos deben coincidir");
         }

@@ -786,12 +786,12 @@
                     <input type='text' name='alturaMax' size='3' value='<%=altuki%>' required>
 
                     <br/>
-                    Altura del Sensor de Piso (centímetros)<input id='Alturamin' type='range' min='0' max='2' step='0.1' />
+                    Altura del Sensor de Piso (centímetros)<!--<input id='Alturamin' type='range' min='0' max='2' step='0.1' />-->
 
                     <br/><br/>
                     <input type='text' size='3' name='alturaMin' value='<%=altot%>' required>
                     <br/>
-                    Altura del Sensor mínima<input id='Alturamin' type='range' min='0' max='2' step='0.1' />
+                    Altura del Sensor mínima<!--<input id='Alturamin' type='range' min='0' max='2' step='0.1' />-->
                     <br/>
                     <button type='submit' name='Aceptar' class ='btn btn-success'>Confirmar</button>
                 </form>
