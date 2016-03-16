@@ -234,3 +234,16 @@ h4.cuenta{
     font-weight: 400;
     margin-bottom: 30px;
 }
+
+#illustration {
+    background: url("../Imagenes/404.gif") no-repeat 50% 55%;
+    max-width: 100%;
+    min-height: 480px;
+    background-size: 100%;
+}
+
+.error-404.not-found {
+    margin: auto;
+    max-width: 770px;
+    width: 100%;
+}

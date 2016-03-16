@@ -37,7 +37,7 @@ public class Logout extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>");
             HttpSession sesion = request.getSession();
-            sesion.setAttribute("sessionStat", "null");
+            sesion.removeAttribute("sessionMail");
             sesion.invalidate();
         }
     }

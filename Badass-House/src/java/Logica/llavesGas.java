@@ -43,8 +43,6 @@ public class llavesGas extends HttpServlet {
             String llaveNom = request.getParameter("key1");
             String redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp'>";
             
-            System.out.println(ppm1);
-            System.out.println(llaveNom);
             try {
                 datos.conectar();
                 int res = datos.modificacion1("call flujoGas('" + correo + "', '" + ppm1 + "','" + llaveNom + "');");

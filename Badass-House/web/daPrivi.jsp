@@ -5,7 +5,6 @@
     correo =request.getParameter("correo");
     idHabitacion=request.getParameter("idHabitacion");
     permiso=request.getParameter("permiso");
-    System.out.println(permiso);
     datos.conectar();
     datos.consulta1("call altaPrivi('"+correo+"','"+idHabitacion+"','"+permiso+"')");
     out.print("<script> alert('Permiso actualizado');</script>");

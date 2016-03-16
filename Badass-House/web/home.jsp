@@ -8,6 +8,7 @@
         <title>Home</title>
         <link rel="shortcut icon" href="https://cdn2.iconfinder.com/data/icons/social-messaging-productivity-1-1/128/home-512.png">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="BS/js/jquery.js"></script>
         <link rel="stylesheet" href="BS/css/bootstrap.css" />
         <link rel="stylesheet" href="BS/css/bootstrap-theme.css" />
         <link rel="stylesheet" href="BS/css/bootstrap-theme.min.css" />
@@ -19,6 +20,7 @@
 <link rel="stylesheet" href="Estilos/estiloTabla.css">
 </head>
 <body>
+
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <center>
@@ -34,7 +36,18 @@
                     <ul class="nav navbar-nav navbar-right">
                         <%
                             BD.cDatos datos = new BD.cDatos();
-                            String correin = (String) session.getAttribute("sessionMail");
+                            String correin = "";
+                            correin = (String) session.getAttribute("sessionMail");
+
+                            if (correin.equals(null)) {
+                                out.print("<script>alert('Tu sesion ha expirado');</script>");
+                                out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>");
+                            }
+                            /*
+                             if (correin.equals(null){
+                             out.print("<script>alert('Tu sesion ha expirado');</script>");
+                             out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.jsp'>");
+                             }*/
                             String tipoUsuario = "";
                             datos.conectar();
                             ResultSet tipoUsr = datos.consulta1("call dimeTipo('" + correin + "');");
@@ -50,6 +63,23 @@
                             }
                             if (tipoUsuario.equals("1")) {
                         %>
+
+                        <input id="reloadValue" type="hidden" name="reloadValue" value="" />
+                        <script type="text/javascript">
+                            jQuery(document).ready(function () {
+                                var d = new Date();
+                                d = d.getTime();
+                                if (jQuery('#reloadValue').val().length === 0) {
+                                    jQuery('#reloadValue').val(d);
+                                    jQuery('body').show();
+                                }
+                                else {
+                                    jQuery('#reloadValue').val('');
+                                    location.reload();
+                                }
+                            });
+                        </script>
+
 
                         <li><a href="#status">Status</a></li>
                         <li><a href="#miCuenta">Mi cuenta</a></li>
@@ -129,7 +159,6 @@
 
                                             }
                                         }
-                                        System.out.println(String.valueOf(cuenta + 1));
                                         out.print("</ul>");
                                     }
                                 } else if (rs4.getString("pkte").equals("Pro") || rs4.getString("pkte").equals("ProNKA")) {
@@ -157,7 +186,6 @@
 
                                             }
                                         }
-                                        System.out.println(String.valueOf(cuenta + 1));
                                         out.print("</ul>");
                                     }
 
@@ -188,7 +216,6 @@
 
                                             }
                                         }
-                                        System.out.println(String.valueOf(cuenta + 1));
                                         out.print("</ul>");
                                     }
 
@@ -589,7 +616,7 @@
                                     }
                                 }
                             }
-                            
+
                             out.print("<td> <form action='daPrivi' method='post'>"
                                     + "<select name='idHabitacion'>");
                             for (int v = 0; v < cantidad; v++) {
@@ -608,10 +635,10 @@
                             }
                             out.print("<td><select name='Permisos'>");
                             for (int v = 0; v < 6; v++) {
-                                if(habAllowed[v] !=null){
+                                if (habAllowed[v] != null) {
                                     out.print("<option>" + habAllowed[v] + "</option>");
                                 }
-                                
+
                             }
 
                             out.print("</select></td></tr>");
@@ -809,7 +836,6 @@
          */
         int coincidencia;
         coincidencia = 0;
-        System.out.println(habPermitidas[0]);
 
         for (int iterator = 0; iterator < habPermitidas.length; iterator++) {
             if (habPermitidas[iterator] != null) {
@@ -1096,7 +1122,6 @@
                 }
             }
             int coincidencia1 = 0;
-            System.out.println(habNames[1]);
 
             for (int iterator = 0; iterator < habPermitidas.length; iterator++) {
                 if (habPermitidas[iterator] != null) {
@@ -1672,7 +1697,6 @@
                 }
             }
             coincidencia = 0;
-            System.out.println(habPermitidas[0]);
 
             for (int iterator = 0; iterator < habPermitidas.length; iterator++) {
                 if (habPermitidas[iterator] != null) {
@@ -1968,7 +1992,6 @@
 
     <%        if (paquete.equals("Platino") || paquete.equals("PlatinoNKA")) {
             coincidencia = 0;
-            System.out.println(habPermitidas[0]);
 
             for (int iterator = 0; iterator < habPermitidas.length; iterator++) {
                 if (habPermitidas[iterator] != null) {

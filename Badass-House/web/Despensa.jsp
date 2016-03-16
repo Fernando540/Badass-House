@@ -98,8 +98,6 @@
                     if (rs.getString("alertuki") != null) {
                         int si = Integer.parseInt(rs.getString("alertuki"));
                         int compara = Integer.parseInt(rs.getString("numero"));
-                        System.out.println(si);
-                        System.out.println(compara);
                         if (compara <= si) {
                             out.print("<script> alert('Queda poco de " + rs.getString("produ") + "');</script>");
                         }

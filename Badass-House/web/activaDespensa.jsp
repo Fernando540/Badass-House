@@ -5,7 +5,6 @@
     String correo = (String) session.getAttribute("sessionMail");
     
     tipoNoti=request.getParameter("tipoNoti");
-    System.out.println(tipoNoti);
     try{
         datos.conectar();
         datos.consulta1("call activaNoti('"+correo+"','"+tipoNoti+"');");

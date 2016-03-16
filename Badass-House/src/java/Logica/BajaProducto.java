@@ -41,7 +41,6 @@ public class BajaProducto extends HttpServlet {
             HttpSession sesion = request.getSession();
             String correo = (String) sesion.getAttribute("sessionMail");
             String code = request.getParameter("codigo");;
-            System.out.println(code);
             try {
                 datos.conectar();
                 int res;

@@ -141,16 +141,12 @@
                         rs = conectar.consulta1("call validaSerie('" + numSerie + "');");
                         while (rs.next()) {
                             if (rs.getString("resultado").equals("ira men no existe ese numero de serie")) {
-                                System.out.println(numSerie);
-                                System.out.println(rs.getString("resultado"));
-                                System.out.println(rs.getString("estaduki"));
                                 out.print("<script> alert('ira men no existe ese numero de serie');</script>");
                                 out.print(registro);
                             } else {
                                 rs = conectar.consulta1("call dimeCuenta('" + numSerie + "');");
                                 while (rs.next()) {
                                     if (rs.getString("msj").equals("adelante")) {
-                                        System.out.println(rs.getString("msj"));
                                         conectar.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
                                         result = conectar.modificacion();
                                         conectar.regCasa(direccion, correo, numSerie);

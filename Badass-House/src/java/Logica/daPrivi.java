@@ -21,7 +21,6 @@ public class daPrivi extends HttpServlet {
             correo = request.getParameter("correo");
             idHabitacion = request.getParameter("idHabitacion");
             permiso = request.getParameter("permiso");
-            System.out.println(permiso);
             try {
                 datos.conectar();
                 datos.consulta1("call altaPrivi('" + correo + "','" + idHabitacion + "','" + permiso + "')");

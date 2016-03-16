@@ -171,7 +171,7 @@ public class JSPAltaCuenta extends HttpServlet {
                                 ResultSet rs1 = conectar.consulta1("call validaSerie('" + numSerie + "');");
                                 while (rs1.next()) {
                                     if (rs1.getString("resultado").equals("ira men no existe ese numero de serie")) {
-                                        System.out.println(numSerie);
+                                        
 
                                         out.print("<script> alert('ira men no existe ese numero de serie');</script>");
                                         out.print(registro);
