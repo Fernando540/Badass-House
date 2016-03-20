@@ -17,10 +17,26 @@
         <link rel="stylesheet" href="css/SlidersStyles.css" />
         <script src="BS/js/bootstrap.js"/></script>
     <script src="js/scripts.js"/></script>
+
+
 <link rel="stylesheet" href="Estilos/estiloTabla.css">
 </head>
 <body>
-
+    <input id="reloadValue" type="hidden" name="reloadValue" value="" />
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            var d = new Date();
+            d = d.getTime();
+            if (jQuery('#reloadValue').val().length === 0) {
+                jQuery('#reloadValue').val(d);
+                jQuery('body').show();
+            }
+            else {
+                jQuery('#reloadValue').val('');
+                location.reload();
+            }
+        });
+    </script>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <center>
@@ -64,21 +80,6 @@
                             if (tipoUsuario.equals("1")) {
                         %>
 
-                        <input id="reloadValue" type="hidden" name="reloadValue" value="" />
-                        <script type="text/javascript">
-                            jQuery(document).ready(function () {
-                                var d = new Date();
-                                d = d.getTime();
-                                if (jQuery('#reloadValue').val().length === 0) {
-                                    jQuery('#reloadValue').val(d);
-                                    jQuery('body').show();
-                                }
-                                else {
-                                    jQuery('#reloadValue').val('');
-                                    location.reload();
-                                }
-                            });
-                        </script>
 
 
                         <li><a href="#status">Status</a></li>

@@ -58,5 +58,37 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/wsbadasshouse"/>
         <delete dir="${build.generated.dir}/jax-wsCache/CifraCesar"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-CifraSha, wsimport-client-CifraCesar"/>
+    <target name="wsimport-client-WS_Login" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/WS_Login"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WS_Login" destdir="${build.generated.dir}/jax-wsCache/WS_Login" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/WS_Login/wsdl/localhost_8080/WebServices/WS_Login.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/WebServices/WS_Login?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/WS_Login/wsdl/localhost_8080/WebServices/WS_Login.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/WS_Login"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/WS_Login">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-WS_Login" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/wsbadasshouse"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/WS_Login"/>
+    </target>
+    <target name="wsimport-client-WS_AltaUsuario" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/WS_AltaUsuario"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WS_AltaUsuario" destdir="${build.generated.dir}/jax-wsCache/WS_AltaUsuario" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/WS_AltaUsuario/wsdl/localhost_8080/WebServices/WS_AltaUsuario.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/WebServices/WS_AltaUsuario?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/WS_AltaUsuario/wsdl/localhost_8080/WebServices/WS_AltaUsuario.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/WS_AltaUsuario"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/WS_AltaUsuario">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-WS_AltaUsuario" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/wsbadasshouse"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/WS_AltaUsuario"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-CifraSha, wsimport-client-CifraCesar, wsimport-client-WS_Login, wsimport-client-WS_AltaUsuario"/>
 </project>

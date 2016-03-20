@@ -8,6 +8,7 @@
     String password = "";
     String pass = "";
     String pass1 = "";
+    String resultado = "";
     String login = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
     String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp'>";
     String index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/index1.jsp'>";
@@ -42,47 +43,31 @@
             } catch (Exception exD) {
                 out.print(exD.getMessage());
             }
+
             try {
-                bD.conectar();
-                clave = "777888222333";
-                bD.setAccion(correo, pass1, clave);
-                rs = bD.consulta();/*("call valida('" + correo + "',AES_ENCRYPT('" + pass1 + "','" + clave + "'));");*/
+                wsbadasshouse.WSLogin_Service service = new wsbadasshouse.WSLogin_Service();
+                wsbadasshouse.WSLogin port = service.getWSLoginPort();
 
-                while (rs.next()) {
-                    if (rs.getString("Estatus").equals("1")) {
-                        ResultSet rs1 = bD.consulta1("call dimeTipo('" + correo + "');");
-                        while (rs1.next()) {
-                            String nameUsr = rs.getString("nName");
-                            if (rs1.getString("privilegio").equals("1")) {
+                resultado = port.wsLogin(correo, pass1);
+                 
+            } catch (Exception ex) {
+            }
 
-                                out.print("<script> alert('Bienvenido " + nameUsr + "');</script>");
-                                sesion.setAttribute("sessionMail", correo);
-                                sesion.setAttribute("sessionName", nameUsr);
-                                sesion.setAttribute("sessionStat", "logueado");
-                                sesion.setMaxInactiveInterval(40 * 60);
-                                
-                                out.print(index);
+            if (resultado.equals("invalido")) {
+                out.print("<script> alert('Usuario Invalido');</script>");
+                out.print(login);
 
-                            } else {
-                                out.print("<script> alert('Bienvenido " + nameUsr + "');</script>");
-                                sesion.setAttribute("sessionMail", correo);
-                                sesion.setAttribute("sessionName", nameUsr);
-                                sesion.setAttribute("sessionStat", "logueado");
-                                sesion.setMaxInactiveInterval(40 * 60);
-                                out.print(index);
-                            }
-                        }
+            } else {
+                out.print("<script> alert('Bienvenido " + resultado + "');</script>");
+                sesion.setAttribute("sessionMail", correo);
+                sesion.setAttribute("sessionName", resultado);
+                sesion.setAttribute("sessionStat", "logueado");
+                sesion.setMaxInactiveInterval(40 * 60);
 
-                    } else {
-                        out.print("<script> alert('Usuario Invalido');</script>");
-                        out.print(login);
-                    }
-                }
-
-            } catch (Exception XD) {
-                out.println(XD);
+                out.print(index);
 
             }
+
         } else {
             out.print("<script> alert('Ingresa un correo valido!!!!');</script>");
             out.print(login);

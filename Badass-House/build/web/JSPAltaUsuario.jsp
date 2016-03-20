@@ -20,14 +20,9 @@
     Matcher mat2;
     Matcher mat3;
     ResultSet rs;
+    String resultado = "";
     HttpSession sesion = request.getSession();
 
-    /*if (request.getParameter("nka").equals("")) {
-     out.print("<script> alert('Por Favor seleccione la proteccion');</script>");
-     out.print(registro);
-     } else {
-     nka = request.getParameter("nka");
-     }*/
     if (request.getParameter("numSerie").equals("") || request.getParameter("numSerie").length() > 6) {
         out.print("<script> alert('Ingresa bien el numero de serie!!!!');</script>");
         out.print(registro);
@@ -56,11 +51,11 @@
         aMaterno = request.getParameter("aMaterno");
     }
     /*if (request.getParameter("tipoUsr").equals("")) {
-        out.print("<script> alert('Ingresa un tipo usuario');</script>");
-        out.print(registro);
-    } else {
-        tipoUsr = request.getParameter("tipoUsr");
-    }*/
+     out.print("<script> alert('Ingresa un tipo usuario');</script>");
+     out.print(registro);
+     } else {
+     tipoUsr = request.getParameter("tipoUsr");
+     }*/
     if (request.getParameter("direccion").equals("")) {
         out.print("<script> alert('Ingresa la direccion!!!!');</script>");
         out.print(registro);
@@ -106,99 +101,64 @@
             out.print("<script> alert('Ingresa caracteres Validos >:V!!!!');</script>");
             out.print(registro);
         } else {
+
             try {
-                try {
-                    wsbadasshouse.CifraCesar_Service service = new wsbadasshouse.CifraCesar_Service();
-                    wsbadasshouse.CifraCesar port = service.getCifraCesarPort();
-                    pass = port.cifrar(password);
-                } catch (Exception ex) {
-                    out.print(ex.getMessage());
-                }
-
-                try {
-                    wsbadasshouse.CifraSha_Service service1 = new wsbadasshouse.CifraSha_Service();
-                    wsbadasshouse.CifraSha port1 = service1.getCifraShaPort();
-
-                    pass1 = port1.cifrar(pass);
-
-                } catch (Exception exD) {
-                    out.print(exD.getMessage());
-                    // TODO handle custom exceptions here
-                }
-
-                cDatos conectar = new cDatos();
-                conectar.conectar();
-                clave = "777888222333";
-                //AES_DECRYPT('contraseña','llave')<----- Para desencriptar los datos (Nombre,Apellidos,etc...)*/
-                conectar.setAccion(correo, pass1, clave);
-                rs = conectar.consulta();/*("call valida('" + correo + "','" + pass + "');");*/
-
-                while (rs.next()) {
-                    if (rs.getString("Estatus").equals("1")) {
-                        out.print("<script> alert('Usuario ya Registrado');</script>");
-                        out.print(registro);
-                    } else {
-                        rs = conectar.consulta1("call validaSerie('" + numSerie + "');");
-                        while (rs.next()) {
-                            if (rs.getString("resultado").equals("ira men no existe ese numero de serie")) {
-                                out.print("<script> alert('ira men no existe ese numero de serie');</script>");
-                                out.print(registro);
-                            } else {
-                                rs = conectar.consulta1("call dimeCuenta('" + numSerie + "');");
-                                while (rs.next()) {
-                                    if (rs.getString("msj").equals("adelante")) {
-                                        conectar.setAccion(correo, pass1, clave, nombre, aPaterno, aMaterno);
-                                        result = conectar.modificacion();
-                                        conectar.regCasa(direccion, correo, numSerie);
-                                        conectar.modificacion();
-                                        //conectar.modificacion1("insert into usu(correo,tipo) values('" + correo + "','" + tipoUsr + "')");
-                                        conectar.modificacion1("call altaTipo('" + correo + "','Premium');");
-
-                                        if (result == 1) {
-                                            rs = conectar.consulta1("call dimeTipo('" + correo + "');");
-                                            while (rs.next()) {
-
-                                                if (rs.getString("privilegio").equals("1")) {
-
-                                                    conectar.consulta1("call ingresaProteccion('" + correo + "','" + nka + "');");
-                                                    conectar.consulta1("call altaNoti('" + numSerie + "');");
-                                                    out.print("<script> alert('Bienvenido " + nombre + "');</script>");
-                                                    sesion.setAttribute("sessionMail", correo);
-                                                    sesion.setAttribute("sessionName", nombre);
-                                                    sesion.setAttribute("numSerie", numSerie);
-                                                    sesion.setAttribute("direccion", direccion);
-                                                    sesion.setAttribute("sessionStat", "logueado");
-
-                                                    out.print(index);
-
-                                                } else {
-                                                    out.print("<script> alert('Bienvenido " + nombre + "');</script>");
-                                                    sesion.setAttribute("sessionMail", correo);
-                                                    sesion.setAttribute("sessionName", nombre);
-                                                    sesion.setAttribute("sessionStat", "logueado");
-                                                    out.print(index);
-                                                }
-                                            }
-
-                                        } else {
-                                            out.print("<script> alert('Error');</script>");
-                                            out.print(registro);
-                                        }
-                                    } else {
-                                        out.print("<script> alert('Ingresa a tu cuenta principal para agregar una nueva cuenta');</script>");
-                                        out.print(registro);
-                                    }
-                                }
-
-                            }
-                        }
-
-                    }
-                }
-
-            } catch (SQLException e) {
-                out.print(e);
+                wsbadasshouse.CifraCesar_Service service = new wsbadasshouse.CifraCesar_Service();
+                wsbadasshouse.CifraCesar port = service.getCifraCesarPort();
+                pass = port.cifrar(password);
+            } catch (Exception ex) {
+                out.print(ex.getMessage());
             }
+
+            try {
+                wsbadasshouse.CifraSha_Service service1 = new wsbadasshouse.CifraSha_Service();
+                wsbadasshouse.CifraSha port1 = service1.getCifraShaPort();
+
+                pass1 = port1.cifrar(pass);
+
+            } catch (Exception exD) {
+                out.print(exD.getMessage());
+                // TODO handle custom exceptions here
+            }
+            try {
+                wsbadasshouse.WSAltaUsuario_Service service = new wsbadasshouse.WSAltaUsuario_Service();
+                wsbadasshouse.WSAltaUsuario port = service.getWSAltaUsuarioPort();
+
+                resultado = port.wsAltaUsuario(correo, pass1, numSerie, nombre, aPaterno, aMaterno, direccion);
+
+            } catch (Exception ex) {
+                // TODO handle custom exceptions here
+            }
+
+            if (resultado.equals("Usuario ya Registrado")) {
+                out.print("<script> alert('Usuario ya Registrado');</script>");
+                out.print(registro);
+            } else {
+
+                if (resultado.equals("ira men no existe ese numero de serie")) {
+                    out.print("<script> alert('ira men no existe ese numero de serie');</script>");
+                    out.print(registro);
+                } else {
+
+                    if (resultado.equals("Ingresa a tu cuenta principal para agregar una nueva cuenta")) {
+                        out.print("<script> alert('Ingresa a tu cuenta principal para agregar una nueva cuenta');</script>");
+                        out.print(registro);
+
+                    } else {
+                        out.print("<script> alert('Bienvenido " + nombre + "');</script>");
+                        sesion.setAttribute("sessionMail", correo);
+                        sesion.setAttribute("sessionName", nombre);
+                        sesion.setAttribute("numSerie", numSerie);
+                        sesion.setAttribute("direccion", direccion);
+                        sesion.setAttribute("sessionStat", "logueado");
+
+                        out.print(index);
+                    }
+
+                }
+
+            }
+
         }
 
     }

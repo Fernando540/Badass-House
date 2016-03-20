@@ -7,6 +7,12 @@
     <service name="CifraSha">
       <implementation-class>WSBadassHouse.CifraSha</implementation-class>
     </service>
+    <service name="WS_Login">
+      <implementation-class>WSBadassHouse.WS_Login</implementation-class>
+    </service>
+    <service name="WS_AltaUsuario">
+      <implementation-class>WSBadassHouse.WS_AltaUsuario</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>
