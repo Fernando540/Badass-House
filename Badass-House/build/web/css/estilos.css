@@ -235,15 +235,43 @@ h4.cuenta{
     margin-bottom: 30px;
 }
 
-#illustration {
+#illustration404 {
     background: url("../Imagenes/404.gif") no-repeat 50% 55%;
     max-width: 100%;
     min-height: 480px;
     background-size: 100%;
 }
 
-.error-404.not-found {
+#illustration500 {
+    background: url("../Imagenes/confused_travolta.gif") no-repeat 50% 55%;
+    max-width: 50%;
+    min-height: 350px;
+    background-size: 100%;
     margin: auto;
-    max-width: 770px;
+}
+
+#error{
+    background: url('../Imagenes/errorBackground.jpg') no-repeat center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: 100%;
+}
+
+.error_cabron {
+    margin: auto;
     width: 100%;
+}
+
+.the_content_404 {
+    font-size: 1.3rem;
+    margin: 30px 0 60px 0;
+    text-align: center;
+}
+
+#jumbotron_error{
+    background-color: #212121;        
+    color: #fff;
+    padding: 10px 25px;
+    font-family: Montserrat;
 }

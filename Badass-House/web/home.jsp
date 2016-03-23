@@ -1,7 +1,7 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="BD.cDatos"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!DOCTYPE html>   
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -18,52 +18,46 @@
         <script src="BS/js/bootstrap.js"/></script>
     <script src="js/scripts.js"/></script>
 
-
 <link rel="stylesheet" href="Estilos/estiloTabla.css">
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var d = new Date();
+        d = d.getTime();
+        if (jQuery('#reloadValue').val().length === 0) {
+            jQuery('#reloadValue').val(d);
+            jQuery('body').show();
+        } else {
+            jQuery('#reloadValue').val('');
+            location.reload(true);
+        }
+    });
+</script>
+<input id="reloadValue" type="hidden" name="reloadValue" value="" />
 </head>
+<%
+    if (session.getAttribute("sessionMail") == null) {
+        out.print("<script>alert('La sesion ha expirado');</script>");
+        out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>");
+    } else {
+%>
 <body>
-    <input id="reloadValue" type="hidden" name="reloadValue" value="" />
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            var d = new Date();
-            d = d.getTime();
-            if (jQuery('#reloadValue').val().length === 0) {
-                jQuery('#reloadValue').val(d);
-                jQuery('body').show();
-            }
-            else {
-                jQuery('#reloadValue').val('');
-                location.reload();
-            }
-        });
-    </script>
+
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <center>
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand">Casa de ${sessionScope.sessionName}<!--Aquí va el nombre del cabrón ese--></a>
+                    <b><a class="navbar-brand">Casa de ${sessionScope.sessionName}</a></b>
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav navbar-right">
                         <%
                             BD.cDatos datos = new BD.cDatos();
-                            String correin = "";
-                            correin = (String) session.getAttribute("sessionMail");
-
-                            if (correin.equals(null)) {
-                                out.print("<script>alert('Tu sesion ha expirado');</script>");
-                                out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>");
-                            }
+                            String correin = (String) session.getAttribute("sessionMail");
                             /*
-                             if (correin.equals(null){
-                             out.print("<script>alert('Tu sesion ha expirado');</script>");
-                             out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.jsp'>");
-                             }*/
+                                                     if (correin.equals(null){
+                                                     out.print("<script>alert('Tu sesion ha expirado');</script>");
+                                                     out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.jsp'>");
+                                                     }*/
                             String tipoUsuario = "";
                             datos.conectar();
                             ResultSet tipoUsr = datos.consulta1("call dimeTipo('" + correin + "');");
@@ -190,36 +184,33 @@
                                         out.print("</ul>");
                                     }
 
+                                } else if (tipoUsuario.equals("1")) {
+                                    out.print("<li class='dropdown'>");
+                                    out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones <span class='caret'></span></a>");
+                                    out.print("<ul class='dropdown-menu'>");
+                                    out.print("<li><a href='#Habitacion1'>" + habNames[0] + "</a></li>");
+                                    out.print("<li><a href='#Habitacion2'>" + habNames[1] + "</a></li>");
+                                    out.print("<li><a href='#Habitacion3'>" + habNames[2] + "</a></li>");
+                                    out.print("<li><a href='#Habitacion4'>" + habNames[3] + "</a></li>");
+                                    out.print("<li><a href='#Habitacion5'>" + habNames[4] + "</a></li>");
+                                    out.print("<li><a href='#Habitacion6'>" + habNames[5] + "</a></li>");
+                                    out.print("</ul>");
                                 } else {
-                                    if (tipoUsuario.equals("1")) {
-                                        out.print("<li class='dropdown'>");
-                                        out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones <span class='caret'></span></a>");
-                                        out.print("<ul class='dropdown-menu'>");
-                                        out.print("<li><a href='#Habitacion1'>" + habNames[0] + "</a></li>");
-                                        out.print("<li><a href='#Habitacion2'>" + habNames[1] + "</a></li>");
-                                        out.print("<li><a href='#Habitacion3'>" + habNames[2] + "</a></li>");
-                                        out.print("<li><a href='#Habitacion4'>" + habNames[3] + "</a></li>");
-                                        out.print("<li><a href='#Habitacion5'>" + habNames[4] + "</a></li>");
-                                        out.print("<li><a href='#Habitacion6'>" + habNames[5] + "</a></li>");
-                                        out.print("</ul>");
-                                    } else {
-                                        out.print("<li class='dropdown'>");
-                                        out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
-                                        out.print("<ul class='dropdown-menu'>");
+                                    out.print("<li class='dropdown'>");
+                                    out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
+                                    out.print("<ul class='dropdown-menu'>");
 
-                                        for (cuenta = 0; cuenta < habPermitidas.length; cuenta++) {
-                                            if (habPermitidas[cuenta] != null) {
-                                                for (int n = 0; n < habNames.length; n++) {
-                                                    if (habPermitidas[cuenta].equals(habNames[n])) {
-                                                        out.print("<li><a href='#Habitacion" + String.valueOf(n + 1) + "'>" + habPermitidas[cuenta] + "</a></li>");
-                                                    }
+                                    for (cuenta = 0; cuenta < habPermitidas.length; cuenta++) {
+                                        if (habPermitidas[cuenta] != null) {
+                                            for (int n = 0; n < habNames.length; n++) {
+                                                if (habPermitidas[cuenta].equals(habNames[n])) {
+                                                    out.print("<li><a href='#Habitacion" + String.valueOf(n + 1) + "'>" + habPermitidas[cuenta] + "</a></li>");
                                                 }
-
                                             }
-                                        }
-                                        out.print("</ul>");
-                                    }
 
+                                        }
+                                    }
+                                    out.print("</ul>");
                                 }
                             }
                         %>
@@ -245,14 +236,14 @@
             </center>            
         </div>
     </nav>
-    <!--Div Satus-->
+    <!--Div Status-->
     <%
         if (tipoUsuario.equals("1")) {
     %>
     <div id="status" class="container-fluid noTePeguesArriba">
         <div class="row">
-            <div class=" page-header text-center noTePeguesArriba">
-                <br>
+            <div class="page-header text-center noTePeguesArriba">
+                <br><br><br>
                 <strong>Status</strong>
             </div>
         </div>
@@ -275,8 +266,8 @@
 
             %>
             <div class="text-center">
-                <br><br><br><br>
-                <h4 class="status">Llaves de gas</h4>
+                <br>
+                <h3 class="status">Llaves de gas</h3>
             </div>
             <% if (us[0].equals("0")) {
             %>
@@ -358,7 +349,7 @@
         <div class="row-fluid">
             <div class="text-center">
                 <br><br><br><br>
-                <h4 class="status">Activar Notificaciones</h4>
+                <h3 class="status">Activar Notificaciones</h3>
             </div>
             <%                ResultSet estadote;
                 estadote = datos.consulta1("call dimeEstado('" + correin + "','Despensa');");
@@ -609,12 +600,10 @@
                             while (rs3.next()) {
                                 if (rs3.getString("pkte").equals("Basico") || rs3.getString("pkte").equals("BasicoNKA")) {
                                     cantidad = 2;
+                                } else if (rs3.getString("pkte").equals("Pro") || rs3.getString("pkte").equals("ProNKA")) {
+                                    cantidad = 4;
                                 } else {
-                                    if (rs3.getString("pkte").equals("Pro") || rs3.getString("pkte").equals("ProNKA")) {
-                                        cantidad = 4;
-                                    } else {
-                                        cantidad = 6;
-                                    }
+                                    cantidad = 6;
                                 }
                             }
 
@@ -2564,6 +2553,8 @@
     <%
         }
     %>
-
 </body>
+<%
+    }
+%>
 </html>
