@@ -17,6 +17,20 @@
         <script src="BS/js/bootstrap.js"/></script>
     <script src="js/scripts.js"/></script>
 <link rel="stylesheet" href="Estilos/estiloTabla.css">
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        var d = new Date();
+        d = d.getTime();
+        if (jQuery('#reloadValue').val().length === 0) {
+            jQuery('#reloadValue').val(d);
+            jQuery('body').show();
+        } else {
+            jQuery('#reloadValue').val('');
+            location.reload(true);
+        }
+    });
+</script>
+<input id="reloadValue" type="hidden" name="reloadValue" value="" />
 <style>
     body {
         background: url("Imagenes/background.jpg") no-repeat fixed center;
@@ -36,16 +50,15 @@
         return false;
     }
 </script>
-
+<%
+    if (session.getAttribute("sessionMail") == null) {
+        out.print("<script>alert('La sesion ha expirado');</script>");
+        out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>");
+    } else {
+%>
 </head>
 
 <body>
-    <%
-        String x = (String) session.getAttribute("sessionStat");
-        String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
-
-        if (x.equals("logueado")) {
-    %>
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -116,7 +129,7 @@
 
                     int cont = Integer.parseInt(rs.getString("numero"));
                     String valid = rs.getString("numero");
-                    if (valid.equals(null)||valid.equals("0")) {
+                    if (valid.equals(null) || valid.equals("0")) {
                         out.println("<td><form action='UsoProducto' method='post'><select name='Cantidad'>");
                         out.println("<option>0</option>");
                     } else {
@@ -137,7 +150,5 @@
 </body>
 </html>
 
-<% } else {
-        out.print(gologin);
-    }
+<% }
 %>

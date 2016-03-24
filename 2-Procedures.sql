@@ -140,7 +140,9 @@ begin
     set iDesp = (select idDespensa from relCasaDespensa where idCasa = homeID);
     
     set total = (select cantidad from relDespensaProductos where idUnico=codigo and idDespensa=iDesp);
-	set ntotal = (total-canti);
+    if total!=0 then
+		set ntotal = (total-canti);
+    end if;
     update relDespensaProductos set cantidad=(ntotal) where idUnico=codigo and idDespensa=iDesp;
 	insert into relCasaUsrEvento(idCasa,correo,tipoEvento,evento) values(homeID,mail,1,'Modifico Despensa');
 end;//
