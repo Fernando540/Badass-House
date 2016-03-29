@@ -24,12 +24,18 @@ public class WS_Login {
             rs = datos.consulta();
             while (rs.next()) {
                 if (rs.getString("Estatus").equals("1")) {
-                    resultado=rs.getString("nName");
+                    if(rs.getString("nName")!=null){
+                        resultado=rs.getString("nName");
+                    }else{
+                        resultado="invalido";
+                    }
+                    
                 } else {
                     resultado="invalido";
                 }
             }
         } catch (SQLException e) {
+            resultado="invalido";
             System.out.println(e);
         }
         return resultado;

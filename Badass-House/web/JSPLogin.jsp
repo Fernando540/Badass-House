@@ -53,7 +53,7 @@
             } catch (Exception ex) {
             }
 
-            if (resultado.equals("invalido")) {
+            if (resultado.equals("invalido") || resultado.equals("")) {
                 out.print("<script> alert('Usuario Invalido');</script>");
                 out.print(login);
 
