@@ -10,4 +10,4 @@ This is just a school project :D
 Este programa es público, ajeno a cualquier partido político
 Queda prohibido el uso para fines distintos a los establecidos en el programa.
 
-                                                                COPYRIGHT 2020 ASÍ BIEN PRO... "Soy buien puto" -Ghandi
+                                                                COPYRIGHT 2020 ASÍ BIEN PRO... "Soy bien puto" -Ghandi
