@@ -1,4 +1,4 @@
-use badasshouse;
+use prograbatiz_BadAssHouse;
 drop trigger if exists creameHabs;
 drop trigger if exists creaEnchufes;
 

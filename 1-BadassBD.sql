@@ -1,6 +1,6 @@
-drop database if exists badasshouse;
-create database badasshouse;
-use badasshouse;
+drop database if exists prograbatiz_BadAssHouse;
+create database prograbatiz_BadAssHouse;
+use prograbatiz_BadAssHouse;
 
 ##Tablas principales
 create table usuarios(Correo nvarchar(35) primary key,contrasenia blob,nombre nvarchar(30),aPaterno nvarchar(30),aMaterno nvarchar(30));
@@ -21,8 +21,8 @@ create table privilegios(idRel int(2) auto_increment primary key,idHabitacion in
 ##Tabla privilegios
 
 ##Tabla de Eventos##
-insert into catalogoeventos(idTipo,evento) values(1,'Modifico Despensa');
-insert into catalogoeventos(idTipo,evento) values(2,'Uso Force Close');
+insert into catalogoEventos(idTipo,evento) values(1,'Modifico Despensa');
+insert into catalogoEventos(idTipo,evento) values(2,'Uso Force Close');
 
 create table notificaciones(idRel int(2) auto_increment primary key,idCasa nvarchar(6),evento nvarchar(30),estado nvarchar(20));
 ##Tabla de Eventos##

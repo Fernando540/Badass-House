@@ -1,4 +1,4 @@
-use badasshouse;
+use prograbatiz_BadAssHouse;
 
 insert into casa(idCasa,paquete) values('abc123','Basico');
 insert into casa(idCasa,paquete) values('abcabc','BasicoNKA');

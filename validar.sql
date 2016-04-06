@@ -1,4 +1,4 @@
-use badasshouse;
+use prograbatiz_BadAssHouse;
 #insert into usuarios(correo,contrasenia,nombre,aPaterno,aMaterno) values('correo','contrasenia','nom','pat','mat');#
 
 select * from usuarios;

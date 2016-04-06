@@ -1,4 +1,4 @@
-use badasshouse;
+use prograbatiz_BadAssHouse;
 drop procedure if exists valida;
 drop procedure if exists altaTipo;
 drop procedure if exists validaSerie;
@@ -29,6 +29,7 @@ drop procedure if exists habiNames;
 drop procedure if exists changeHabName;
 drop procedure if exists dimePermiso;
 drop procedure if exists dimePuertas;
+drop procedure if exists dimeAbierto;
 drop procedure if exists abreCierra;
 drop procedure if exists statusGas;
 drop procedure if exists flujoGas;
@@ -85,15 +86,15 @@ begin
     if noDespensas = 0 then
 		set noDespensas = 1;
 		insert into despensa(idDespensa,estatus) values(noDespensas,'activo');
-        insert into relcasadespensa(idCasa,idDespensa) values(seriuki,noDespensas);
+        insert into relCasaDespensa(idCasa,idDespensa) values(seriuki,noDespensas);
     else
 		set noDespensas = (noDespensas+1);
 		if (coinDesp = 0) then
 			insert into despensa(idDespensa,estatus) values(noDespensas,'activo');
-            insert into relcasadespensa(idCasa,idDespensa) values(seriuki,noDespensas);
+            insert into relCasaDespensa(idCasa,idDespensa) values(seriuki,noDespensas);
         end if;
     end if;
-    insert into relusrcasa(Correo,idCasa) values(correito,seriuki);
+    insert into relUsrCasa(Correo,idCasa) values(correito,seriuki);
 end;//
 
 create procedure altadespensuki(in correin nvarchar(35), in barcode nvarchar(35),in nombre nvarchar(35),in alert nvarchar(100))
@@ -170,10 +171,10 @@ begin
 	declare privilegio int(2);
     if tipo='Premium' then
 		set privilegio=1;
-        insert into relusrtipo(Correo,idTipo) values(mail,privilegio);
+        insert into relUsrTipo(Correo,idTipo) values(mail,privilegio);
 	else
 		set Privilegio=2;
-        insert into relusrtipo(Correo,idTipo) values(mail,privilegio);
+        insert into relUsrTipo(Correo,idTipo) values(mail,privilegio);
     end if;
 end;//
 
@@ -193,7 +194,7 @@ end;//
 create procedure dimeTipo(in mail nvarchar(35))
 begin
 	declare tipo nvarchar(10);
-    set tipo=(select idTipo from relusrtipo where correo=mail);
+    set tipo=(select idTipo from relUsrTipo where correo=mail);
     select tipo as privilegio;
 end;//
 
@@ -246,9 +247,9 @@ begin
 	declare idHabi int;
     
     set idCasi=(select idCasa from relUsrCasa where correo=mail);
-    set idHabi = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where idCasa=idCasi and habitaciones.nombre=habiName);
+    set idHabi = (select habitaciones.idHabitacion from habitaciones inner join relCasaHab on habitaciones.idHabitacion = relCasaHab.idHabitacion where idCasa=idCasi and habitaciones.nombre=habiName);
         
-	select enchufes.uso as estatus, enchufes.Nombre as switchName from enchufes inner join relenchuhab on enchufes.idEnchufe = relenchuhab.idEnchufe where relenchuhab.idHabitacion=idHabi;
+	select enchufes.uso as estatus, enchufes.Nombre as switchName from enchufes inner join relEnchuHab on enchufes.idEnchufe = relEnchuHab.idEnchufe where relEnchuHab.idHabitacion=idHabi;
 end;//
 
 create procedure simulaCorriente(in mailuki nvarchar(35),in corriente int, in contacto nvarchar(30),in habName nvarchar(35))
@@ -258,7 +259,7 @@ begin
     declare idContact int;
     
     set homeID = (select idCasa from relUsrCasa where Correo = mailuki);
-    set idHabi = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where relcasahab.idCasa=homeID and habitaciones.nombre=habName);
+    set idHabi = (select habitaciones.idHabitacion from habitaciones inner join relCasaHab on habitaciones.idHabitacion = relCasaHab.idHabitacion where relCasaHab.idCasa=homeID and habitaciones.nombre=habName);
     set idContact = (select enchufes.idEnchufe from enchufes inner join relEnchuHab on enchufes.idEnchufe = relEnchuHab.idEnchufe where relEnchuHab.idHabitacion=idHabi and enchufes.Nombre=contacto);
     
     update enchufes set uso=corriente where idEnchufe=idContact;
@@ -351,7 +352,7 @@ declare homeID nvarchar(6);
 declare roomID int;
 
 set homeID=(select idCasa from relUsrCasa where correo=mail);
-set roomID = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where idCasa=homeID and habitaciones.nombre=habName);
+set roomID = (select habitaciones.idHabitacion from habitaciones inner join relCasaHab on habitaciones.idHabitacion = relCasaHab.idHabitacion where idCasa=homeID and habitaciones.nombre=habName);
 
 set contador=(select count(*) from privilegios where idHabitacion=roomID and correoJunior=mail);
 if contador=0 then
@@ -424,7 +425,7 @@ begin
 declare idCasi nvarchar(6);
 set idCasi=(select idCasa from relUsrCasa where correo=mail);
 
-select habitaciones.nombre as habiName from habitaciones inner join relCasaHab on habitaciones.idHabitacion = relCasaHab.idHabitacion where relcasahab.idCasa=idCasi;
+select habitaciones.nombre as habiName from habitaciones inner join relCasaHab on habitaciones.idHabitacion = relCasaHab.idHabitacion where relCasaHab.idCasa=idCasi;
 end;//
 
 create procedure changeHabName(in mail nvarchar(35), in oldName nvarchar(35),in newName nvarchar(35))
@@ -432,7 +433,7 @@ begin
     declare homeID nvarchar(6);
     declare roomID int;
     set homeID = (select idCasa from relUsrCasa where Correo = mail);
-    set roomID = (select habitaciones.idHabitacion from habitaciones inner join relcasahab on habitaciones.idHabitacion = relcasahab.idHabitacion where idCasa=homeID and habitaciones.nombre=oldName);
+    set roomID = (select habitaciones.idHabitacion from habitaciones inner join relCasaHab on habitaciones.idHabitacion = relCasaHab.idHabitacion where idCasa=homeID and habitaciones.nombre=oldName);
     
     update habitaciones set nombre=newName where idHabitacion=roomID;
 end;//
