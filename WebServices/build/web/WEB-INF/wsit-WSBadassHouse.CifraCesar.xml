@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+ <definitions 
+ xmlns="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="CifraCesar" targetNamespace="http://WSBadassHouse/" xmlns:tns="http://WSBadassHouse/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" 
+ >
+    <message name="Cifrar"/>
+    <message name="CifrarResponse"/>
+    <portType name="CifraCesar">
+        <operation name="Cifrar">
+            <input message="tns:Cifrar"/>
+            <output message="tns:CifrarResponse"/>
+        </operation>
+    </portType>
+    <binding name="CifraCesarPortBinding" type="tns:CifraCesar">
+        <operation name="Cifrar">
+            <input/>
+            <output/>
+        </operation>
+    </binding>
+    <service name="CifraCesar">
+        <port name="CifraCesarPort" binding="tns:CifraCesarPortBinding"/>
+    </service>
+</definitions>

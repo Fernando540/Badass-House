@@ -126,71 +126,13 @@
                                 }
                             }
 
-                            ResultSet rs4 = datos.consulta1("call dimePaquete('','" + correin + "');");
-                            while (rs4.next()) {
-                                if (rs4.getString("pkte").equals("Basico") || rs4.getString("pkte").equals("BasicoNKA")) {
-                                    if (tipoUsuario.equals("1")) {
-                                        out.print("<li class='dropdown'>");
-                                        out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
-                                        out.print("<ul class='dropdown-menu'>");
-                                        out.print("<li><a href='#Habitacion1'>" + habNames[0] + "</a></li>");
-                                        out.print("<li><a href='#Habitacion2'>" + habNames[1] + "</a></li>");
-                                        out.print("</ul>");
-                                    } else {
-                                        out.print("<li class='dropdown'>");
-                                        out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
-                                        out.print("<ul class='dropdown-menu'>");
-
-                                        for (cuenta = 0; cuenta < habPermitidas.length; cuenta++) {
-                                            if (habPermitidas[cuenta] != null) {
-                                                for (int n = 0; n < habNames.length; n++) {
-                                                    if (habPermitidas[cuenta].equals(habNames[n])) {
-                                                        out.print("<li><a href='#Habitacion" + String.valueOf(n + 1) + "'>" + habPermitidas[cuenta] + "</a></li>");
-                                                    }
-                                                }
-
-                                            }
-                                        }
-                                        out.print("</ul>");
-                                    }
-                                } else if (rs4.getString("pkte").equals("Pro") || rs4.getString("pkte").equals("ProNKA")) {
-                                    if (tipoUsuario.equals("1")) {
-                                        out.print("<li class='dropdown'>");
-                                        out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
-                                        out.print("<ul class='dropdown-menu'>");
-                                        out.print("<li><a href='#Habitacion1'>" + habNames[0] + "</a></li>");
-                                        out.print("<li><a href='#Habitacion2'>" + habNames[1] + "</a></li>");
-                                        out.print("<li><a href='#Habitacion3'>" + habNames[2] + "</a></li>");
-                                        out.print("<li><a href='#Habitacion4'>" + habNames[3] + "</a></li>");
-                                        out.print("</ul>");
-                                    } else {
-                                        out.print("<li class='dropdown'>");
-                                        out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
-                                        out.print("<ul class='dropdown-menu'>");
-
-                                        for (cuenta = 0; cuenta < habPermitidas.length; cuenta++) {
-                                            if (habPermitidas[cuenta] != null) {
-                                                for (int n = 0; n < habNames.length; n++) {
-                                                    if (habPermitidas[cuenta].equals(habNames[n])) {
-                                                        out.print("<li><a href='#Habitacion" + String.valueOf(n + 1) + "'>" + habPermitidas[cuenta] + "</a></li>");
-                                                    }
-                                                }
-
-                                            }
-                                        }
-                                        out.print("</ul>");
-                                    }
-
-                                } else if (tipoUsuario.equals("1")) {
+                            if (paquete.equals("Basico") || paquete.equals("BasicoNKA")) {
+                                if (tipoUsuario.equals("1")) {
                                     out.print("<li class='dropdown'>");
-                                    out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones <span class='caret'></span></a>");
+                                    out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
                                     out.print("<ul class='dropdown-menu'>");
                                     out.print("<li><a href='#Habitacion1'>" + habNames[0] + "</a></li>");
                                     out.print("<li><a href='#Habitacion2'>" + habNames[1] + "</a></li>");
-                                    out.print("<li><a href='#Habitacion3'>" + habNames[2] + "</a></li>");
-                                    out.print("<li><a href='#Habitacion4'>" + habNames[3] + "</a></li>");
-                                    out.print("<li><a href='#Habitacion5'>" + habNames[4] + "</a></li>");
-                                    out.print("<li><a href='#Habitacion6'>" + habNames[5] + "</a></li>");
                                     out.print("</ul>");
                                 } else {
                                     out.print("<li class='dropdown'>");
@@ -209,10 +151,65 @@
                                     }
                                     out.print("</ul>");
                                 }
+                            } else if (paquete.equals("Pro") || paquete.equals("ProNKA")) {
+                                if (tipoUsuario.equals("1")) {
+                                    out.print("<li class='dropdown'>");
+                                    out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
+                                    out.print("<ul class='dropdown-menu'>");
+                                    out.print("<li><a href='#Habitacion1'>" + habNames[0] + "</a></li>");
+                                    out.print("<li><a href='#Habitacion2'>" + habNames[1] + "</a></li>");
+                                    out.print("<li><a href='#Habitacion3'>" + habNames[2] + "</a></li>");
+                                    out.print("<li><a href='#Habitacion4'>" + habNames[3] + "</a></li>");
+                                    out.print("</ul>");
+                                } else {
+                                    out.print("<li class='dropdown'>");
+                                    out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
+                                    out.print("<ul class='dropdown-menu'>");
+
+                                    for (cuenta = 0; cuenta < habPermitidas.length; cuenta++) {
+                                        if (habPermitidas[cuenta] != null) {
+                                            for (int n = 0; n < habNames.length; n++) {
+                                                if (habPermitidas[cuenta].equals(habNames[n])) {
+                                                    out.print("<li><a href='#Habitacion" + String.valueOf(n + 1) + "'>" + habPermitidas[cuenta] + "</a></li>");
+                                                }
+                                            }
+
+                                        }
+                                    }
+                                    out.print("</ul>");
+                                }
+
+                            } else if (tipoUsuario.equals("1")) {
+                                out.print("<li class='dropdown'>");
+                                out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones <span class='caret'></span></a>");
+                                out.print("<ul class='dropdown-menu'>");
+                                out.print("<li><a href='#Habitacion1'>" + habNames[0] + "</a></li>");
+                                out.print("<li><a href='#Habitacion2'>" + habNames[1] + "</a></li>");
+                                out.print("<li><a href='#Habitacion3'>" + habNames[2] + "</a></li>");
+                                out.print("<li><a href='#Habitacion4'>" + habNames[3] + "</a></li>");
+                                out.print("<li><a href='#Habitacion5'>" + habNames[4] + "</a></li>");
+                                out.print("<li><a href='#Habitacion6'>" + habNames[5] + "</a></li>");
+                                out.print("</ul>");
+                            } else {
+                                out.print("<li class='dropdown'>");
+                                out.print("<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Habitaciones<span class='caret'></span></a>");
+                                out.print("<ul class='dropdown-menu'>");
+
+                                for (cuenta = 0; cuenta < habPermitidas.length; cuenta++) {
+                                    if (habPermitidas[cuenta] != null) {
+                                        for (int n = 0; n < habNames.length; n++) {
+                                            if (habPermitidas[cuenta].equals(habNames[n])) {
+                                                out.print("<li><a href='#Habitacion" + String.valueOf(n + 1) + "'>" + habPermitidas[cuenta] + "</a></li>");
+                                            }
+                                        }
+
+                                    }
+                                }
+                                out.print("</ul>");
                             }
+
                         %>
-                        <%
-                            if (tipoUsuario.equals("1")) {
+                        <%                            if (tipoUsuario.equals("1")) {
 
 
                         %>
@@ -382,12 +379,10 @@
             ResultSet rs;
             String x = (String) session.getAttribute("sessionStat");
             String log = (String) session.getAttribute("sessionMail");
-            String numSerie = (String) session.getAttribute("numSerie");
-            String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
 
             try {
 
-                rs = datos.consulta1("select * from usuarios where correo = '" + log + "';");
+                rs = datos.consulta1("select nombre,aPaterno,aMaterno from usuarios where correo = '" + log + "';");
 
                 while (rs.next()) {
                     nombre = rs.getString("nombre");
