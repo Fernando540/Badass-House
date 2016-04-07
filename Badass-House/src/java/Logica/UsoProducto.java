@@ -41,7 +41,7 @@ public class UsoProducto extends HttpServlet {
             String correo = (String) sesion.getAttribute("sessionMail");
             String code = request.getParameter("codigo");;
             String canti = request.getParameter("Cantidad");
-            String redirect = ("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/Despensa.jsp'>");
+            String redirect = ("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/Despensa.jsp'>");
             
 
             try {

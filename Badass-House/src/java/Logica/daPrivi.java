@@ -28,7 +28,7 @@ public class daPrivi extends HttpServlet {
 
             }
             out.print("<script> alert('Permiso actualizado');</script>");
-            out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#miCuenta'>");
+            out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/home.jsp#miCuenta'>");
         }
     }
 

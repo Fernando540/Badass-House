@@ -35,7 +35,7 @@ public class Logout extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>");
+            out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/login.html'>");
             HttpSession sesion = request.getSession();
             sesion.removeAttribute("sessionMail");
             sesion.invalidate();

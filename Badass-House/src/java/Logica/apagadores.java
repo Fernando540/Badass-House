@@ -37,17 +37,17 @@ public class apagadores extends HttpServlet {
                 }
 
                 if (habit.equals(habNames[0])) {
-                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion1'>";
+                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/home.jsp#Habitacion1'>";
                 } else if (habit.equals(habNames[1])) {
-                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion2'>";
+                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/home.jsp#Habitacion2'>";
                 } else if (habit.equals(habNames[2])) {
-                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion3'>";
+                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/home.jsp#Habitacion3'>";
                 } else if (habit.equals(habNames[3])) {
-                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion4'>";
+                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/home.jsp#Habitacion4'>";
                 } else if (habit.equals(habNames[4])) {
-                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion5'>";
+                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/home.jsp#Habitacion5'>";
                 } else {
-                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Habitacion6'>";
+                    redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/home.jsp#Habitacion6'>";
                 }
 
             } catch (Exception ex) {

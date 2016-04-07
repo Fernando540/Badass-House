@@ -8,7 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     ResultSet rs;
-    String nombre="", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/miCuenta.jsp'>";
+    String nombre="", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/miCuenta.jsp'>";
     String log = (String) session.getAttribute("sessionMail");
     BD.cDatos sql = new BD.cDatos();
     sql.conectar();

@@ -18,4 +18,5 @@
     </service>
   </services>
   <clients/>
+  <jsr109>true</jsr109>
 </jax-ws>

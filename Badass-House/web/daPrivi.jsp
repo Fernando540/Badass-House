@@ -8,5 +8,5 @@
     datos.conectar();
     datos.consulta1("call altaPrivi('"+correo+"','"+idHabitacion+"','"+permiso+"')");
     out.print("<script> alert('Permiso actualizado');</script>");
-    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#Configuracion'>");
+    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/home.jsp#Configuracion'>");
 %>
