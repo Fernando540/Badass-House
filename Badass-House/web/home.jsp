@@ -53,12 +53,9 @@
                         <%
                             BD.cDatos datos = new BD.cDatos();
                             String correin = (String) session.getAttribute("sessionMail");
-                            /*
-                                                     if (correin.equals(null){
-                                                     out.print("<script>alert('Tu sesion ha expirado');</script>");
-                                                     out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.jsp'>");
-                                                     }*/
+                            int volt = 0, ppm = 0;
                             String tipoUsuario = "";
+                            String checado;
                             datos.conectar();
                             ResultSet tipoUsr = datos.consulta1("call dimeTipo('" + correin + "');");
                             while (tipoUsr.next()) {
@@ -269,77 +266,45 @@
                 <br>
                 <h3 class="status">Llaves de gas</h3>
             </div>
-            <% if (us[0].equals("0")) {
-            %>
-
             <div class="col-md-3">
                 <form name="Gas1" action="llavesGas" method="post">
                     Llave 1 
-                    <input type="checkbox" class="sliderEstilos" id="sliderLlave1" onclick="sendStat1()" >
+                    <% if (us[0].equals("0")) {
+                            ppm = 900;
+                            checado = "";
+                        } else {
+                            checado = "checked";
+                            ppm = 0;
+                        }
+                    %>
+                    <input type="checkbox" class="sliderEstilos" id="sliderLlave1" onclick="sendStat1()" <%=checado%>>
                     <label for="sliderLlave1"></label>
-                    <input type="text" name="ppm1" value="900" hidden>
+                    <input type="text" name="ppm1" value="<%= ppm%>" hidden>
                     <input type="text" name="key1" value="Llave principal" hidden>
-                </form>
-                <form action="llavesGas" method="post">
-                    <input type="text" value="<%= us[0]%>" name="ppm1" placeholder = "Valor en PPM">
-                    <input type="text" name="key1" value="Llave principal" hidden>
-                    <input type="submit" class="btn btn-warning" value="Mándalo">      
                 </form>
             </div>
-
-            <% } else {
-
-            %>
-
-            <div class="col-md-3">
-                <form name="Gas2" action="llavesGas" method="post">
-                    Llave 1 
-                    <input type="checkbox" class="sliderEstilos" id="sliderLlave1" onclick="sendStat2()" checked>
-                    <label for="sliderLlave1"></label>
-                    <input type="text" name="ppm1" value="0" hidden>
-                    <input type="text" name="key1" value="Llave principal" hidden>
-                </form>
-                <form action="llavesGas" method="post">
-                    <input type="text" value="<%= us[0]%>" name="ppm1" placeholder = "Valor en PPM">
-                    <input type="text" name="key1" value="Llave principal" hidden>
-                    <input type="submit" class="btn btn-warning" value="Mándalo">     
-                </form>
-
-            </div>
-            <% }
+            <%
+                int ppm1 = 0;
+                String checado1 = "";
                 if (us[1].equals("0")) {
+                    ppm1 = 900;
+                    checado1 = "";
+                } else {
+                    ppm1 = 0;
+                    checado1 = "checked";
+                }
             %>
             <div class="col-md-3">
                 <form name="Gas3" action="llavesGas" method="post">
                     Llave 2
-                    <input type="checkbox" class="sliderEstilos" id="sliderLlave2" onclick="sendStat3()" >
+                    <input type="checkbox" class="sliderEstilos" id="sliderLlave2" onclick="sendStat3()" <%=checado1%> >
                     <label for="sliderLlave2"></label>
-                    <input type="text" name="ppm1" value="900" hidden>
+                    <input type="text" name="ppm1" value="<%=ppm1%>" hidden>
                     <input type="text" name="key1" value="Llave2" hidden>
                 </form>
-                <form name="Gas33" action="llavesGas" method="post">
-                    <input type="text" value="<%= us[1]%>" name="ppm1" placeholder = "Valor en PPM">
-                    <input type="text" name="key1" value="Llave2" hidden>
-                    <input type="submit" class="btn btn-warning" value="Mándalo">      
-                </form>
+
             </div>
-            <% } else {
-            %>
-            <div class="col-md-3">
-                <form name="Gas4" action="llavesGas" method="post">
-                    Llave 2 
-                    <input type="checkbox" class="sliderEstilos" id="sliderLlave2" onclick="sendStat4()" checked>
-                    <label for="sliderLlave2"></label>
-                    <input type="text" name="ppm1" value="0" hidden>
-                    <input type="text" name="key1" value="Llave2" hidden>
-                </form>
-                <form name="Gas44" action="llavesGas" method="post">
-                    <input type="text" value="<%= us[1]%>" name="ppm1" placeholder = "Valor en PPM">
-                    <input type="text" name="key1" value="Llave2" hidden>
-                    <input type="submit" class="btn btn-warning" value="Mándalo">  
-                </form>    
-            </div>
-            <% }
+            <%
                 } catch (Exception es) {
 
                 }
@@ -353,65 +318,48 @@
             </div>
             <%                ResultSet estadote;
                 estadote = datos.consulta1("call dimeEstado('" + correin + "','Despensa');");
-
+                String estado;
                 while (estadote.next()) {
                     if (estadote.getString("estaduki").equals("activado")) {
+                        estado = "checked";
+                    } else {
+                        estado = "";
+                    }
 
             %>
             <div class="col-md-3">
                 <form name="activaDespensuki" action="activaDespensa.jsp" method="post">
                     Despensa
-                    <input type="checkbox" class="sliderEstilos"  id="despi" onclick="activa()" checked>
-                    <label for="despi"></label>
-                    <input type="text" value="Despensa" name="tipoNoti" hidden>
-                    <input type="submit" value="aceptar" name="tipoNoti" hidden>
-                </form>
-            </div>
-            <%            } else {
-            %>
-            <div class="col-md-3">
-                <form name="activaDespensuki" action="activaDespensa.jsp" method="post">
-                    Despensa
-                    <input type="checkbox" class="sliderEstilos"  id="despi" onclick="activa()" >
+                    <input type="checkbox" class="sliderEstilos"  id="despi" onclick="activa()" <%=estado%>>
                     <label for="despi"></label>
                     <input type="text" value="Despensa" name="tipoNoti" hidden>
                     <input type="submit" value="aceptar" name="tipoNoti" hidden>
                 </form>
             </div>
             <%
-                    }
                 }
             %>
             <%
                 ResultSet estadote1;
                 estadote1 = datos.consulta1("call dimeEstado('" + correin + "','ForceClose');");
-
+                String estado1 = "";
                 while (estadote1.next()) {
                     if (estadote1.getString("estaduki").equals("activado")) {
+                        estado1 = "checked";
+                    }
 
             %>
             <div class="col-md-3">
                 <form name="" action="" method="post">
                     ForceClose
-                    <input type="checkbox" class="sliderEstilos"  id="close" checked>
-                    <label for="close"></label>
-                    <input type="text" value="Despensa" name="tipoNoti" hidden>
-                    <input type="submit" value="aceptar" name="tipoNoti" hidden>
-                </form>
-            </div>
-            <%            } else {
-            %>
-            <div class="col-md-3">
-                <form name="" action="" method="post">
-                    Despensa
-                    <input type="checkbox" class="sliderEstilos"  id="close">
+                    <input type="checkbox" class="sliderEstilos"  id="close" <%=estado1%>>
                     <label for="close"></label>
                     <input type="text" value="Despensa" name="tipoNoti" hidden>
                     <input type="submit" value="aceptar" name="tipoNoti" hidden>
                 </form>
             </div>
             <%
-                    }
+
                 }
             %>
         </div>
@@ -708,60 +656,38 @@
                 <%
                     ResultSet abierto = datos.consulta1("call dimeAbierto('" + correin + "','" + id[0] + "');");
                     String estado = "";
+                    String abertura = "";
                     while (abierto.next()) {
                         estado = abierto.getString("state");
                     }
                     if (estado.equals("Abierta")) {
+                        abertura = "checked";
+                    }
                 %>
                 <form name="frontdoor" action="opCl" method="post">
-                    <input type="checkbox" class="sliderEstilos" id="sliderCerradura1" onclick="cierra()" checked>
+                    <input type="checkbox" class="sliderEstilos" id="sliderCerradura1" onclick="cierra()"  <%=abertura%>>
                     <label for="sliderCerradura1"></label>
                     <input type="text" name="idPuerta" value="<%=id[0]%>" hidden>
 
                 </form>
-                <%
-                } else {
-                %>
-                <form name="frontdoor" action="opCl" method="post">
-                    <input type="checkbox" class="sliderEstilos" id="sliderCerradura1" onclick="cierra()" >
-                    <label for="sliderCerradura1"></label>
-                    <input type="text" name="idPuerta" value="<%=id[0]%>" hidden>
-
-                </form>
-
-                <%
-                    }%>
             </div>
             <div class="col-md-3">
                 Puerta Atras
                 <%
                     abierto = datos.consulta1("call dimeAbierto('" + correin + "','" + id[1] + "');");
-
+                    String abertura1 = "";
                     while (abierto.next()) {
                         estado = abierto.getString("state");
                     }
                     if (estado.equals("Abierta")) {
-                %>
-
-
-                <form name="backdoor" action="opCl" method="post">
-                    <input type="checkbox" class="sliderEstilos" id="sliderCerradura2" onclick="cierra1()" checked>
-                    <label for="sliderCerradura2"></label>
-                    <input type="text" name="idPuerta" value="<%=id[1]%>" hidden>
-
-                </form>
-                <%
-                } else {
-                %>
-                <form name="backdoor" action="opCl" method="post">
-                    <input type="checkbox" class="sliderEstilos" id="sliderCerradura2" onclick="cierra1()">
-                    <label for="sliderCerradura2"></label>
-                    <input type="text" name="idPuerta" value="<%=id[1]%>" hidden>
-
-                </form>
-                <%
+                        abertura = "checked";
                     }
                 %>
+                <form name="backdoor" action="opCl" method="post">
+                    <input type="checkbox" class="sliderEstilos" id="sliderCerradura2" onclick="cierra1()" <%=abertura1%>>
+                    <label for="sliderCerradura2"></label>
+                    <input type="text" name="idPuerta" value="<%=id[1]%>" hidden>
+                </form>              
             </div>
         </div>
     </div>
@@ -888,219 +814,101 @@
                     </div>
                     Enchufe 1
                     <br>
-                    <% if (uso[0].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff1" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende1()">
-                                    <label for="Enchufe1"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff1" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende1()" checked>
-                                    <label for="Enchufe1"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo = "";
+                        if (uso[0].equals("0")) {
+                            volt = 50;
+
+                        } else {
+                            volt = 0;
+                            tipo = "checked";
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff1" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe1" onclick="apagaPrende1()" <%=tipo%>>
+                                    <label for="Enchufe1"></label>
+                                    <input type="text" value="<%=volt%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 2
                     <br>
-                    <% if (uso[1].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff2" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende2()">
-                                    <label for="Enchufe2"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff2" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende2()" checked>
-                                    <label for="Enchufe2"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo1 = "checked";
+                        int volt1 = 0;
+                        if (uso[1].equals("0")) {
+                            tipo1 = "";
+                            volt = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff2" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe2" onclick="apagaPrende2()" <%=tipo1%>>
+                                    <label for="Enchufe2"></label>
+                                    <input type="text" value="<%=volt1%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 3
                     <br>
-                    <% if (uso[2].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff3" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende3()">
-                                    <label for="Enchufe3"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff3" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende3()" checked>
-                                    <label for="Enchufe3"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo2 = "checked";
+                        int volt2 = 0;
+                        if (uso[2].equals("0")) {
+                            volt2 = 50;
+                            tipo2 = "";
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff3" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe3" onclick="apagaPrende3()" <%=tipo2%>>
+                                    <label for="Enchufe3"></label>
+                                    <input type="text" value="<%=volt2%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Luz Principal
                     <br>
-                    <% if (uso[3].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff4" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende4()">
-                                    <label for="Luz"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff4" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende4()" checked>
-                                    <label for="Luz"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo3 = "checked";
+                        int volt3 = 0;
+                        if (uso[3].equals("0")) {
+                            tipo3 = "";
+                            volt3 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff4" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz" onclick="apagaPrende4()" <%=tipo3%>>
+                                    <label for="Luz"></label>
+                                    <input type="text" value="<%=volt3%>" name="Voltaje" hidden>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[0]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                 </center>
                 <!--</section>-->
@@ -1172,219 +980,100 @@
                     </div>
                     Enchufe 1
                     <br>
-                    <% if (uso[0].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff5" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe5" onclick="apagaPrende5()">
-                                    <label for="Enchufe5"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff5" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe5" onclick="apagaPrende5()" checked>
-                                    <label for="Enchufe5"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo1 = "checked";
+                        int volt1 = 0;
+                        if (uso[0].equals("0")) {
+                            tipo1 = "";
+                            volt1 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff5" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe5" onclick="apagaPrende5()" <%=tipo1%>>
+                                    <label for="Enchufe5"></label>
+                                    <input type="text" value="<%=volt1%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 2
                     <br>
-                    <% if (uso[1].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff6" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe6" onclick="apagaPrende6()">
-                                    <label for="Enchufe6"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff6" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe6" onclick="apagaPrende6()" checked>
-                                    <label for="Enchufe6"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo2 = "checked";
+                        int volt2 = 0;
+                        if (uso[1].equals("0")) {
+                            tipo2 = "";
+                            volt2 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff6" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe6" onclick="apagaPrende6()" <%=tipo2%>>
+                                    <label for="Enchufe6"></label>
+                                    <input type="text" value="<%=volt2%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 3
                     <br>
-                    <% if (uso[2].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff7" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe7" onclick="apagaPrende7()">
-                                    <label for="Enchufe7"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff7" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe7" onclick="apagaPrende7()" checked>
-                                    <label for="Enchufe7"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo3 = "checked";
+                        int volt3 = 0;
+                        if (uso[2].equals("0")) {
+                            tipo3 = "";
+                            volt3 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff7" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe7" onclick="apagaPrende7()" <%=tipo3%>>
+                                    <label for="Enchufe7"></label>
+                                    <input type="text" value="<%=volt3%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Luz Principal
                     <br>
-                    <% if (uso[3].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff8" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz2" onclick="apagaPrende8()">
-                                    <label for="Luz2"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff8" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz2" onclick="apagaPrende8()" checked>
-                                    <label for="Luz2"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo4 = "checked";
+                        int volt4 = 0;
+                        if (uso[3].equals("0")) {
+                            tipo4 = "";
+                            volt4 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff8" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz2" onclick="apagaPrende8()" <%=tipo4%>>
+                                    <label for="Luz2"></label>
+                                    <input type="text" value="<%=volt4%>" name="Voltaje" hidden>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[1]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+
+                        </tr>
+                    </table>
                     <br>
                 </center>
                 <!--</section>-->
@@ -1463,219 +1152,99 @@
                     </div>
                     Enchufe 1
                     <br>
-                    <% if (uso[0].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff9" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe9" onclick="apagaPrende9()">
-                                    <label for="Enchufe9"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff9" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe9" onclick="apagaPrende9()" checked>
-                                    <label for="Enchufe9"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo1 = "checked";
+                        int volt1 = 0;
+                        if (uso[0].equals("0")) {
+                            tipo1 = "";
+                            volt1 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff9" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe9" onclick="apagaPrende9()" <%=tipo1%>>
+                                    <label for="Enchufe9"></label>
+                                    <input type="text" value="<%=volt1%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 2
                     <br>
-                    <% if (uso[1].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff10" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe10" onclick="apagaPrende10()">
-                                    <label for="Enchufe10"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff10" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe10" onclick="apagaPrende10()" checked>
-                                    <label for="Enchufe10"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo2 = "checked";
+                        int volt2 = 0;
+                        if (uso[1].equals("0")) {
+                            tipo2 = "";
+                            volt2 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff10" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe10" onclick="apagaPrende10()" <%=tipo2%>>
+                                    <label for="Enchufe10"></label>
+                                    <input type="text" value="<%=volt2%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 3
                     <br>
-                    <% if (uso[2].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff11" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe11" onclick="apagaPrende11()">
-                                    <label for="Enchufe11"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff11" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe11" onclick="apagaPrende11()" checked>
-                                    <label for="Enchufe11"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo3 = "checked";
+                        int volt3 = 0;
+                        if (uso[2].equals("0")) {
+                            tipo3 = "";
+                            volt3 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff11" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe11" onclick="apagaPrende11()" <%=tipo3%>>
+                                    <label for="Enchufe11"></label>
+                                    <input type="text" value="<%=volt3%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Luz Principal
                     <br>
-                    <% if (uso[3].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff12" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz3" onclick="apagaPrende12()">
-                                    <label for="Luz3"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff12" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz3" onclick="apagaPrende12()" checked>
-                                    <label for="Luz3"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo4 = "checked";
+                        int volt4 = 0;
+                        if (uso[3].equals("0")) {
+                            tipo4 = "";
+                            volt4 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff12" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz3" onclick="apagaPrende12()" <%=tipo4%>>
+                                    <label for="Luz3"></label>
+                                    <input type="text" value="<%=volt4%>" name="Voltaje" hidden>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[2]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                 </center>
                 <!--</section>-->
@@ -1747,219 +1316,99 @@
                     </div>
                     Enchufe 1
                     <br>
-                    <% if (uso[0].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff13" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe13" onclick="apagaPrende13()">
-                                    <label for="Enchufe13"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff13" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe13" onclick="apagaPrende13()" checked>
-                                    <label for="Enchufe13"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo1 = "checked";
+                        int volt1 = 0;
+                        if (uso[0].equals("0")) {
+                            tipo1 = "";
+                            volt1 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff13" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe13" onclick="apagaPrende13()" <%=tipo1%>>
+                                    <label for="Enchufe13"></label>
+                                    <input type="text" value="<%=volt1%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 2
                     <br>
-                    <% if (uso[1].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff14" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe14" onclick="apagaPrende14()">
-                                    <label for="Enchufe14"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff14" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe10" onclick="apagaPrende14()" checked>
-                                    <label for="Enchufe14"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo2 = "checked";
+                        int volt2 = 0;
+                        if (uso[1].equals("0")) {
+                            tipo2 = "";
+                            volt2 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff14" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe14" onclick="apagaPrende14()" <%=tipo2%>>
+                                    <label for="Enchufe14"></label>
+                                    <input type="text" value="<%=volt2%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 3
                     <br>
-                    <% if (uso[2].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff15" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe15" onclick="apagaPrende15()">
-                                    <label for="Enchufe15"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff15" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe15" onclick="apagaPrende15()" checked>
-                                    <label for="Enchufe15"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo3 = "checked";
+                        int volt3 = 0;
+                        if (uso[2].equals("0")) {
+                            tipo3 = "";
+                            volt3 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff15" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe15" onclick="apagaPrende15()" <%=tipo3%>>
+                                    <label for="Enchufe15"></label>
+                                    <input type="text" value="<%=volt3%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Luz Principal
                     <br>
-                    <% if (uso[3].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff16" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz4" onclick="apagaPrende16()">
-                                    <label for="Luz4"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff16" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz4" onclick="apagaPrende16()" checked>
-                                    <label for="Luz4"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo4 = "checked";
+                        int volt4 = 0;
+                        if (uso[3].equals("0")) {
+                            tipo4 = "";
+                            volt4 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff16" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz4" onclick="apagaPrende16()" <%=tipo4%>>
+                                    <label for="Luz4"></label>
+                                    <input type="text" value="<%=volt4%>" name="Voltaje" hidden>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[3]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                 </center>
                 <!--</section>-->
@@ -2041,219 +1490,99 @@
                     </div>
                     Enchufe 1
                     <br>
-                    <% if (uso[0].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff17" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe17" onclick="apagaPrende17()">
-                                    <label for="Enchufe17"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff17" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe17" onclick="apagaPrende17()" checked>
-                                    <label for="Enchufe17"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo1 = "checked";
+                        int volt1 = 0;
+                        if (uso[0].equals("0")) {
+                            tipo1 = "";
+                            volt1 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff17" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe17" onclick="apagaPrende17()" <%=tipo1%>>
+                                    <label for="Enchufe17"></label>
+                                    <input type="text" value="<%=volt1%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 2
                     <br>
-                    <% if (uso[1].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff18" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe18" onclick="apagaPrende18()">
-                                    <label for="Enchufe18"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff18" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe18" onclick="apagaPrende18()" checked>
-                                    <label for="Enchufe18"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo2 = "checked";
+                        int volt2 = 0;
+                        if (uso[1].equals("0")) {
+                            tipo2 = "";
+                            volt2 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff18" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe18" onclick="apagaPrende18()" <%=tipo2%>>
+                                    <label for="Enchufe18"></label>
+                                    <input type="text" value="<%=volt2%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 3
                     <br>
-                    <% if (uso[2].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff19" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe19" onclick="apagaPrende19()">
-                                    <label for="Enchufe19"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff19" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe19" onclick="apagaPrende19()" checked>
-                                    <label for="Enchufe19"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo3 = "checked";
+                        int volt3 = 0;
+                        if (uso[2].equals("0")) {
+                            tipo3 = "";
+                            volt3 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff19" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe19" onclick="apagaPrende19()" <%=tipo3%>>
+                                    <label for="Enchufe19"></label>
+                                    <input type="text" value="<%=volt3%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Luz Principal
                     <br>
-                    <% if (uso[3].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff20" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz5" onclick="apagaPrende20()">
-                                    <label for="Luz5"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff20" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz5" onclick="apagaPrende20()" checked>
-                                    <label for="Luz5"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo4 = "checked";
+                        int volt4 = 0;
+                        if (uso[3].equals("0")) {
+                            tipo4 = "";
+                            volt4 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff20" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz5" onclick="apagaPrende20()" <%=tipo4%>>
+                                    <label for="Luz5"></label>
+                                    <input type="text" value="<%=volt4%>" name="Voltaje" hidden>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[4]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                 </center>
                 <!--</section>-->
@@ -2325,219 +1654,100 @@
                     </div>
                     Enchufe 1
                     <br>
-                    <% if (uso[0].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff21" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe21" onclick="apagaPrende21()">
-                                    <label for="Enchufe21"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff21" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe21" onclick="apagaPrende21()" checked>
-                                    <label for="Enchufe21"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[0] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe1" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo1 = "checked";
+                        int volt1 = 0;
+                        if (uso[0].equals("0")) {
+                            tipo1 = "";
+                            volt1 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff21" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe21" onclick="apagaPrende21()" <%=tipo1%>>
+                                    <label for="Enchufe21"></label>
+                                    <input type="text" value="<%=volt1%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe1" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 2
                     <br>
-                    <% if (uso[1].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff22" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe22" onclick="apagaPrende22()">
-                                    <label for="Enchufe22"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff22" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe22" onclick="apagaPrende22()" checked>
-                                    <label for="Enchufe22"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[1] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe2" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo2 = "checked";
+                        int volt2 = 0;
+                        if (uso[1].equals("0")) {
+                            tipo2 = "";
+                            volt2 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff22" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe22" onclick="apagaPrende22()" <%=tipo2%>>
+                                    <label for="Enchufe22"></label>
+                                    <input type="text" value="<%=volt2%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe2" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Enchufe 3
                     <br>
-                    <% if (uso[2].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff23" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe23" onclick="apagaPrende23()">
-                                    <label for="Enchufe23"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff23" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Enchufe23" onclick="apagaPrende23()" checked>
-                                    <label for="Enchufe23"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[2] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Enchufe3" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo3 = "checked";
+                        int volt3 = 0;
+                        if (uso[2].equals("0")) {
+                            tipo3 = "";
+                            volt3 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff23" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Enchufe23" onclick="apagaPrende23()" <%=tipo3%>>
+                                    <label for="Enchufe23"></label>
+                                    <input type="text" value="<%=volt3%>" name="Voltaje" hidden>
+                                    <input type="text" value="Enchufe3" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                     Luz Principal
                     <br>
-                    <% if (uso[3].equals("0")) {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff24" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz6" onclick="apagaPrende24()">
-                                    <label for="Luz6"></label>
-                                    <input type="text" value="50" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
-                    <% } else {
-                    %>
-                    <table style="width:30%">
-                        <tr>
-                            <td>
-                                <form name="OnOff24" action="apagadores" method="post">
-                                    <input type="checkbox" class="sliderEstilos" id="Luz6" onclick="apagaPrende24()" checked>
-                                    <label for="Luz6"></label>
-                                    <input type="text" value="0" name="Voltaje" hidden>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                </form>
-                            </td>
-                            <td style="padding-left:30px ; padding-top: 18px">
-                                <form class="form-horizontal" action="apagadores" method="post">
-                                    <%
-                                        out.println("<input type='text' class='form-control' name='Voltaje' value='" + uso[3] + "' placeholder='Voltaje' size='30'>");
-                                    %>
-                                    <input type="text" value="Luz" name="contacto" hidden>
-                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
-                                    <input type="submit" class="btn btn-warning" value="Mándalo">
-                                </form>
-                        </tr>
-                    </table>
                     <%
+                        String tipo4 = "checked";
+                        int volt4 = 0;
+
+                        if (uso[3].equals("0")) {
+                            tipo4 = "";
+                            volt4 = 50;
                         }
                     %>
+                    <table style="width:30%">
+                        <tr>
+                            <td align="center">
+                                <form name="OnOff24" action="apagadores" method="post">
+                                    <input type="checkbox" class="sliderEstilos" id="Luz6" onclick="apagaPrende24()" <%=tipo4%>>
+                                    <label for="Luz6"></label>
+                                    <input type="text" value="<%=volt4%>" name="Voltaje" hidden>
+                                    <input type="text" value="Luz" name="contacto" hidden>
+                                    <input type="text" value="<%out.println(habNames[5]);%>" name="habit" hidden>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
                     <br>
                 </center>
                 <!--</section>-->
