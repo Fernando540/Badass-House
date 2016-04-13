@@ -53,7 +53,7 @@
 <%
     if (session.getAttribute("sessionMail") == null) {
         out.print("<script>alert('La sesion ha expirado');</script>");
-        out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/login.html'>");
+        out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/Badass-House/web/login.html'>");
     } else {
 %>
 </head>

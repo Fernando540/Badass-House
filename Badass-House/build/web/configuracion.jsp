@@ -10,7 +10,7 @@
     ResultSet rs;
     String x = (String) session.getAttribute("sessionStat");
     String log = (String) session.getAttribute("sessionMail");
-    String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/login.html'>";
+    String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/Badass-House/web/login.html'>";
     if (x.equals("logueado")) {
 
         try {

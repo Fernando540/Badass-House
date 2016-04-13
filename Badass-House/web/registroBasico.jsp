@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
-        <title>Registro BÃ¡sico</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+        <link rel="shortcut icon" href="https://cdn2.iconfinder.com/data/icons/social-messaging-productivity-1-1/128/home-512.png">
+        <title>Registro Básico</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <link rel="stylesheet" href="BS/css/bootstrap.css" />
         <link rel="stylesheet" href="BS/css/bootstrap-theme.css" />
@@ -27,7 +28,7 @@
     function noNumeros(e) {
         key = e.keyCode || e.which;
         tecla = String.fromCharCode(key).toLowerCase();
-        letras = " Ã¡Ã©Ã­Ã³ÃºabcdefghijklmnÃ±opqrstuvwxyz";
+        letras = " áéíóúabcdefghijklmnñopqrstuvwxyz";
         especiales = "8-37-39-46";
 
         tecla_especial = false;
@@ -47,7 +48,7 @@
         correo2 = document.getElementById("correo2").value;
 
         if (correo2 === correo1) {
-            //alert("Los correos coinciden, ingresa tu contraseÃ±a");
+            //alert("Los correos coinciden, ingresa tu contraseña");
         } else {
             alert("Los correos deben coincidir");
         }
@@ -63,10 +64,10 @@
             if (correo2 === correo1) {
                 document.getElementById("Aceptar").disabled = false;
             } else {
-                alert("Las contraseÃ±as y correos deben coincidir");
+                alert("Las contraseñas y correos deben coincidir");
             }
         } else {
-            alert("Las contraseÃ±as no coinciden");
+            alert("Las contraseñas no coinciden");
         }
     }
 
@@ -85,7 +86,7 @@
                         <input type="text" class="form-control" name="numSerie" maxlength="6" required >
                     </div>
                    <!-- <div class="form-group">
-                        <label>Â¿ProtecciÃ³n para niÃ±os?&nbsp; SI<input type="radio" name="nka" value="SI">&nbsp; NO<input type="radio" name="nka" value="NO" checked></label>
+                        <label>¿Protección para niños?&nbsp; SI<input type="radio" name="nka" value="SI">&nbsp; NO<input type="radio" name="nka" value="NO" checked></label>
                     </div>-->
                     <div class="form-group">
                         <label>Nombre</label>
@@ -111,7 +112,7 @@
                         <input type="text" class="form-control" name="direccion" maxlength="35" placeholder="Col: Calle: No.:" required>
                     </div>
                     <div class="form-group">
-                        <label>Correo electrÃ³nico</label>
+                        <label>Correo electrónico</label>
                         <input type="email" class="form-control" name="correo1" id="correo1" placeholder="nombre@dominio.com" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" >
                     </div>
                     <div class="form-group">
@@ -119,11 +120,11 @@
                         <input type="email" class="form-control" name="correo2" id="correo2" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" onfocusout="validarCorreo()">                        
                     </div>
                     <div class="form-group">
-                        <label>ContraseÃ±a</label>
+                        <label>Contraseña</label>
                         <input type="password" class="form-control" name="password1" id="password1" maxlength="15" placeholder="15 caract&eacute;res max" required>
                     </div>
                     <div class="form-group">
-                        <label>Ingresa tu contraseÃ±a de nuevo</label>
+                        <label>Ingresa tu contraseña de nuevo</label>
                         <input type="password" class="form-control" name="password2" id="password2" maxlength="15" required onfocusout="validarPassword()">
                     </div>
                     <button type="submit" name="Aceptar" id="Aceptar" class ="btn btn-success" disabled>Confirmar</button>

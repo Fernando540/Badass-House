@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "CifraSha", targetNamespace = "http://WSBadassHouse/", wsdlLocation = "http://localhost:8080/WebServices/CifraSha?wsdl")
+@WebServiceClient(name = "CifraSha", targetNamespace = "http://WSBadassHouse/", wsdlLocation = "http://badasshouse.net23.net/WebServices/CifraSha?wsdl")
 public class CifraSha_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class CifraSha_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:8080/WebServices/CifraSha?wsdl");
+            url = new URL("http://badasshouse.net23.net/WebServices/CifraSha?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
