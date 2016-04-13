@@ -1,0 +1,12 @@
+Guardar como atributos de sesión:
+1.- idCasa
+2.- tipoUsuario
+3.- Paquete
+
+Eliminar todas las consultas de la BD con esos datos
+
+Cambiar el código de barras que se muestra de único a global con un inner Join
+
+Nuevas notificaciones de force close y NKA
+
+Simular el comportamiento de NKA
