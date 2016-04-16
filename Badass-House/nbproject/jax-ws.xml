@@ -3,7 +3,7 @@
   <services/>
   <clients>
     <client name="CifraSha">
-      <wsdl-url>http://badasshouse.net23.net/WebServices/CifraSha?wsdl</wsdl-url>
+      <wsdl-url>http://189.245.172.14:81/WebServices/CifraSha?wsdl</wsdl-url>
       <local-wsdl-file>localhost_8080/WebServices/CifraSha.wsdl</local-wsdl-file>
       <package-name>wsbadasshouse</package-name>
       <catalog-file>catalog.xml</catalog-file>
@@ -22,7 +22,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://badasshouse.net23.net/WebServices/CifraSha?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://189.245.172.14:81/WebServices/CifraSha?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
@@ -35,7 +35,7 @@
       </wsimport-options>
     </client>
     <client name="CifraCesar">
-      <wsdl-url>http://badasshouse.net23.net/WebServices/CifraCesar?wsdl</wsdl-url>
+      <wsdl-url>http://189.245.172.14:81/WebServices/CifraCesar?wsdl</wsdl-url>
       <local-wsdl-file>localhost_8080/WebServices/CifraCesar.wsdl</local-wsdl-file>
       <package-name>wsbadasshouse</package-name>
       <catalog-file>catalog.xml</catalog-file>
@@ -54,7 +54,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://badasshouse.net23.net/WebServices/CifraCesar?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://189.245.172.14:81/WebServices/CifraCesar?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
@@ -67,7 +67,7 @@
       </wsimport-options>
     </client>
     <client name="WS_Login">
-      <wsdl-url>http://badasshouse.net23.net/WebServices/WS_Login?wsdl</wsdl-url>
+      <wsdl-url>http://189.245.172.14:81/WebServices/WS_Login?wsdl</wsdl-url>
       <local-wsdl-file>localhost_8080/WebServices/WS_Login.wsdl</local-wsdl-file>
       <package-name>wsbadasshouse</package-name>
       <catalog-file>catalog.xml</catalog-file>
@@ -86,7 +86,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://badasshouse.net23.net/WebServices/WS_Login?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://189.245.172.14:81/WebServices/WS_Login?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>
@@ -99,7 +99,7 @@
       </wsimport-options>
     </client>
     <client name="WS_AltaUsuario">
-      <wsdl-url>http://badasshouse.net23.net/WebServices/WS_AltaUsuario?wsdl</wsdl-url>
+      <wsdl-url>http://189.245.172.14:81/WebServices/WS_AltaUsuario?wsdl</wsdl-url>
       <local-wsdl-file>localhost_8080/WebServices/WS_AltaUsuario.wsdl</local-wsdl-file>
       <package-name>wsbadasshouse</package-name>
       <catalog-file>catalog.xml</catalog-file>
@@ -118,7 +118,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://badasshouse.net23.net/WebServices/WS_AltaUsuario?wsdl</wsimport-option-value>
+          <wsimport-option-value>http://189.245.172.14:81/WebServices/WS_AltaUsuario?wsdl</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>

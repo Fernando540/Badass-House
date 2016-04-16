@@ -32,10 +32,10 @@ public class Despensa1 extends HttpServlet {
                 res = datos.modificacion1("call altadespensuki('" + correo + "','" + codigo + "','" + nombre + "','" + alerta + "');");
                 if (res == 1) {
                     out.print("<script>alert('Alta Exitosa');</script>");
-                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/Despensa.jsp'>");
+                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Despensa.jsp'>");
                 } else {
                     out.print("<script>alert('Errorts');</script>");
-                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://badasshouse.net23.net/Despensa.jsp'>");
+                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Despensa.jsp'>");
                 }
             } catch (Exception e) {
                 out.print(e);
