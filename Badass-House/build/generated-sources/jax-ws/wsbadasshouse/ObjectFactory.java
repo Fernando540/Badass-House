@@ -24,8 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _WSAltaUsuario_QNAME = new QName("http://WSBadassHouse/", "WS_AltaUsuario");
-    private final static QName _WSAltaUsuarioResponse_QNAME = new QName("http://WSBadassHouse/", "WS_AltaUsuarioResponse");
+    private final static QName _CifrarResponse_QNAME = new QName("http://WSBadassHouse/", "CifrarResponse");
+    private final static QName _Cifrar_QNAME = new QName("http://WSBadassHouse/", "Cifrar");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: wsbadasshouse
@@ -35,37 +35,37 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link WSAltaUsuario_Type }
+     * Create an instance of {@link CifrarResponse }
      * 
      */
-    public WSAltaUsuario_Type createWSAltaUsuario_Type() {
-        return new WSAltaUsuario_Type();
+    public CifrarResponse createCifrarResponse() {
+        return new CifrarResponse();
     }
 
     /**
-     * Create an instance of {@link WSAltaUsuarioResponse }
+     * Create an instance of {@link Cifrar }
      * 
      */
-    public WSAltaUsuarioResponse createWSAltaUsuarioResponse() {
-        return new WSAltaUsuarioResponse();
+    public Cifrar createCifrar() {
+        return new Cifrar();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link WSAltaUsuario_Type }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link CifrarResponse }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "WS_AltaUsuario")
-    public JAXBElement<WSAltaUsuario_Type> createWSAltaUsuario(WSAltaUsuario_Type value) {
-        return new JAXBElement<WSAltaUsuario_Type>(_WSAltaUsuario_QNAME, WSAltaUsuario_Type.class, null, value);
+    @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "CifrarResponse")
+    public JAXBElement<CifrarResponse> createCifrarResponse(CifrarResponse value) {
+        return new JAXBElement<CifrarResponse>(_CifrarResponse_QNAME, CifrarResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link WSAltaUsuarioResponse }{@code >}}
+     * Create an instance of {@link JAXBElement }{@code <}{@link Cifrar }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "WS_AltaUsuarioResponse")
-    public JAXBElement<WSAltaUsuarioResponse> createWSAltaUsuarioResponse(WSAltaUsuarioResponse value) {
-        return new JAXBElement<WSAltaUsuarioResponse>(_WSAltaUsuarioResponse_QNAME, WSAltaUsuarioResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "Cifrar")
+    public JAXBElement<Cifrar> createCifrar(Cifrar value) {
+        return new JAXBElement<Cifrar>(_Cifrar_QNAME, Cifrar.class, null, value);
     }
 
 }

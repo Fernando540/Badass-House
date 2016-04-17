@@ -35,19 +35,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link WSLogin_Type }
-     * 
-     */
-    public WSLogin_Type createWSLogin_Type() {
-        return new WSLogin_Type();
-    }
-
-    /**
      * Create an instance of {@link WSLoginResponse }
      * 
      */
     public WSLoginResponse createWSLoginResponse() {
         return new WSLoginResponse();
+    }
+
+    /**
+     * Create an instance of {@link WSLogin_Type }
+     * 
+     */
+    public WSLogin_Type createWSLogin_Type() {
+        return new WSLogin_Type();
     }
 
     /**
