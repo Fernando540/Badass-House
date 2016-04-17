@@ -44,22 +44,14 @@
                 out.print(exD.getMessage());
             }
 
-            
-   
-    try {
-	wsbadasshouse.WSLogin_Service service = new wsbadasshouse.WSLogin_Service();
-	wsbadasshouse.WSLogin port = service.getWSLoginPort();
-	 // TODO initialize WS operation arguments here
-	
-	// TODO process result here
-	 resultado = port.wsLogin(correo, pass1);
-	
-    } catch (Exception ex) {
-	// TODO handle custom exceptions here
-    }
+            try {
+                wsbadasshouse.WSLogin_Service service = new wsbadasshouse.WSLogin_Service();
+                wsbadasshouse.WSLogin port = service.getWSLoginPort();
 
-
-
+                resultado = port.wsLogin(correo, pass1);
+                 
+            } catch (Exception ex) {
+            }
 
             if (resultado.equals("invalido") || resultado.equals("")) {
                 out.print("<script> alert('Usuario Invalido');</script>");
