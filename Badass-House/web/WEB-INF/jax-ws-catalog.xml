@@ -9,4 +9,12 @@
     <system systemId="http://localhost:8080/WebServices/WS_Login?xsd=1" uri="wsdl/localhost_8080/WebServices/WS_Login.xsd_1.xsd"/>
     <system systemId="http://localhost:8080/WebServices/WS_AltaUsuario?wsdl" uri="wsdl/localhost_8080/WebServices/WS_AltaUsuario.wsdl"/>
     <system systemId="http://localhost:8080/WebServices/WS_AltaUsuario?xsd=1" uri="wsdl/localhost_8080/WebServices/WS_AltaUsuario.xsd_1.xsd"/>
+    <system systemId="http://189.245.172.14:81/WebServices/WS_Login?wsdl" uri="wsdl/189.245.172.14_81/WebServices/WS_Login.wsdl"/>
+    <system systemId="http://189.245.172.14:81/WebServices/WS_Login?xsd=1" uri="wsdl/189.245.172.14_81/WebServices/WS_Login.xsd_1.xsd"/>
+    <system systemId="http://189.245.172.14:81/WebServices/CifraSha?wsdl" uri="wsdl/189.245.172.14_81/WebServices/CifraSha.wsdl"/>
+    <system systemId="http://189.245.172.14:81/WebServices/CifraSha?xsd=1" uri="wsdl/189.245.172.14_81/WebServices/CifraSha.xsd_1.xsd"/>
+    <system systemId="http://189.245.172.14:81/WebServices/CifraCesar?wsdl" uri="wsdl/189.245.172.14_81/WebServices/CifraCesar.wsdl"/>
+    <system systemId="http://189.245.172.14:81/WebServices/CifraCesar?xsd=1" uri="wsdl/189.245.172.14_81/WebServices/CifraCesar.xsd_1.xsd"/>
+    <system systemId="http://189.245.172.14:81/WebServices/WS_AltaUsuario?wsdl" uri="wsdl/189.245.172.14_81/WebServices/WS_AltaUsuario.wsdl"/>
+    <system systemId="http://189.245.172.14:81/WebServices/WS_AltaUsuario?xsd=1" uri="wsdl/189.245.172.14_81/WebServices/WS_AltaUsuario.xsd_1.xsd"/>
 </catalog>
