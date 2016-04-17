@@ -8,7 +8,7 @@
     String clave = "", mail = "";
     String nombre = "", aPaterno = "", aMaterno = "";
     String direccion = "", correo = "", password = "";
-    String registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp'>";
+    String registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp'>";
     mail = (String) session.getAttribute("sessionMail");
 
     String tipoUsr = "", numSerie = "", passOrig = "";

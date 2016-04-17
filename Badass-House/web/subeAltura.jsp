@@ -6,7 +6,7 @@
     int rs;
     if (request.getParameter("alturaMax").equals("") || request.getParameter("alturaMin").equals("")) {
         out.print("<script>alert('Ingresa los datos que se te piden');</script>");
-        out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#NoKids'>");
+        out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp#NoKids'>");
     } else {
         alturaMax = request.getParameter("alturaMax");
         alturaMin = request.getParameter("alturaMin");
@@ -14,10 +14,10 @@
         rs = sql.modificacion1("call ingresaAltura('" + correo + "','" + alturaMax + "','" + alturaMin + "');");
         if (rs == 1) {
             out.print("<script>alert('Altura ingresada');</script>");
-            out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#NoKids'>");
+            out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp#NoKids'>");
         } else {
             out.print("<script>alert(errorts');</script>");
-            out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#NoKids'>");
+            out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp#NoKids'>");
         }
     }
 

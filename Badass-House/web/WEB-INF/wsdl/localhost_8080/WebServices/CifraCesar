@@ -18,7 +18,7 @@ Información
 <table border=\"0\"><tr><td>Nombre de Servicio\:</td><td>{http://WSBadassHouse/}CifraSha</td></tr><tr><td>Nombre de Puerto\:</td><td>{http://WSBadassHouse/}CifraShaPort</td></tr></table>
 </td>
 <td>
-<table border=\"0\"><tr><td>Dirección\:</td><td>http://localhost:8080/WebServices/CifraSha</td></tr><tr><td>WSDL\:</td><td><a href\="http://localhost:8080/WebServices/CifraSha?wsdl">http://localhost:8080/WebServices/CifraSha?wsdl</a></td></tr><tr><td>Clase de Implantación\:</td><td>WSBadassHouse.CifraSha</td></tr></table>
+<table border=\"0\"><tr><td>Dirección\:</td><td>http://localhost:8090/WebServices/CifraSha</td></tr><tr><td>WSDL\:</td><td><a href\="http://localhost:8090/WebServices/CifraSha?wsdl">http://localhost:8090/WebServices/CifraSha?wsdl</a></td></tr><tr><td>Clase de Implantación\:</td><td>WSBadassHouse.CifraSha</td></tr></table>
 </td>
 </tr>
 <tr>
@@ -26,7 +26,7 @@ Información
 <table border=\"0\"><tr><td>Nombre de Servicio\:</td><td>{http://WSBadassHouse/}CifraCesar</td></tr><tr><td>Nombre de Puerto\:</td><td>{http://WSBadassHouse/}CifraCesarPort</td></tr></table>
 </td>
 <td>
-<table border=\"0\"><tr><td>Dirección\:</td><td>http://localhost:8080/WebServices/CifraCesar</td></tr><tr><td>WSDL\:</td><td><a href\="http://localhost:8080/WebServices/CifraCesar?wsdl">http://localhost:8080/WebServices/CifraCesar?wsdl</a></td></tr><tr><td>Clase de Implantación\:</td><td>WSBadassHouse.CifraCesar</td></tr></table>
+<table border=\"0\"><tr><td>Dirección\:</td><td>http://localhost:8090/WebServices/CifraCesar</td></tr><tr><td>WSDL\:</td><td><a href\="http://localhost:8090/WebServices/CifraCesar?wsdl">http://localhost:8090/WebServices/CifraCesar?wsdl</a></td></tr><tr><td>Clase de Implantación\:</td><td>WSBadassHouse.CifraCesar</td></tr></table>
 </td>
 </tr>
 </table>

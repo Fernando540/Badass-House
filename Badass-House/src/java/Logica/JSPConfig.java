@@ -25,7 +25,7 @@ public class JSPConfig extends HttpServlet {
             String am = "";
             String opass = "";
             String npass = "";
-            String conf = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/home.jsp#miCuenta'>";
+            String conf = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp#miCuenta'>";
             correo = request.getParameter("uX");
             nombre = request.getParameter("nom");
             ap = request.getParameter("ap");
@@ -37,7 +37,7 @@ public class JSPConfig extends HttpServlet {
             sesion.setAttribute("sessionName", nombre);
             sesion.setAttribute("sessionStat", "logueado");
             sesion.setMaxInactiveInterval(40 * 60);
-            String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/login.html'>";
+            String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=login.html'>";
 
             if (nombre.equals("") || ap.equals("") || am.equals("")) {
                 out.print("<script> alert('Completa el formulario!!!!');</script>");

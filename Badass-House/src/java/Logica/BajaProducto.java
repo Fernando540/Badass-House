@@ -47,10 +47,10 @@ public class BajaProducto extends HttpServlet {
                 res = datos.modificacion1("call BajaProducto('" + correo + "','" + code + "');");
                 if (res == 1) {
                     out.print("<script>alert('Se Eliminado correctamente');</script>");
-                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/Despensa.jsp'>");
+                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=Despensa.jsp'>");
                 } else {
                     out.print("<script>alert('Errorts');</script>");
-                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://localhost:8080/BadassHouse/Despensa.jsp'>");
+                    out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=Despensa.jsp'>");
                 }
             } catch (Exception e) {
                 out.print(e);
