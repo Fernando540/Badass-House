@@ -10,9 +10,9 @@
     int result;
     String clave = "";
     String nombre = "", aPaterno = "", aMaterno = "";
-    String direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Badass-House/web/registroBasico.jsp'>";
-    String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Badass-House/web/home.jsp'>";
-    String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Badass-House/web/index1.jsp'>", numSerie = "";
+    String direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=registroBasico.jsp'>";
+    String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp'>";
+    String tipoUsr = "", index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=index1.jsp'>", numSerie = "";
     Pattern pat1 = Pattern.compile("[^A-Za-zА-За-з ]");
     Pattern pat = Pattern.compile("[A-Za-z0-9._%+-]+@[AZa-z0-9.-]+\\.[a-z]{2,4}$");
     String nka = "";

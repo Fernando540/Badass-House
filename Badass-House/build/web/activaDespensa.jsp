@@ -8,7 +8,7 @@
     try{
         datos.conectar();
         datos.consulta1("call activaNoti('"+correo+"','"+tipoNoti+"');");
-        out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Badass-House/web/home.jsp#Status'>");
+        out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp#Status'>");
     }catch(SQLException e){
         out.print(e.getMessage());
     }

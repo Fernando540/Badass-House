@@ -17,7 +17,7 @@
     String am = "";
     String opass = "";
     String npass = "";
-    String conf = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Badass-House/web/home.jsp'>";
+    String conf = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp'>";
     correo = request.getParameter("uX");
     nombre = request.getParameter("nom");
     ap = request.getParameter("ap");
@@ -29,7 +29,7 @@
     sesion.setAttribute("sessionName", nombre);
     sesion.setAttribute("sessionStat", "logueado");
     sesion.setMaxInactiveInterval(40 * 60);
-    String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Badass-House/web/login.html'>";
+    String gologin = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=login.html'>";
 
     if (nombre.equals("") || ap.equals("") || am.equals("")) {
         out.print("<script> alert('Completa el formulario!!!!');</script>");

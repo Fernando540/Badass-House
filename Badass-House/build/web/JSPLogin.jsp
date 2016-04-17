@@ -9,9 +9,9 @@
     String pass = "";
     String pass1 = "";
     String resultado = "";
-    String login = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Badass-House/web/login.html'>";
-    String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Badass-House/web/home.jsp'>";
-    String index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Badass-House/web/index1.jsp'>";
+    String login = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=login.html'>";
+    String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp'>";
+    String index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=index1.jsp'>";
     cDatos bD = new cDatos();
     ResultSet rs;
     HttpSession sesion = request.getSession();

@@ -33,7 +33,7 @@ public class mandaDespensa extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/Despensa.jsp'>");
+            out.println("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=Despensa.jsp'>");
         }
     }
 

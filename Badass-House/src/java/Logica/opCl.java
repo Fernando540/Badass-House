@@ -24,7 +24,7 @@ public class opCl extends HttpServlet {
             try{
                 datos.conectar();
                 datos.consulta1("call abreCierra('"+correo+"','"+idPuerta+"');");
-                out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/home.jsp#cerraduras'>");
+                out.print("<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp#cerraduras'>");
             }catch(SQLException e){
                 
             }

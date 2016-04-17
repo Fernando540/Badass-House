@@ -41,7 +41,7 @@ public class llavesGas extends HttpServlet {
             String correo = (String) session.getAttribute("sessionMail");
             String ppm1 = request.getParameter("ppm1");
             String llaveNom = request.getParameter("key1");
-            String redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=http://189.245.172.14:81/home.jsp'>";
+            String redirect = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp'>";
             
             try {
                 datos.conectar();

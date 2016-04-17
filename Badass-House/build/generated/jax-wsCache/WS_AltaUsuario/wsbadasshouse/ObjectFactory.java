@@ -35,19 +35,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link WSAltaUsuarioResponse }
-     * 
-     */
-    public WSAltaUsuarioResponse createWSAltaUsuarioResponse() {
-        return new WSAltaUsuarioResponse();
-    }
-
-    /**
      * Create an instance of {@link WSAltaUsuario_Type }
      * 
      */
     public WSAltaUsuario_Type createWSAltaUsuario_Type() {
         return new WSAltaUsuario_Type();
+    }
+
+    /**
+     * Create an instance of {@link WSAltaUsuarioResponse }
+     * 
+     */
+    public WSAltaUsuarioResponse createWSAltaUsuarioResponse() {
+        return new WSAltaUsuarioResponse();
     }
 
     /**
