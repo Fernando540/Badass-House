@@ -8,7 +8,7 @@
     String password = "";
     String pass = "";
     String pass1 = "";
-    String resultado = "";
+    String resultado = "", tipoUsuario = "", paquete="";
     String login = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=login.html'>";
     String index = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=home.jsp'>";
     String index1 = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=index1.jsp'>";
@@ -49,7 +49,7 @@
                 wsbadasshouse.WSLogin port = service.getWSLoginPort();
 
                 resultado = port.wsLogin(correo, pass1);
-                 
+
             } catch (Exception ex) {
             }
 
@@ -62,6 +62,25 @@
                 sesion.setAttribute("sessionMail", correo);
                 sesion.setAttribute("sessionName", resultado);
                 sesion.setAttribute("sessionStat", "logueado");
+                bD.conectar();
+                ResultSet tipoUsr = bD.consulta1("call dimeTipo('" + correo + "');");
+                while (tipoUsr.next()) {
+                    tipoUsuario = tipoUsr.getString("privilegio");
+                }
+                ResultSet paqueton = bD.consulta1("call dimePaquete('','" + correo+ "');");
+                while (paqueton.next()) {
+                    paquete = paqueton.getString("pkte");
+                }
+                ResultSet idCasa;
+                String idCas = "";
+                idCasa = bD.consulta1("select idCasa from relUsrCasa where correo='" + correo+ "';");
+
+                while (idCasa.next()) {
+                    idCas = idCasa.getString("idCasa");
+                }
+                sesion.setAttribute("tipoUsr", tipoUsuario);
+                sesion.setAttribute("paquete", paquete);
+                sesion.setAttribute("idCasa", idCas);
                 sesion.setMaxInactiveInterval(40 * 60);
 
                 out.print(index);

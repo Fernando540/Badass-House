@@ -53,14 +53,12 @@
                         <%
                             BD.cDatos datos = new BD.cDatos();
                             String correin = (String) session.getAttribute("sessionMail");
+                            String paquete = (String) session.getAttribute("paquete");
                             int volt = 0, ppm = 0;
-                            String tipoUsuario = "";
+                            String tipoUsuario = (String) session.getAttribute("tipoUsr");
                             String checado;
                             datos.conectar();
-                            ResultSet tipoUsr = datos.consulta1("call dimeTipo('" + correin + "');");
-                            while (tipoUsr.next()) {
-                                tipoUsuario = tipoUsr.getString("privilegio");
-                            }
+
                             ResultSet dimePuertas = datos.consulta1("call dimePuertas('" + correin + "');");
                             String id[] = new String[2];
                             int num = 0;
@@ -90,22 +88,11 @@
                         <%                         }
                         %>
                         <%
-                            datos.conectar();
-                            ResultSet rs3;
-                            rs3 = datos.consulta1("call dimePaquete('','" + correin + "');");
-                            while (rs3.next()) {
-                                if (rs3.getString("pkte").equals("BasicoNKA") || rs3.getString("pkte").equals("ProNKA") || rs3.getString("pkte").equals("PlatinoNKA")) {
-                                    if (tipoUsuario.equals("1")) {
-                                        out.print("<li><a href='#NoKids'>Niños no</a></li>");
-                                    }
-
+                            if (paquete.equals("BasicoNKA") || paquete.equals("ProNKA") || paquete.equals("PlatinoNKA")) {
+                                if (tipoUsuario.equals("1")) {
+                                    out.print("<li><a href='#NoKids'>Niños no</a></li>");
                                 }
-                            }
 
-                            String paquete = "";
-                            ResultSet paqueton = datos.consulta1("call dimePaquete('','" + correin + "');");
-                            while (paqueton.next()) {
-                                paquete = paqueton.getString("pkte");
                             }
 
                             ResultSet habiNames = datos.consulta1("call habiNames('" + correin + "');");
@@ -517,13 +504,11 @@
         </div>
         <div class="row">
             <%
-                ResultSet idCasa;
-                String idCas = "";
-                idCasa = datos.consulta1("select idCasa from relUsrCasa where correo='" + correin + "';");
+                
+                String idCas = (String) session.getAttribute("idCasa");;
+                
 
-                while (idCasa.next()) {
-                    idCas = idCasa.getString("idCasa");
-                }
+                
                 ResultSet users;
                 users = datos.consulta1("select correo from relUsrCasa where idCasa='" + idCas + "';");
 
@@ -538,16 +523,14 @@
                         if (tipo.getString("privilegio").equals("2")) {
                             out.print("<tr><td>" + correok + "</td><td>Junior</td>");
 
-                            rs3 = datos.consulta1("call dimePaquete('','" + correin + "');");
                             int cantidad = 0;
-                            while (rs3.next()) {
-                                if (rs3.getString("pkte").equals("Basico") || rs3.getString("pkte").equals("BasicoNKA")) {
-                                    cantidad = 2;
-                                } else if (rs3.getString("pkte").equals("Pro") || rs3.getString("pkte").equals("ProNKA")) {
-                                    cantidad = 4;
-                                } else {
-                                    cantidad = 6;
-                                }
+
+                            if (paquete.equals("Basico") || paquete.equals("BasicoNKA")) {
+                                cantidad = 2;
+                            } else if (paquete.equals("Pro") || paquete.equals("ProNKA")) {
+                                cantidad = 4;
+                            } else {
+                                cantidad = 6;
                             }
 
                             out.print("<td> <form action='daPrivi' method='post'>"
@@ -689,10 +672,8 @@
     <!--Div Cerradura-->
     <!--Niños no-->
     <%
-        rs3 = datos.consulta1("call dimePaquete('','" + correin + "');");
 
-        while (rs3.next()) {
-            if (rs3.getString("pkte").equals("BasicoNKA") || rs3.getString("pkte").equals("ProNKA") || rs3.getString("pkte").equals("PlatinoNKA")) {
+        if (paquete.equals("BasicoNKA") || paquete.equals("ProNKA") || paquete.equals("PlatinoNKA")) {
 
     %>
     <div id='NoKids' class= 'container-fluid noTePeguesArriba' >
@@ -737,9 +718,8 @@
         </div>
     </div>
     <%
-                }
-
             }
+
         }
         /*                      HABITACIONES 1 Y 2
          ----------------------------------------------------------------
