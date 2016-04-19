@@ -77,4 +77,35 @@ public class WSGenerico {
         }
         return habNames;
     }
+    @WebMethod(operationName="")
+    public String simulaCorriente(@WebParam(name = "volt")String volt,@WebParam(name = "habit") String habit, @WebParam(name = "contact")String contact , @WebParam(name = "correo") String correo){
+        String resultado="";
+        BD.cDatos datos=new BD.cDatos();
+        try {
+                datos.conectar();
+                ResultSet habiNames = datos.consulta1("call habiNames('" + correo + "');");
+                int itera = 0;
+                String[] habNames = new String[6];
+                while (habiNames.next()) {
+                    habNames[itera] = habiNames.getString("habiName");
+                    itera = itera + 1;
+                }
+            } catch (Exception ex) {
+                System.out.print(ex);
+            }
+        try {
+
+                int res;
+                res = datos.modificacion1("call simulaCorriente('" + correo + "','" + volt + "','" + contact + "','" + habit + "')");
+                if (res == 1) {
+                    resultado="actualizado";
+                } else {
+                    resultado="Errorts";
+                    
+                }
+            } catch (Exception e) {
+                System.out.print(e);
+            }
+        return resultado;
+    }
 }
