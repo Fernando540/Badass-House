@@ -24,22 +24,14 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CifrarResponse_QNAME = new QName("http://WSBadassHouse/", "CifrarResponse");
-    private final static QName _Cifrar_QNAME = new QName("http://WSBadassHouse/", "Cifrar");
+    private final static QName _Cifrar_QNAME = new QName("http://WSBadassHouse/", "cifrar");
+    private final static QName _CifrarResponse_QNAME = new QName("http://WSBadassHouse/", "cifrarResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: wsbadasshouse
      * 
      */
     public ObjectFactory() {
-    }
-
-    /**
-     * Create an instance of {@link CifrarResponse }
-     * 
-     */
-    public CifrarResponse createCifrarResponse() {
-        return new CifrarResponse();
     }
 
     /**
@@ -51,21 +43,29 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CifrarResponse }{@code >}}
+     * Create an instance of {@link CifrarResponse }
      * 
      */
-    @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "CifrarResponse")
-    public JAXBElement<CifrarResponse> createCifrarResponse(CifrarResponse value) {
-        return new JAXBElement<CifrarResponse>(_CifrarResponse_QNAME, CifrarResponse.class, null, value);
+    public CifrarResponse createCifrarResponse() {
+        return new CifrarResponse();
     }
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link Cifrar }{@code >}}
      * 
      */
-    @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "Cifrar")
+    @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "cifrar")
     public JAXBElement<Cifrar> createCifrar(Cifrar value) {
         return new JAXBElement<Cifrar>(_Cifrar_QNAME, Cifrar.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CifrarResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://WSBadassHouse/", name = "cifrarResponse")
+    public JAXBElement<CifrarResponse> createCifrarResponse(CifrarResponse value) {
+        return new JAXBElement<CifrarResponse>(_CifrarResponse_QNAME, CifrarResponse.class, null, value);
     }
 
 }

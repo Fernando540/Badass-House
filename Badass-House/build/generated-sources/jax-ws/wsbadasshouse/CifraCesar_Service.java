@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "CifraCesar", targetNamespace = "http://WSBadassHouse/", wsdlLocation = "http://189.245.172.14:81/WebServices/CifraCesar?wsdl")
+@WebServiceClient(name = "CifraCesar", targetNamespace = "http://WSBadassHouse/", wsdlLocation = "http://localhost:8080/WebServices/CifraCesar?wsdl")
 public class CifraCesar_Service
     extends Service
 {
@@ -30,7 +30,7 @@ public class CifraCesar_Service
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://189.245.172.14:81/WebServices/CifraCesar?wsdl");
+            url = new URL("http://localhost:8080/WebServices/CifraCesar?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
