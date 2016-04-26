@@ -658,7 +658,7 @@
                         estado = abierto.getString("state");
                     }
                     if (estado.equals("Abierta")) {
-                        abertura = "checked";
+                        abertura1 = "checked";
                     }
                 %>
                 <form name="backdoor" action="opCl" method="post">

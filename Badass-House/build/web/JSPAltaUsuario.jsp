@@ -6,8 +6,9 @@
 <%@page import="java.util.regex.Matcher"%>
 <%@page import="java.util.regex.Pattern"%>
 <%
-    String pass = "", pass1 = "";
+    String pass = "", pass1 = "", paquete="";
     int result;
+    cDatos datos = new cDatos();
     String clave = "";
     String nombre = "", aPaterno = "", aMaterno = "";
     String direccion = "", correo = "", password = "", registro = "<META HTTP-EQUIV='REFRESH' CONTENT='0;URL=registroBasico.jsp'>";
@@ -145,11 +146,17 @@
                         out.print(registro);
 
                     } else {
+                        datos.conectar();
+                        rs = datos.consulta1("call dimePaquete('','" + correo + "');");
+                        while (rs.next()) {
+                            paquete = rs.getString("pkte");
+                        }
                         out.print("<script> alert('Bienvenido " + nombre + "');</script>");
                         sesion.setAttribute("sessionMail", correo);
                         sesion.setAttribute("sessionName", nombre);
-                        sesion.setAttribute("numSerie", numSerie);
-                        sesion.setAttribute("direccion", direccion);
+                        sesion.setAttribute("tipoUsr", "1");
+                        sesion.setAttribute("paquete", paquete);
+                        sesion.setAttribute("idCasa", numSerie);
                         sesion.setAttribute("sessionStat", "logueado");
 
                         out.print(index);
